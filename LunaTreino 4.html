@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>Luna & Treino</title>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#C084FC"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+html,body{overscroll-behavior:none;-webkit-overflow-scrolling:touch;}
+button,[role="button"]{touch-action:manipulation;}
+input,select,textarea{font-size:16px!important;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+.nav{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;}
+body{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--bg:#0D0A1A;--su:#1A1530;--ca:#221E3A;--ac:#C084FC;--so:#E879F9;--tx:#FAF5FF;--mu:#8B7AA8;--glow:#C084FC;}
+body{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--tx);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:90px;overflow-x:hidden;}
+.glow-orb{position:fixed;top:-100px;left:50%;transform:translateX(-50%);width:320px;height:320px;background:radial-gradient(circle,var(--glow)14 0%,transparent 68%);pointer-events:none;z-index:0;transition:background 1s;}
+.glow-orb2{position:fixed;bottom:-80px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,var(--so)0C 0%,transparent 70%);pointer-events:none;z-index:0;}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--su);border-top:1px solid var(--ac)18;display:flex;justify-content:space-around;padding:8px 0 20px;z-index:100;}
+.nb{background:none;border:none;color:var(--mu);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Outfit',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;}
+.nb.on{color:var(--ac);}
+.ni{font-size:1.2rem;line-height:1;}
+.page{padding:20px 16px 10px;position:relative;z-index:1;}
+.hidden{display:none!important;}
+.card{background:var(--ca);border:1px solid var(--ac)12;border-radius:22px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac)30,transparent);}
+.ct{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--tx);margin-bottom:12px;}
+.tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);}
+.ac{color:var(--ac);}
+.mn{font-family:'JetBrains Mono',monospace;}
+.bp{background:linear-gradient(135deg,var(--ac),var(--so));color:#fff;border:none;border-radius:14px;padding:14px 22px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;margin-top:6px;transition:all .2s;box-shadow:0 4px 20px var(--ac)35;}
+.bp:active{transform:scale(.97);}
+.bg{background:var(--ac)14;color:var(--ac);border:1px solid var(--ac)28;border-radius:12px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;}
+.bd{background:var(--su);color:var(--mu);border:1px solid var(--ac)12;border-radius:12px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;}
+.inp{width:100%;background:var(--su);border:1px solid var(--ac)18;border-radius:12px;padding:12px 14px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.92rem;outline:none;}
+.inp:focus{border-color:var(--ac)55;}
+.inp::placeholder{color:var(--mu);}
+select.inp{appearance:none;cursor:pointer;}
+textarea.inp{resize:none;line-height:1.65;}
+.rng{width:100%;height:4px;border-radius:2px;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;margin:8px 0;accent-color:var(--ac);}
+.pill{background:var(--ac)14;border:1px solid var(--ac)22;border-radius:50px;padding:4px 12px;font-size:.72rem;color:var(--ac);font-weight:600;display:inline-block;margin:2px;}
+.pill.so{background:var(--so)14;border-color:var(--so)22;color:var(--so);}
+.pill.green{background:#4ADE8014;border-color:#4ADE8022;color:#4ADE80;}
+.pill.red{background:#F8717114;border-color:#F8717122;color:#F87171;}
+.dv{height:1px;background:var(--ac)08;margin:14px 0;}
+.segbar{display:flex;gap:3px;margin:9px 0;}
+.seg{height:6px;flex:1;border-radius:3px;}
+.wd{width:22px;height:26px;border:1px solid var(--ac)22;border-radius:50% 50% 50% 50%/58% 58% 42% 42%;display:inline-block;background:var(--ac)08;margin:2px;transition:all .3s;}
+.wd.full{background:var(--ac);border-color:transparent;box-shadow:0 2px 10px var(--ac)45;}
+.zr{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--ac)06;}
+.zr:last-child{border-bottom:none;}
+.zd{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.alert{background:linear-gradient(135deg,#F8717130,#EF444430);border:1px solid #F8717140;border-radius:13px;padding:11px 14px;font-size:.83rem;font-weight:600;margin-bottom:11px;color:#FCA5A5;}
+.mr{display:flex;align-items:center;gap:9px;padding:9px;background:var(--su);border-radius:12px;margin-bottom:6px;}
+.tn{font-family:'JetBrains Mono',monospace;font-size:clamp(3.2rem,16vw,5rem);font-weight:600;letter-spacing:-2px;line-height:1;}
+.tn.run{color:var(--ac);text-shadow:0 0 60px var(--ac)55;animation:tp 1.5s ease-in-out infinite;}
+.tn.wlk{color:var(--so);animation:tp 2s ease-in-out infinite;}
+.tn.go{color:var(--ac);animation:tp 1.8s ease-in-out infinite;}
+@keyframes tp{0%,100%{opacity:1;}50%{opacity:.7;}}
+.sb{border:none;border-radius:12px;padding:8px 3px;font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:600;cursor:pointer;flex:1;line-height:1.5;}
+.oc{background:var(--ca);border:1px solid var(--ac)18;border-radius:22px;padding:22px;margin-bottom:13px;}
+.cbr{display:flex;align-items:center;gap:11px;padding:8px 0;cursor:pointer;}
+.chk{width:20px;height:20px;border-radius:6px;border:2px solid var(--ac)38;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
+.chk.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+.pstep{height:4px;flex:1;border-radius:2px;background:var(--su);}
+.pstep.on{background:linear-gradient(90deg,var(--ac),var(--so));}
+.pt{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;line-height:1.15;margin-bottom:5px;}
+.pti{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--mu);}
+.tabs{display:flex;gap:5px;margin-bottom:15px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{white-space:nowrap;flex-shrink:0;padding:8px 15px;}
+.tab.on{background:var(--ac)18;border-color:var(--ac)45;font-weight:700;color:var(--ac);}
+.pbadge{border-radius:50px;padding:5px 14px;font-size:.76rem;font-weight:700;}
+.aluna-card{background:var(--su);border:1px solid var(--ac)12;border-radius:16px;padding:14px;margin-bottom:9px;cursor:pointer;}
+.ex-item{padding:13px 14px;background:var(--su);border-radius:14px;margin-bottom:8px;border:2px solid transparent;cursor:pointer;transition:all .15s;}
+.ex-item.sel{border-color:var(--ac);background:var(--ac)10;}
+.ex-item-header{display:flex;align-items:center;gap:12px;}
+.ex-chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--ac)35;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.ex-chk.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+.ex-name{font-size:.9rem;font-weight:500;flex:1;}
+.ex-fields{display:flex;gap:6px;margin-top:10px;}
+.ex-field{flex:1;background:var(--ca);border:1px solid var(--ac)20;border-radius:9px;padding:9px 6px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.8rem;outline:none;text-align:center;width:0;}
+.ex-field::placeholder{color:var(--mu);font-size:.68rem;}
+.treino-card{background:var(--su);border:1px solid var(--ac)12;border-radius:18px;padding:16px;margin-bottom:9px;cursor:pointer;position:relative;overflow:hidden;}
+.treino-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ac)50,transparent);}
+.moti{background:linear-gradient(135deg,var(--ac)16,var(--so)10);border:1px solid var(--ac)20;border-radius:16px;padding:14px 16px;margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;line-height:1.6;}
+.wod-card{background:linear-gradient(135deg,var(--su),var(--ca));border:1px solid var(--ac)18;border-radius:18px;padding:16px;margin-bottom:9px;cursor:pointer;}
+.wod-diff{border-radius:50px;padding:3px 11px;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.diff-easy{background:#4ADE8018;color:#4ADE80;border:1px solid #4ADE8025;}
+.diff-mid{background:#FACC1518;color:#FACC15;border:1px solid #FACC1525;}
+.diff-hard{background:#F8717118;color:#F87171;border:1px solid #F8717125;}
+.prog-fill-bar{height:5px;background:var(--su);border-radius:3px;margin-top:9px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--ac),var(--so));transition:width .5s ease;}
+.luna-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,var(--ac),var(--so));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.version-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--ac)20,var(--so)15);border:1px solid var(--ac)30;border-radius:50px;padding:4px 12px;font-size:.7rem;font-weight:700;color:var(--ac);}
+.astro-row{display:flex;gap:10px;margin-bottom:10px;}
+.astro-item{flex:1;background:var(--su);border-radius:14px;padding:12px;text-align:center;border:1px solid var(--ac)10;}
+.chart-area{background:var(--su);border-radius:14px;padding:16px;margin-bottom:10px;min-height:120px;display:flex;align-items:flex-end;gap:5px;}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--ac),var(--so)80);min-height:8px;}
+.phase-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;border:2px solid var(--ac)30;}
+.ob-error{color:#F87171;font-size:.73rem;margin-top:4px;display:none;}
+.ob-error.show{display:block;animation:obshake .3s ease;}
+@keyframes obshake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+.inp.ob-invalid{border-color:#F87171!important;background:rgba(248,113,113,.06)!important;}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:flex-end;justify-content:center;}
+.modal{background:var(--su);border-radius:22px 22px 0 0;padding:24px 20px 36px;width:100%;max-width:430px;max-height:88vh;overflow-y:auto;}
+.modal-handle{width:40px;height:4px;background:var(--mu)40;border-radius:2px;margin:0 auto 18px;}
+</style>
+</head>
+<body>
+<div class="glow-orb" id="glow1"></div>
+<div class="glow-orb2"></div>
+<div id="pg-onboard"   class="page"></div>
+<div id="pg-home"      class="page hidden"></div>
+<div id="pg-treino"    class="page hidden"></div>
+<div id="pg-ciclo"     class="page hidden"></div>
+<div id="pg-progresso" class="page hidden"></div>
+<div id="pg-personal"  class="page hidden"></div>
+<div id="modal-root"></div>
+<nav class="nav" id="nav" style="display:none">
+  <button class="nb on"  onclick="goPage('home')"      id="nb-home">      <span class="ni">🌙</span>Luna</button>
+  <button class="nb"     onclick="goPage('treino')"    id="nb-treino">    <span class="ni">🏋️</span>Treino</button>
+  <button class="nb"     onclick="goPage('ciclo')"     id="nb-ciclo">     <span class="ni">🌀</span>Ciclo</button>
+  <button class="nb"     onclick="goPage('progresso')" id="nb-progresso"> <span class="ni">📈</span>Evolução</button>
+  <button class="nb"     onclick="goPage('personal')"  id="nb-personal">  <span class="ni">👩‍💼</span>Personal</button>
+</nav>
+<script>
+var LUNA_KEYS = {
+  PERFIL:  'luna_perfil_usuario',
+  ALUNAS:  'luna_perfil_alunas',
+  HIST:    'luna_treino_historico',
+  DEUSA:   'luna_treino_deusa',
+  BASEURL: 'luna_config_baseurl',
+  CIDADE:  'luna_config_cidade',
+  LOG:     function(d){ return 'luna_ciclo_log_'+d; },
+  MANA:    function(t,i){ return 'luna_treino_mana_'+t+'_'+i; },
+  AGENDA:  function(i){ return 'luna_treino_agenda_'+i; },
+  REL:     function(i){ return 'luna_relatorios_aluna_'+i; },
+};
+(function migrarLocalStorage(){
+  if(localStorage.getItem('luna_config_migrated_v2')) return;
+  var m=[
+    ['luna_p2',          LUNA_KEYS.PERFIL],
+    ['luna_alunas2',     LUNA_KEYS.ALUNAS],
+    ['luna_hist',        LUNA_KEYS.HIST],
+    ['luna_baseurl',     LUNA_KEYS.BASEURL],
+    ['luna_treino_deusa',LUNA_KEYS.DEUSA],
+  ];
+  m.forEach(function(p){
+    var v=localStorage.getItem(p[0]);
+    if(v!==null){localStorage.setItem(p[1],v);localStorage.removeItem(p[0]);}
+  });
+  Object.keys(localStorage).forEach(function(k){
+    if(/^luna_t_\d{4}-\d{2}-\d{2}$/.test(k)){
+      var d=k.replace('luna_t_','');
+      localStorage.setItem(LUNA_KEYS.LOG(d),localStorage.getItem(k));
+      localStorage.removeItem(k);
+    }
+    if(/^luna_mana_/.test(k)&&!k.startsWith('luna_treino_mana_')){
+      localStorage.setItem(k.replace('luna_mana_','luna_treino_mana_'),localStorage.getItem(k));
+      localStorage.removeItem(k);
+    }
+    if(/^luna_ag2_/.test(k)){
+      var idx=k.replace('luna_ag2_','');
+      localStorage.setItem(LUNA_KEYS.AGENDA(idx),localStorage.getItem(k));
+      localStorage.removeItem(k);
+    }
+  });
+  localStorage.setItem('luna_config_migrated_v2','true');
+})();
+var _audioCtx=null;
+function getAudioCtx(){
+  if(!_audioCtx){try{_audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}
+  if(_audioCtx.state==='suspended'){_audioCtx.resume();}
+  return _audioCtx;
+}
+document.addEventListener('touchstart',function(){getAudioCtx();},{once:true,passive:true});
+document.addEventListener('click',function(){getAudioCtx();},{once:true});
+function beep(freq,dur,vol){
+  var ctx=getAudioCtx();if(!ctx)return;
+  try{
+    var o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=freq||660;o.type='sine';
+    var t=ctx.currentTime;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vol||0.4,t+0.01);
+    g.gain.exponentialRampToValueAtTime(0.001,t+(dur||0.2));
+    o.start(t);o.stop(t+(dur||0.2)+0.05);
+  }catch(e){}
+}
+function soundPhaseEnd(){beep(520,0.18,0.45);setTimeout(function(){beep(400,0.25,0.4);},220);}
+function soundSetEnd(){beep(600,0.15,0.4);setTimeout(function(){beep(700,0.15,0.4);},180);setTimeout(function(){beep(800,0.2,0.45);},360);}
+function soundWorkoutDone(){beep(660,0.15,0.5);setTimeout(function(){beep(880,0.15,0.5);},180);setTimeout(function(){beep(1100,0.15,0.5);},360);setTimeout(function(){beep(880,0.08,0.3);},520);setTimeout(function(){beep(1320,0.3,0.55);},580);}
+var FRASES=["O patriarcado não vai te segurar hoje, mana. Força nesse agachamento! 💜","Treinar é um ato de autocuidado e rebeldia. Vai gostosa! 🔥","Seu corpo, suas regras e sua força. Só falta mais uma! ✊","Uma mulher forte sustenta a outra. Força na peruca! 👑","Ocupamos todos os espaços, inclusive o topo do pódio. Vai mana! 🏆"];
+var CURIOSIDADES=[
+  {e:"🦴",t:"Você sabia?",c:"Temos 206 ossos no corpo adulto — mas nascemos com cerca de 270! Eles vão se fundindo conforme a gente cresce. Legal, né?"},
+  {e:"💪",t:"Sabia dessa?",c:"O músculo mais forte do corpo em relação ao seu tamanho é o masseter — aquele que fecha a sua mandíbula. Já pensou que poderosa?"},
+  {e:"❤️",t:"Seu coração é demais!",c:"Ele bate cerca de 100 mil vezes por dia. Em uma vida inteira, são mais de 2,5 bilhões de batimentos. Trata ele bem, tá?"},
+  {e:"🏃‍♀️",t:"Corra por você!",c:"30 minutos de caminhada rápida por dia já reduzem em 35% o risco de doenças cardiovasculares. Simples assim. Você já tá na frente!"},
+  {e:"🧠",t:"Treino é remédio pro cérebro!",c:"O exercício libera BDNF — uma proteína que estimula crescimento de neurônios. Cada treino literalmente deixa você mais esperta 🧠✨"},
+  {e:"⚖️",t:"Equilíbrio salva vida!",c:"Sabia que quedas são a principal causa de morte em idosos acima de 65 anos? Treinar equilíbrio hoje é um presente para a você do futuro 💜"},
+  {e:"🦵",t:"Pernas = sua segunda bomba!",c:"Os músculos da perna ajudam o sangue a voltar ao coração. Por isso agachar e andar é tão poderoso — você tem uma bomba extra aí embaixo!"},
+  {e:"💦",t:"Água no treino!",c:"Perder apenas 2% do peso corporal em suor já reduz sua força em até 10% e sua concentração em 15%. Bebe água, mana!"},
+  {e:"😴",t:"Dormir é treinar!",c:"A maioria do crescimento muscular acontece enquanto você dorme. Sem sono, sem resultado. Seu travesseiro é tão importante quanto o halter 😴"},
+  {e:"🔥",t:"Músculos queimam mais!",c:"500g de músculo queima 3x mais calorias em repouso do que 500g de gordura. Cada treino de força que você faz muda seu metabolismo para sempre!"},
+  {e:"🌡️",t:"Febre protetora!",c:"Sabia que o sistema imune fica mais forte com exercício moderado? Quem treina regularmente tem menos gripes e recupera mais rápido 💪"},
+  {e:"🧬",t:"Você rejuvenesce!",c:"Exercício aeróbico regular preserva os telômeros — as capinhas do DNA que encurtam com o envelhecimento. Treinar literalmente atrasa o relógio biológico!"},
+  {e:"🫀",t:"Pressão na medida!",c:"Hipertensão afeta 1 em cada 3 adultos. Mas 150 minutos de exercício por semana já reduzem a pressão tanto quanto alguns remédios. Você é sua melhor farmácia!"},
+  {e:"🦷",t:"Ossos pedem musculação!",c:"A osteoporose começa a se desenvolver silenciosamente nos 30 anos. Treino de força estimula a formação óssea. Levanta peso hoje para não quebrar amanhã!"},
+  {e:"🩸",t:"Açúcar no controle!",c:"Sabe quando você faz uma caminhada depois do almoço? Isso reduz o pico de glicose em até 30%! Seu pâncreas agradece cada passinho 🦶"},
+];
+var ASTRO_PREV={
+  "Áries":    ["Marte te empurra hoje! É dia de escalar a carga, mana 🔥","Energia de fogo puro — use no treino antes que vire ansiedade 😅","Sua impulsividade é sua superpotência. Só não pula o aquecimento!"],
+  "Touro":    ["Vênus sorri pra você. Treino lento e consistente vence sempre 💚","Dia de se conectar com o corpo sem pressa. Cada rep é um presente","Touro não desiste. Bora terminar aquela série que você odiou na semana passada?"],
+  "Gêmeos":  ["Seu cérebro tá nas nuvens hoje — treino é o aterramento perfeito ⚡","Mente dupla? Coloca fone, vai pro treino e silencia as vozes 😂","Mercúrio em alta — aproveita pra aprender um exercício novo hoje!"],
+  "Câncer":  ["A Lua manda em você — e hoje ela diz: cuide de si primeiro 🌙","Treino é autocuidado. E autocuidado é revolucionário, mana 💜","Dia emocional? O agachamento vai transformar a tensão em força!"],
+  "Leão":    ["O Sol é sua energia natal e hoje ele brilha FORTE ☀️🔥","Leão no ginásio é espetáculo — faz bonito, mas faz completo!","Você nasceu pra liderar. Lidera seu próprio corpo primeiro 👑"],
+  "Virgem":  ["Mercúrio preciso — hoje é dia de focar na técnica, não na carga","Virginiana de raça: anota tudo, melhora tudo, conquista tudo 📋","Seu perfeccionismo é um dom. Usa ele a favor do seu movimento!"],
+  "Libra":   ["Vênus equilibrando — dia perfeito pra treino de mobilidade 🌸","Libra ama harmonia. Alinha respiração + movimento hoje e sente a diferença","Seu charme é inegável, mana. Mas vai além do espelho — sente a força!"],
+  "Escorpião":["Plutão intenso — você tá no pico hoje, vai fundo! 🦂🔥","Escorpião transforma tudo. Inclusive fraqueza em potência.","Ninguém treina com mais determinação do que você. Prova hoje!"],
+  "Sagitário":["Júpiter expansivo — aumenta um set, adiciona um exercício novo 🏹","Seu fogo viajante quer aventura. Testa um circuito novo hoje!","Sagitário mira longe. Cada treino é uma flecha no seu objetivo!"],
+  "Capricórnio":["Saturno disciplinado — seu dia mais produtivo da semana. Bora! 🏔️","Cap não precisa de motivação, só de consistência. E você tem de sobra!","Você constrói devagar, mas constrói pra ficar. Igual seu músculo 💪"],
+  "Aquário":  ["Urano elétrico — treino diferente hoje, surpreende seu corpo ⚡","Aquariana inovadora: que tal inventar uma sequência nova?","Você tá à frente do seu tempo, mana. Seu corpo também vai!"],
+  "Peixes":  ["Netuno sensível — escuta o que seu corpo pede hoje 🌊","Piscianos sentem tudo. Usa essa sensibilidade no movimento consciente","Seu intuição é sua bússola. Ela tá te dizendo: vai treinar! 💜"],
+};
+function getCuriosidade(){var idx=Math.floor(new Date().getTime()/(1000*60*60*24))%CURIOSIDADES.length;return CURIOSIDADES[idx];}
+function getAstroPrev(signo){var arr=ASTRO_PREV[signo]||ASTRO_PREV["Libra"];return arr[Math.floor(new Date().getDate())%arr.length];}
+var fraseIdx=0;
+function nextFrase(){var f=FRASES[fraseIdx%FRASES.length];fraseIdx++;return f;}
+var SIGNS={
+  "Áries":      {e:"♈",el:"Fogo",   bg:"#160808",su:"#241010",ca:"#2E1414",ac:"#F87171",so:"#FB923C",tx:"#FFF1F2",mu:"#B06060",glow:"#F87171"},
+  "Touro":      {e:"♉",el:"Terra",  bg:"#081408",su:"#0F2010",ca:"#152A15",ac:"#4ADE80",so:"#A3E635",tx:"#F0FFF4",mu:"#509050",glow:"#4ADE80"},
+  "Gêmeos":     {e:"♊",el:"Ar",     bg:"#141208",su:"#201E10",ca:"#2A2815",ac:"#FACC15",so:"#FCD34D",tx:"#FFFBEB",mu:"#A09030",glow:"#FACC15"},
+  "Câncer":     {e:"♋",el:"Água",   bg:"#080E18",su:"#101828",ca:"#162035",ac:"#60A5FA",so:"#93C5FD",tx:"#EFF6FF",mu:"#5080A0",glow:"#60A5FA"},
+  "Leão":       {e:"♌",el:"Fogo",   bg:"#150C00",su:"#221500",ca:"#2C1C00",ac:"#FB923C",so:"#FBBF24",tx:"#FFF7ED",mu:"#A07030",glow:"#FB923C"},
+  "Virgem":     {e:"♍",el:"Terra",  bg:"#0A1410",su:"#142018",ca:"#1A2A20",ac:"#6EE7B7",so:"#A7F3D0",tx:"#ECFDF5",mu:"#50907A",glow:"#6EE7B7"},
+  "Libra":      {e:"♎",el:"Ar",     bg:"#160A16",su:"#241424",ca:"#2E1A2E",ac:"#F0ABFC",so:"#E879F9",tx:"#FDF4FF",mu:"#A060A0",glow:"#F0ABFC"},
+  "Escorpião":  {e:"♏",el:"Água",   bg:"#0A0214",su:"#140820",ca:"#1C1028",ac:"#A78BFA",so:"#C084FC",tx:"#F5F3FF",mu:"#7060A0",glow:"#A78BFA"},
+  "Sagitário":  {e:"♐",el:"Fogo",   bg:"#160800",su:"#241000",ca:"#301600",ac:"#FB7185",so:"#FCA5A5",tx:"#FFF1F2",mu:"#A05050",glow:"#FB7185"},
+  "Capricórnio":{e:"♑",el:"Terra",  bg:"#0C0C0C",su:"#181818",ca:"#202020",ac:"#94A3B8",so:"#CBD5E1",tx:"#F8FAFC",mu:"#607080",glow:"#94A3B8"},
+  "Aquário":    {e:"♒",el:"Ar",     bg:"#001018",su:"#001C28",ca:"#002434",ac:"#22D3EE",so:"#67E8F9",tx:"#ECFEFF",mu:"#309090",glow:"#22D3EE"},
+  "Peixes":     {e:"♓",el:"Água",   bg:"#06081A",su:"#0E1228",ca:"#141A38",ac:"#818CF8",so:"#A5B4FC",tx:"#EEF2FF",mu:"#5060A0",glow:"#818CF8"},
+};
+var SIGN_NAMES=["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"];
+var SIGN_TABLE=[
+  ["Áries",      3,21, 4,19],["Touro",      4,20, 5,20],["Gêmeos",     5,21, 6,20],
+  ["Câncer",     6,21, 7,22],["Leão",       7,23, 8,22],["Virgem",     8,23, 9,22],
+  ["Libra",      9,23,10,22],["Escorpião", 10,23,11,21],["Sagitário", 11,22,12,21],
+  ["Capricórnio",12,22,12,31],["Capricórnio", 1, 1, 1,19],["Aquário",    1,20, 2,18],
+  ["Peixes",     2,19, 3,20],
+];
+function getSign(bd){
+  if(!bd)return"Escorpião";
+  var d=new Date(bd+"T12:00:00");
+  var md=(d.getMonth()+1)*100+d.getDate();
+  for(var i=0;i<SIGN_TABLE.length;i++){
+    var r=SIGN_TABLE[i];
+    if(md>=(r[1]*100+r[2])&&md<=(r[3]*100+r[4]))return r[0];
+  }
+  return"Capricórnio";
+}
+function julianDate(y,mo,d,hUTC){
+  if(mo<=2){y-=1;mo+=12;}
+  var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(mo+1))+d+hUTC/24+B-1524.5;
+}
+function norm360(a){return((a%360)+360)%360;}
+function getLua(bd){
+  if(!bd)return"Peixes";
+  var d=new Date(bd+"T12:00:00Z");
+  var jd=julianDate(d.getUTCFullYear(),d.getUTCMonth()+1,d.getUTCDate(),12);
+  var T=(jd-2451545.0)/36525;
+  var L0=norm360(218.3164477+481267.88123421*T);
+  var M=norm360(134.9633964+477198.8675055*T);
+  var F=norm360(93.2720950+483202.0175233*T);
+  var Ms=norm360(357.5291092+35999.0502909*T);
+  var D=norm360(297.8501921+445267.1114034*T);
+  var r=Math.PI/180;
+  var dL=6.288774*Math.sin(M*r)+1.274027*Math.sin((2*D-M)*r)
+        +0.658314*Math.sin(2*D*r)+0.213618*Math.sin(2*M*r)
+        -0.185116*Math.sin(Ms*r)-0.114332*Math.sin(2*F*r)
+        +0.058793*Math.sin((2*D-2*M)*r)+0.053322*Math.sin((2*D+M)*r)
+        +0.045758*Math.sin((2*D-Ms)*r)-0.040923*Math.sin((Ms-M)*r)
+        -0.034720*Math.sin(D*r)-0.030383*Math.sin((Ms+M)*r);
+  var moonLon=norm360(L0+dL);
+  return SIGN_NAMES[Math.floor(moonLon/30)%12];
+}
+function getAge(bd){if(!bd)return null;var b=new Date(bd),n=new Date(),a=n.getFullYear()-b.getFullYear();if(n.getMonth()-b.getMonth()<0||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate()))a--;return a;}
+function cyclePhase(last,len,mensDur){
+  len=len||28; mensDur=mensDur||5;
+  if(!last) return null;
+  var d=Math.floor((new Date()-new Date(last))/86400000)%len;
+  if(d<0) return null;
+  // Ovulação conservadora: ocorre len-14 dias antes do próximo ciclo
+  // Janela fértil real: dia da ovulação -1 e +1 (3 dias conservadores)
+  var ovDay=len-14;
+  if(d<mensDur) return{p:"Menstruação",i:"🔴",c:"#F87171",a:"Exercícios leves, yoga e caminhada. Respeite seu corpo.",short:"Mens."};
+  if(d<ovDay-1) return{p:"Folicular",i:"🌱",c:"#4ADE80",a:"Energia crescente! Ótimo para HIIT e força.",short:"Folicular"};
+  if(d<=ovDay+1) return{p:"Ovulação",i:"✨",c:"#FACC15",a:"Pico de energia! Maximize o treino.",short:"Ovulação"};
+  return{p:"Lútea",i:"🌙",c:"#A78BFA",a:"Treinos moderados e mobilidade.",short:"Lútea"};
+}
+function hrZones(age){var mx=220-age;return[{l:"Z1 Recuperação",p:"50–60%",mn:Math.round(mx*.5),mx:Math.round(mx*.6),c:"#60A5FA"},{l:"Z2 Aeróbico leve",p:"60–70%",mn:Math.round(mx*.6),mx:Math.round(mx*.7),c:"#4ADE80"},{l:"Z3 Aeróbico",p:"70–80%",mn:Math.round(mx*.7),mx:Math.round(mx*.8),c:"#FACC15"},{l:"Z4 Limiar",p:"80–90%",mn:Math.round(mx*.8),mx:Math.round(mx*.9),c:"#FB923C"},{l:"Z5 Máxima",p:"90–100%",mn:Math.round(mx*.9),mx:mx,c:"#F87171"}];}
+function fmtT(s){return Math.floor(s/60)+":"+(s%60<10?"0":"")+s%60;}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function ld(k,fb){try{var r=localStorage.getItem(k);return r?JSON.parse(r):fb;}catch(e){return fb;}}
+function todayKey(){return new Date().toISOString().slice(0,10);}
+var EXDB={
+  "Aquecimento":[
+    "Movimentação articular (punhos, cotovelos, ombros, pescoço, tronco, quadris, joelhos e tornozelos)",
+    "Mobilidade de ombros com bastão",
+    "Cat-Cow","Hip 90/90","World's Greatest Stretch","Mobilidade de tornozelo",
+    "Caminhada leve na esteira","Polichinelo","Corrida estacionária","Agachamento leve","Elevação de joelhos","Pular corda leve",
+    "Bicicleta de academia convencional","Bicicleta de Crossfit (Air Bike)","Elíptico","Remo","SkiErg (Ski)",
+    "HIIT como Aquecimento"
+  ],
+  "Mobilidade":["Flexão lateral de tronco","Rotação torácica","Abertura de quadril","Alongamento de isquio","Cat-Cow","Hip 90/90","Mobilidade de ombros com bastão","World's Greatest Stretch","Abertura de peito","Mobilidade de tornozelo"],
+  "Cardio":["Esteira corrida leve","Bicicleta de academia convencional","Bicicleta de Crossfit (Air Bike)","Elíptico","SkiErg (Ski)","Escada (Step)","Remo ergométrico","Corrida moderada","Caminhada inclinada","Dança livre","Circuito de cardio","Pular corda","Aula de grupo"],
+  "HIIT":["Sprint 30s / Descanso 30s","Burpee","Mountain Climber","Agachamento com Salto","Polichinelo explosivo","Box Jump","Kettlebell Swing","Thruster","Battle Rope","Corrida intervalada"],
+  "Peito":["Supino","Crucifixo","Peck Deck","Flexão de Braço","Crossover","Pullover","Press","Fly"],
+  "Ombros":["Desenvolvimento","Elevação Lateral","Elevação Frontal","Elevação 45°","Remada Alta","Arnold Press","Rotação Externa","Face Pull","Encolhimento","Press Militar"],
+  "Costas":["Puxada","Remada","Pull Down","Barra Fixa","Hiperextensão","Serrátil"],
+  "Membros Sup.":["Rosca Direta","Rosca Martelo","Rosca Concentrada","Rosca 21","Tríceps Pulley","Tríceps Coice","Tríceps Francês","Tríceps Testa","Dip","Bíceps no cabo","Tríceps no cabo"],
+  "Abdômen":["Prancha","Crunch","Abdominal Bicicleta","Elevação de Pernas","Rotação Russa","Abdominal Oblíquo","Dead Bug","Hollow Body","Rollout","Abdominal no Cabo","Abdominal Infra"],
+  "Posterior":["Stiff","Leg Curl","Hip Thrust","Glúteo 4 Apoios","Elevação Pélvica","Passada","Deadlift Romeno","Curl Nórdico","Panturrilha"],
+  "Anterior":["Agachamento","Leg Press","Cadeira Extensora","Step Up","Afundo","Hack Squat","Agachamento Goblet","Agachamento Sumô","Agachamento Búlgaro","Cossack Squat"],
+  "Pliometria":["Salto no Caixote","Salto Lateral","Agachamento Pliométrico","Push-up Explosivo","Bound Lateral","Salto ao Cone","Frog Jump","Reactive Step","Depth Jump","Sprint com Salto"]
+};
+// Categorias que têm ângulo + material configuráveis
+var CATS_MUSCULACAO=["Peito","Ombros","Costas","Membros Sup."];
+var ANGULOS=["—","Reto","Inclinado","Declinado","Unilateral","Bilateral","Pronado","Supinado","Neutro"];
+var MATERIAIS=["—","Barra","Halter","Polia / Cabo","Máquina","Smith","Elástico","Peso Corporal","Kettlebell","TRX"];
+// Gera chave única para permitir múltiplas instâncias do mesmo exercício base
+function exKey(nomeBase,angulo,material,instancia){
+  var parts=[nomeBase];
+  if(angulo&&angulo!=="—")parts.push(angulo);
+  if(material&&material!=="—")parts.push(material);
+  if(instancia>1)parts.push("#"+instancia);
+  return parts.join(" · ");
+}
+var WODS=[
+  {nome:"Pagu",signo:"Áries",dif:"easy",desc:"4 Rounds por tempo:\n• 15 Agachamentos livres\n• 10 Flexões com joelho no chão\n• 200m caminhada rápida ou trote leve",foco:"Resistência básica",tempo:"~20 min"},
+  {nome:"Tarsila",signo:"Touro",dif:"easy",desc:"AMRAP 8 minutos:\n• 10 Sentar e levantar da cadeira\n• 15s Prancha abdominal\n• 10 Elevações de quadril no solo",foco:"Força isométrica e cadência",tempo:"8 min"},
+  {nome:"Nise da Silveira",signo:"Gêmeos",dif:"easy",desc:"3 Rounds:\n• 20 Polichinelos\n• 10 Mountain Climbers\n• 10 Rotações de tronco\n• 10 Agachamentos sumô (sem peso)",foco:"Agilidade mental e corporal",tempo:"~18 min"},
+  {nome:"Malala",signo:"Câncer",dif:"mid",desc:"EMOM 12 minutos:\n• Min 1: 15 Abdominais remador\n• Min 2: 12 Afundos alternados\n• Min 3: 30s Cadeirinha na parede",foco:"Persistência e proteção do core",tempo:"12 min"},
+  {nome:"Hebe",signo:"Leão",dif:"mid",desc:"4 Rounds:\n• 12 Desenvolvimentos de ombros c/ halteres\n• 15 Agachamentos Goblet\n• 10 Burpees adaptados (sem peito no chão)",foco:"Movimentos amplos e energia",tempo:"~25 min"},
+  {nome:"Beyoncé",signo:"Virgem",dif:"mid",desc:"Por tempo — 21-15-9 reps:\n• Kettlebell Swing (ou halter)\n• Box Step-up (subida no caixote)\n• Tríceps no banco",foco:"Precisão e técnica",tempo:"~20 min"},
+  {nome:"Cora Coralina",signo:"Libra",dif:"inter",desc:"AMRAP 15 minutos:\n• 10 Remadas unilaterais (cada braço)\n• 15 Saltos na corda (ou simulado)\n• 10 Avanços com caminhada\n• 5 Flexões completas",foco:"Força e resistência respiratória",tempo:"15 min"},
+  {nome:"Elza Soares",signo:"Escorpião",dif:"inter",desc:"5 Rounds:\n• 10 Levantamento Terra c/ barra ou halteres\n• 10 Burpees completos\n• 20 Abdominais infra",foco:"Intensidade visceral e superação",tempo:"~30 min"},
+  {nome:"Marta",signo:"Sagitário",dif:"inter",desc:"4 Rounds por tempo:\n• 400m corrida (ou 2min corrida rápida)\n• 15 Agachamentos com salto\n• 10 Push Press (desenvolvimento c/ pernas)",foco:"Explosão, velocidade e potência",tempo:"~28 min"},
+  {nome:"Michelle Obama",signo:"Capricórnio",dif:"hard",desc:"For Time:\n• 50 Agachamentos c/ barra (Back Squat)\n• 40 Abdominais V-up (Canivete)\n• 30 Supinos c/ halteres\n• 20 Afundos saltados\n• 10 Burpees sobre a barra",foco:"Estrutura, disciplina e volume",tempo:"~35 min"},
+  {nome:"Oprah",signo:"Aquário",dif:"hard",desc:"Chipper — uma vez o mais rápido possível:\n• 100 Polichinelos\n• 80 Mountain Climbers\n• 60 Kettlebell Swings\n• 40 Box Jumps\n• 20 Flexões explosivas (palma ou saindo do chão)",foco:"Inovação e alta demanda metabólica",tempo:"~40 min"},
+  {nome:"Frida Kahlo",signo:"Peixes",dif:"hard",desc:"7 Rounds por tempo:\n• 7 Thrusters (agachamento + desenvolvimento)\n• 7 Pull-ups (barra fixa ou remada pesada)\n• 7 Burpees\n• 7 Knees to Elbow",foco:"Resiliência e entrega total",tempo:"~35 min"},
+];
+var MANA_SIGNOS=["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"];
+var MANA={
+  forca:[
+    {signo:"Áries",e:"♈",t:"Força de Áries ♈",d:"A energia de Áries pede ação imediata! Circuito explosivo para despertar a guerreira em você.",dur:"35 min",ex:[{n:"Agachamento livre",s:3,r:"12",c:"Peso corporal — foco em velocidade na subida"},{n:"Flexão de joelhos (apoio)",s:3,r:"8",c:"Mãos apoiadas, vá no seu ritmo"},{n:"Polichinelo",s:3,r:"30s",c:"Cardio de entrada — acende o fogo!"},{n:"Afundo alternado",s:3,r:"10 cada",c:"Passo largo, joelho não ultrapassa o pé"},{n:"Prancha",s:3,r:"20s",c:"Core firme, respire"}]},
+    {signo:"Touro",e:"♉",t:"Força de Touro ♉",d:"Touro constrói devagar e firme. Movimentos lentos e pesados que criam base real.",dur:"40 min",ex:[{n:"Agachamento sumô",s:3,r:"15",c:"Pés abertos, foco nos adutores e glúteo"},{n:"Elevação pélvica",s:4,r:"15",c:"Segura 2s no topo — sente o glúteo!"},{n:"Remada com elástico",s:3,r:"12",c:"Puxa devagar, solta devagar"},{n:"Stiff com halter ou garrafa",s:3,r:"12",c:"Costas retas, sente o posterior de coxa"},{n:"Prancha lateral",s:2,r:"20s cada",c:"Equilíbrio e core"}]},
+    {signo:"Gêmeos",e:"♊",t:"Força de Gêmeos ♊",d:"Gêmeos se entedia fácil — aqui cada exercício é diferente! Circuito variado e divertido.",dur:"35 min",ex:[{n:"Agachamento + elevação de braços",s:3,r:"12",c:"Combina parte superior e inferior"},{n:"Remada alternada com garrafa",s:3,r:"10 cada",c:"Foco em costas"},{n:"Burpee simplificado",s:3,r:"6",c:"Sem o salto — apenas desça e levante"},{n:"Rosca bíceps",s:3,r:"12",c:"Use garrafas de água se não tiver halter"},{n:"Mountain climber lento",s:3,r:"10 cada",c:"Core + cardio suave"}]},
+    {signo:"Câncer",e:"♋",t:"Força de Câncer ♋",d:"Câncer cuida do corpo como cuida das pessoas que ama. Treino suave mas eficaz.",dur:"35 min",ex:[{n:"Elevação pélvica",s:3,r:"15",c:"Deitada, foco total no glúteo"},{n:"Abdominal supra",s:3,r:"12",c:"Movimento pequeno e controlado"},{n:"Glúteo 4 apoios",s:3,r:"15 cada",c:"Joelho em 90° na subida"},{n:"Flexão inclinada (na parede)",s:3,r:"10",c:"Mãos na parede — ótima para iniciantes"},{n:"Dead bug",s:3,r:"8 cada",c:"Costas no chão, core ativo"}]},
+    {signo:"Leão",e:"♌",t:"Força de Leão ♌",d:"Leão foi feita para brilhar! Treino que fortalece e dá aquela postura de rainha.",dur:"40 min",ex:[{n:"Agachamento com pausa",s:3,r:"12",c:"Para 2s em baixo — sente o poder"},{n:"Desenvolvimento de ombros",s:3,r:"12",c:"Garrafas na altura dos ombros, empurra pra cima"},{n:"Elevação lateral",s:3,r:"12",c:"Ombros que carregam com elegância"},{n:"Extensão de quadril em pé",s:3,r:"15 cada",c:"Pé para trás, glúteo contraído"},{n:"Prancha com elevação de braço",s:3,r:"8 cada",c:"Desafio de equilíbrio real"}]},
+    {signo:"Virgem",e:"♍",t:"Força de Virgem ♍",d:"Virgem faz cada rep com técnica impecável. Aqui qualidade vale mais que quantidade.",dur:"40 min",ex:[{n:"Agachamento com espelho",s:3,r:"10",c:"Olha a postura — joelhos alinhados com os pés"},{n:"Prancha com respiração",s:3,r:"30s",c:"Inspira pelo nariz, expira pela boca"},{n:"Remada neutra",s:3,r:"10",c:"Cotovelo rente ao corpo, escápula juntas"},{n:"Stiff unilateral",s:3,r:"10 cada",c:"Uma perna por vez — equilíbrio e foco"},{n:"Abdominal bicicleta lento",s:3,r:"10 cada",c:"Devagar — sente o oblíquo trabalhar"}]},
+    {signo:"Libra",e:"♎",t:"Força de Libra ♎",d:"Libra busca equilíbrio em tudo — inclusive no corpo. Treino que equilibra todos os lados.",dur:"35 min",ex:[{n:"Agachamento unilateral (cadeira)",s:3,r:"8 cada",c:"Uma perna, apoio na cadeira se precisar"},{n:"Flexão + rotação de tronco",s:3,r:"8",c:"No chão ou inclinada — abre o peito"},{n:"Elevação de perna lateral deitada",s:3,r:"15 cada",c:"Abdutores — cria curvas equilibradas"},{n:"Remada com elástico",s:3,r:"12",c:"Costas fortes e postura elegante"},{n:"Prancha lateral com elevação",s:2,r:"8 cada",c:"Equilíbrio é a assinatura de Libra"}]},
+    {signo:"Escorpião",e:"♏",t:"Força de Escorpião ♏",d:"Escorpião não faz nada pela metade. Treino de força que transforma de verdade.",dur:"40 min",ex:[{n:"Agachamento profundo",s:4,r:"12",c:"Vai até onde consegue — profundidade real"},{n:"Hip thrust com pausa",s:4,r:"10",c:"Segura 3s no topo — glúteo máximo"},{n:"Flexão diamante",s:3,r:"8",c:"Mãos juntas — foco no tríceps"},{n:"Cadeira 90° na parede",s:3,r:"30s",c:"Queima que transforma"},{n:"Prancha com toque no ombro",s:3,r:"10 cada",c:"Core antirrotacional"}]},
+    {signo:"Sagitário",e:"♐",t:"Força de Sagitário ♐",d:"Sagitário precisa de liberdade — treino sem equipamento, em qualquer lugar do mundo!",dur:"35 min",ex:[{n:"Agachamento com salto (suave)",s:3,r:"10",c:"Cai devagar, empurra forte"},{n:"Afundo com joelho no chão",s:3,r:"10 cada",c:"Passo largo e controlado"},{n:"Flexão com abertura de braço",s:3,r:"8",c:"Abre um braço lateral alternando"},{n:"Glúteo 4 apoios com extensão",s:3,r:"15 cada",c:"Perna estendida para trás e para cima"},{n:"Burpee sem salto",s:3,r:"8",c:"Energia de Sagitário em movimento"}]},
+    {signo:"Capricórnio",e:"♑",t:"Força de Capricórnio ♑",d:"Capricórnio sabe que resultados vêm com consistência. Treino estruturado e progressivo.",dur:"45 min",ex:[{n:"Agachamento 3×15 progressivo",s:3,r:"15",c:"Cada série um pouco mais pesada"},{n:"Elevação pélvica 4×15",s:4,r:"15",c:"Base da força de Capricórnio"},{n:"Remada 3×12",s:3,r:"12",c:"Costas que sustentam qualquer ambição"},{n:"Prancha 3×30s",s:3,r:"30s",c:"Segura firme — você aguenta"},{n:"Stiff 3×12",s:3,r:"12",c:"Posterior forte para subir qualquer montanha"}]},
+    {signo:"Aquário",e:"♒",t:"Força de Aquário ♒",d:"Aquário não segue o convencional — treino com movimentos únicos que ninguém espera!",dur:"35 min",ex:[{n:"Agachamento lateral",s:3,r:"10 cada",c:"Lateral — movement fora do padrão"},{n:"Prancha Spider-Man",s:3,r:"8 cada",c:"Joelho toca o cotovelo — criatividade"},{n:"Elevação de quadril unilateral",s:3,r:"12 cada",c:"Uma perna no ar"},{n:"Remada com rotação",s:3,r:"10",c:"Puxa e gira o tronco — diferente!"},{n:"Agachamento isométrico pulsado",s:3,r:"15",c:"Pulsa no meio — sensação nova"}]},
+    {signo:"Peixes",e:"♓",t:"Força de Peixes ♓",d:"Peixes se move como água — fluida, gentil mas poderosa. Treino que respeita sua sensibilidade.",dur:"35 min",ex:[{n:"Agachamento lento e fluido",s:3,r:"12",c:"Desce em 3 segundos, sobe em 3"},{n:"Glúteo 4 apoios suave",s:3,r:"15 cada",c:"Movimento como onda — sem pressa"},{n:"Abdominal com respiração",s:3,r:"10",c:"Inspira antes, expira subindo"},{n:"Flexão inclinada na bancada",s:3,r:"8",c:"Suave e controlada"},{n:"Savasana ativo",s:1,r:"2 min",c:"Fecha com consciência corporal total"}]},
+  ],
+  alongamento:[
+    {signo:"Áries",e:"♈",t:"Fluxo de Áries ♈",d:"Tanta energia guardada! Áries precisa liberar a tensão muscular acumulada da intensidade.",dur:"20 min",ex:[{n:"Corredor do guerreiro",s:1,r:"45s cada",c:"Abre o quadril — libera a força de Áries"},{n:"Torção sentada",s:1,r:"30s cada",c:"Libera a coluna tensa"},{n:"Alongamento de ombros cruzado",s:1,r:"30s cada",c:"Pós-treino de parte superior"},{n:"Postura da criança",s:1,r:"60s",c:"Respira fundo — descansa a guerreira"},{n:"Rolar a coluna de pé",s:1,r:"5x",c:"Vértebra por vértebra — libera tudo"}]},
+    {signo:"Touro",e:"♉",t:"Fluxo de Touro ♉",d:"Touro guarda tensão nos ombros e pescoço. Sequência que dissolve o peso que você carrega.",dur:"25 min",ex:[{n:"Rolamento de pescoço gentil",s:1,r:"5 de cada lado",c:"Devagar — sente cada vértebra"},{n:"Abertura de peito na cadeira",s:1,r:"45s",c:"Mãos atrás, abre o coração"},{n:"Postura da borboleta",s:1,r:"60s",c:"Soltas os adutores e quadril"},{n:"Alongamento lateral em pé",s:1,r:"30s cada",c:"Braço acima, inclina suavemente"},{n:"Savasana com respiração 4-7-8",s:1,r:"3 min",c:"Inspira 4s, segura 7s, solta 8s"}]},
+    {signo:"Gêmeos",e:"♊",t:"Fluxo de Gêmeos ♊",d:"Mente acelerada de Gêmeos precisa de movimento para acalmar. Fluxo dinâmico e curto!",dur:"20 min",ex:[{n:"Saudação ao sol simplificada",s:3,r:"1 rodada",c:"Flui de postura em postura"},{n:"Torção deitada",s:1,r:"45s cada",c:"Libera a coluna e os pulmões"},{n:"Alongamento de tríceps acima da cabeça",s:1,r:"30s cada",c:"Abre o lado"},{n:"Postura do pombo suave",s:1,r:"45s cada",c:"Sente o quadril abrindo"},{n:"Respiração caixa (box breathing)",s:1,r:"2 min",c:"4-4-4-4 — ainda a mente de Gêmeos"}]},
+    {signo:"Câncer",e:"♋",t:"Fluxo de Câncer ♋",d:"Câncer carrega emoção no corpo. Esta sequência é um abraço em si mesma — gentil e restauradora.",dur:"25 min",ex:[{n:"Postura fetal (lado direito)",s:1,r:"60s",c:"Se abraça — você merece cuidado"},{n:"Cat-cow com respiração",s:1,r:"10 ciclos",c:"Ondula a coluna como o mar"},{n:"Abertura de quadril 90/90",s:1,r:"60s cada",c:"Onde Câncer guarda emoção"},{n:"Postura das pernas na parede",s:1,r:"3 min",c:"Drenagem e relaxamento profundo"},{n:"Meditação de gratidão",s:1,r:"2 min",c:"Uma coisa boa sobre seu corpo hoje"}]},
+    {signo:"Leão",e:"♌",t:"Fluxo de Leão ♌",d:"Leão brilha quando abre o coração. Sequência que expande o peito e a postura de quem lidera.",dur:"25 min",ex:[{n:"Postura do camelo (suave)",s:1,r:"30s",c:"Mãos na cintura, abre o peito devagar"},{n:"Saudação ao sol — 3 rounds",s:3,r:"1 round",c:"Honra o sol — sua estrela regia"},{n:"Extensão de coluna deitada (cobra)",s:1,r:"30s",c:"Ergue o peito como rainha"},{n:"Alongamento de quadríceps em pé",s:1,r:"30s cada",c:"Equilíbrio e porte real"},{n:"Postura do guerreiro I",s:1,r:"45s cada",c:"Orgulhosa, alta, presente"}]},
+    {signo:"Virgem",e:"♍",t:"Fluxo de Virgem ♍",d:"Virgem tende à tensão abdominal do estresse. Foco na respiração e no centro do corpo.",dur:"20 min",ex:[{n:"Respiração diafragmática",s:1,r:"3 min",c:"Mão na barriga — ela sobe e desce"},{n:"Torção supina com joelhos juntos",s:1,r:"45s cada",c:"Massageia os órgãos internos"},{n:"Postura da criança longa",s:1,r:"90s",c:"Alonga toda a coluna"},{n:"Gato-vaca com fluxo de respiração",s:1,r:"10 ciclos",c:"Cada movimento guiado pelo ar"},{n:"Savasana guiada",s:1,r:"3 min",c:"Solta o controle — você pode descansar"}]},
+    {signo:"Libra",e:"♎",t:"Fluxo de Libra ♎",d:"Libra vive em busca de equilíbrio. Sequência que harmoniza os dois lados do corpo.",dur:"25 min",ex:[{n:"Árvore (equilíbrio unipodal)",s:1,r:"45s cada",c:"Foco no ponto fixo à sua frente"},{n:"Alongamento lateral bilateral",s:1,r:"30s cada",c:"Um lado por vez — perfeita simetria"},{n:"Postura do triângulo",s:1,r:"45s cada",c:"Abertura de quadril e lateral"},{n:"Borboleta com inclinação",s:1,r:"60s",c:"Dobra suavemente — sem forçar"},{n:"Respiração alternada (nadi shodhana)",s:1,r:"2 min",c:"Equilibra os hemisférios"}]},
+    {signo:"Escorpião",e:"♏",t:"Fluxo de Escorpião ♏",d:"Escorpião guarda tudo no quadril e no sacro. Sequência de libertação profunda e transformadora.",dur:"30 min",ex:[{n:"Postura do pombo profundo",s:1,r:"90s cada",c:"Respira para dentro do desconforto"},{n:"Abertura de quadril em pé (lunge)",s:1,r:"60s cada",c:"Libera o iliopsoas — guarda emoções"},{n:"Torção profunda sentada",s:1,r:"45s cada",c:"Detox emocional pela coluna"},{n:"Postura da rã",s:1,r:"90s",c:"Corajosa — só Escorpião aguenta isso"},{n:"Respiração oceânica (ujjayi)",s:1,r:"3 min",c:"Som do mar na garganta — transforma"}]},
+    {signo:"Sagitário",e:"♐",t:"Fluxo de Sagitário ♐",d:"Sagitário precisa de espaço! Sequência expansiva que abre o corpo inteiro.",dur:"25 min",ex:[{n:"Estrela (abertura total em pé)",s:1,r:"30s",c:"Braços e pernas abertos — sente a liberdade"},{n:"Corredor do guerreiro + extensão",s:1,r:"45s cada",c:"Abre o quadril e os pulmões"},{n:"Arco deitado",s:1,r:"30s",c:"Abre quadríceps e peito"},{n:"Postura do macaco (splits suave)",s:1,r:"45s cada",c:"Vai até onde chega — sem pressão"},{n:"Rolar lateral livre",s:1,r:"60s",c:"Se move livremente pelo tapete"}]},
+    {signo:"Capricórnio",e:"♑",t:"Fluxo de Capricórnio ♑",d:"Capricórnio esquece de descansar. Esta sequência é uma ordem: pare e cuide de você.",dur:"30 min",ex:[{n:"Postura das pernas na parede",s:1,r:"4 min",c:"Recuperação ativa — você merece"},{n:"Flexão anterior sentada",s:1,r:"60s",c:"Alonga o posterior de coxa e costas"},{n:"Torção supina gentil",s:1,r:"45s cada",c:"Libera a tensão da disciplina"},{n:"Postura do bebê feliz",s:1,r:"60s",c:"Quadril pesado, costas no chão"},{n:"Yoga nidra — varredura corporal",s:1,r:"5 min",c:"Fecha os olhos e sente cada parte"}]},
+    {signo:"Aquário",e:"♒",t:"Fluxo de Aquário ♒",d:"Aquário vive na cabeça — hora de descer para o corpo. Sequência incomum e libertadora.",dur:"20 min",ex:[{n:"Respiração da respiração do leão",s:1,r:"5x",c:"Língua pra fora — libera o ridículo"},{n:"Torção sentada com braços abertos",s:1,r:"30s cada",c:"Roda como o vento"},{n:"Rolamento de quadril em pé",s:1,r:"30s cada",c:"Circula o quadril — conecta com o corpo"},{n:"Postura da deusa (Goddess)",s:1,r:"45s",c:"Pés virados para fora, joelhos dobrados"},{n:"Dança livre por 3 minutos",s:1,r:"3 min",c:"Sem coreografia — só seu corpo e a música"}]},
+    {signo:"Peixes",e:"♓",t:"Fluxo de Peixes ♓",d:"Peixes vive entre dois mundos — esta sequência é uma ponte entre o físico e o espiritual.",dur:"30 min",ex:[{n:"Flutuação (balança deitada)",s:1,r:"60s",c:"Abraça os joelhos, rola gentilmente"},{n:"Postura da lua crescente",s:1,r:"45s cada",c:"Abre o lado do corpo — delicada"},{n:"Meditação de visualização",s:1,r:"3 min",c:"Imagina você mais forte a cada dia"},{n:"Ondulação da coluna (cat-cow fluido)",s:1,r:"10 ciclos",c:"Como água — sem pausas"},{n:"Savasana com música",s:1,r:"5 min",c:"Música suave — flutua entre os mundos"}]},
+  ],
+  cardio:[
+    {signo:"Áries",e:"♈",t:"Cardio de Áries ♈",d:"Ascendente Áries dá aparência enérgica e direta. Cardio explosivo para quem nasce correndo!",dur:"25 min",ex:[{n:"Aquecimento — trote leve",s:1,r:"3 min",c:"Começa suave"},{n:"Sprint no lugar (20s) + caminhada (40s)",s:6,r:"1 min",c:"Intervalado — ritmo de Áries"},{n:"Jumping jacks",s:3,r:"30s",c:"Explosão de energia"},{n:"Polichinelo acelerado",s:3,r:"30s",c:"Vai aumentando o ritmo"},{n:"Caminhada de desaceleração",s:1,r:"3 min",c:"Volta ao normal"}]},
+    {signo:"Touro",e:"♉",t:"Cardio de Touro ♈",d:"Ascendente Touro prefere ritmo constante. Cardio sustentado que não precisa de pressa.",dur:"35 min",ex:[{n:"Caminhada em ritmo constante",s:1,r:"10 min",c:"Cadência estável — sem variar"},{n:"Subida de escada ou degrau",s:5,r:"2 min",c:"Sobe e desce — glúteo e cardio"},{n:"Caminhada com inclinação",s:1,r:"10 min",c:"Inclina um pouco — mais esforço, mesma calma"},{n:"Volta relaxante",s:1,r:"5 min",c:"Diminui até parar com dignidade"}]},
+    {signo:"Gêmeos",e:"♊",t:"Cardio de Gêmeos ♊",d:"Ascendente Gêmeos precisa de variedade. Circuito que muda a cada minuto — nunca entedia!",dur:"25 min",ex:[{n:"Polichinelo",s:1,r:"1 min",c:"Exercício 1"},{n:"Corrida no lugar",s:1,r:"1 min",c:"Exercício 2"},{n:"Agachamento + salto",s:1,r:"1 min",c:"Exercício 3 — faz 4 rodadas completas"},{n:"Mountain climber",s:1,r:"1 min",c:"Exercício 4"},{n:"Pula corda imaginária",s:1,r:"1 min",c:"Exercício 5 — vai mudando!"}]},
+    {signo:"Câncer",e:"♋",t:"Cardio de Câncer ♋",d:"Ascendente Câncer prefere ambientes seguros. Cardio gentil em casa — sem academia!",dur:"30 min",ex:[{n:"Caminhada pelo espaço disponível",s:1,r:"5 min",c:"Pode ser em casa mesmo"},{n:"Dança livre na sala",s:3,r:"3 min",c:"Música boa — faz o que quiser"},{n:"Subida de joelhos marchando",s:3,r:"1 min",c:"Simula caminhada no lugar"},{n:"Respiração e movimento suave",s:1,r:"5 min",c:"Finaliza com calma"}]},
+    {signo:"Leão",e:"♌",t:"Cardio de Leão ♌",d:"Ascendente Leão foi feita para ser vista! Dança cardio que é performance e exercício.",dur:"30 min",ex:[{n:"Aquecimento dançante",s:1,r:"3 min",c:"Como se fosse no palco"},{n:"Dança livre intensa",s:3,r:"4 min",c:"Coloca sua música favorita e vai"},{n:"Polichinelo ritmado",s:3,r:"1 min",c:"No ritmo da música"},{n:"Cool down com poses de poder",s:1,r:"3 min",c:"Termina com postura de rainha"}]},
+    {signo:"Virgem",e:"♍",t:"Cardio de Virgem ♍",d:"Ascendente Virgem gosta de método. Treino com tempo exato e estrutura clara.",dur:"30 min",ex:[{n:"Aquecimento 5 min",s:1,r:"5 min",c:"Trote leve + mobilidade"},{n:"Caminhada rápida 10 min",s:1,r:"10 min",c:"Ritmo constante e controlado"},{n:"Trote leve 10 min",s:1,r:"10 min",c:"Mantém o mesmo ritmo exato"},{n:"Volta 5 min",s:1,r:"5 min",c:"Desacelera de forma organizada"}]},
+    {signo:"Libra",e:"♎",t:"Cardio de Libra ♎",d:"Ascendente Libra aprecia beleza e harmonia. Cardio em dupla ou ao ar livre — com leveza.",dur:"30 min",ex:[{n:"Caminhada ao ar livre",s:1,r:"15 min",c:"Aprecia o ambiente — plenitude"},{n:"Trote leve por 5 min",s:1,r:"5 min",c:"Transição suave"},{n:"Dança com respiração",s:2,r:"3 min",c:"Movimento fluido e bonito"},{n:"Esfriamento com gratidão",s:1,r:"2 min",c:"Caminha e agradece o corpo"}]},
+    {signo:"Escorpião",e:"♏",t:"Cardio de Escorpião ♏",d:"Ascendente Escorpião tem resistência secreta. Intervalado intenso — vai além do limite!",dur:"25 min",ex:[{n:"Aquecimento",s:1,r:"3 min",c:"Trote leve"},{n:"Tiro máximo 30s + trote 90s",s:5,r:"2 min",c:"Cada tiro mais intenso que o anterior"},{n:"Caminhada de recuperação",s:1,r:"5 min",c:"Você sabia que ia conseguir"}]},
+    {signo:"Sagitário",e:"♐",t:"Cardio de Sagitário ♐",d:"Ascendente Sagitário precisa de horizonte. Corrida livre — sem distância definida, só o prazer.",dur:"30 min",ex:[{n:"Corrida livre (lá fora se possível)",s:1,r:"20 min",c:"Vai onde os pés levarem"},{n:"Exploração: sobe morro ou degrau",s:1,r:"5 min",c:"Aventura o caminho"},{n:"Caminhada de retorno",s:1,r:"5 min",c:"Aprecia o que viveu"}]},
+    {signo:"Capricórnio",e:"♑",t:"Cardio de Capricórnio ♑",d:"Ascendente Capricórnio constrói resultados. Progressão semana a semana — sem atalhos.",dur:"35 min",ex:[{n:"Caminhada 5 min",s:1,r:"5 min",c:"Base de tudo"},{n:"Caminhada rápida 15 min",s:1,r:"15 min",c:"Mantém ritmo desafiador"},{n:"Trote leve 10 min",s:1,r:"10 min",c:"Um degrau acima da semana passada"},{n:"Volta calma 5 min",s:1,r:"5 min",c:"Com orgulho — você foi além"}]},
+    {signo:"Aquário",e:"♒",t:"Cardio de Aquário ♒",d:"Ascendente Aquário é imprevisível. Circuito louco com mistura de tudo — ninguém faz igual!",dur:"25 min",ex:[{n:"Roda de exercícios surpresa",s:5,r:"5 exercícios × 40s",c:"Escolhe 5 exercícios diferentes por rodada"},{n:"Pular corda com música eletrônica",s:3,r:"1 min",c:"Aquário no habitat natural"},{n:"Dança + polichinelo intercalado",s:2,r:"2 min",c:"Criatividade é o treino"}]},
+    {signo:"Peixes",e:"♓",t:"Cardio de Peixes ♓",d:"Ascendente Peixes flui sem resistência. Cardio aquático ou ao som de música — meditativo.",dur:"30 min",ex:[{n:"Caminhada meditativa",s:1,r:"10 min",c:"Cada passo com intenção"},{n:"Dança fluida contínua",s:2,r:"5 min",c:"Sem parar — como uma onda"},{n:"Corrida leve na areia ou grama",s:1,r:"10 min",c:"Superfície macia — conexão com a terra"},{n:"Respiração final caminhando",s:1,r:"5 min",c:"Volta ao silêncio interior"}]},
+  ]
+};
+var P=ld(LUNA_KEYS.PERFIL,null);
+var LOG=ld(LUNA_KEYS.LOG(todayKey()),{agua:0,borg:5,dor:0,hrMedia:0,notas:"",sono:null,humor:null,wtype:"forca"});
+var ALUNAS=ld(LUNA_KEYS.ALUNAS,[]);
+var SIGN="Escorpião",THEME=SIGNS["Escorpião"];
+var LUA_SIGN="Peixes";
+var currentPage="home";
+var tTab="guia";
+var timer={running:false,phase:"corrida",phEl:0,el:0,done:0,mode:"setup",runT:2,walkT:1,sets:6,iid:null,prepSecs:0};
+var hTimer={running:false,phase:"work",phEl:0,el:0,done:0,mode:"setup",workSecs:40,restSecs:20,sets:8,iid:null};
+var HIIT_ELEM=[
+  {nome:"Fogo 🔥",el:"Fogo",desc:"Explosão e potência",exercicios:["Burpee (com opção de step-back)","Abdominal Infra (Tesoura)","Sprint Parado","Mountain Climber","Salto com Agachamento"],cor:"#F87171"},
+  {nome:"Terra 🌿",el:"Terra",desc:"Força e estabilidade",exercicios:["Agachamento Clássico","Abdominal Remador","Prancha Estática","Avanço Alternado","Cossack Squat"],cor:"#4ADE80"},
+  {nome:"Ar 💨",el:"Ar",desc:"Agilidade e leveza",exercicios:["Polichinelo","Corda Imaginária","Corrida no Lugar","Joelho Alto","Panturrilhas"],cor:"#60A5FA"},
+  {nome:"Água 🌊",el:"Água",desc:"Fluidez e resistência",exercicios:["Minhoca (Inchworm)","Prancha Lateral (Lado A)","Rolamento Coluna","Prancha Lateral (Lado B)","Bicicleta Abdominal"],cor:"#A78BFA"}
+];
+var hiitElem=0;
+var hiitExIdx=0;
+var hiitSerie=0;
+var wodTimer={mode:"idle",running:false,phase:"prep",secs:0,totalSecs:0,iid:null,wodNome:""};
+var fTimer={secs:0,active:false,iid:null};
+var pTab="alunas",selAluna=null,buildCat=null,selExs={};
+var DIAS=["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
+var DIAS_FULL=["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"];
+var selDia=0;
+var selSemana=0;
+var agendaData={0:[null,null,null,null,null,null,null],1:[null,null,null,null,null,null,null],2:[null,null,null,null,null,null,null],3:[null,null,null,null,null,null,null],4:[null,null,null,null,null,null,null],5:[null,null,null,null,null,null,null],6:[null,null,null,null,null,null,null],7:[null,null,null,null,null,null,null]};
+var agenda=agendaData[0];
+function upLog(k,v){LOG[k]=v;sv(LUNA_KEYS.LOG(todayKey()),LOG);}
+function savePro(p){P=p;if(p)sv(LUNA_KEYS.PERFIL,p);}
+function saveAlunas(){sv(LUNA_KEYS.ALUNAS,ALUNAS);}
+function getAgendaKey(alunaIdx){return LUNA_KEYS.AGENDA(alunaIdx);}
+function loadAgenda(alunaIdx){
+  var def={0:[null,null,null,null,null,null,null],1:[null,null,null,null,null,null,null],2:[null,null,null,null,null,null,null],3:[null,null,null,null,null,null,null],4:[null,null,null,null,null,null,null],5:[null,null,null,null,null,null,null],6:[null,null,null,null,null,null,null],7:[null,null,null,null,null,null,null]};
+  agendaData=ld(getAgendaKey(alunaIdx),def);
+  for(var i=0;i<8;i++){if(!agendaData[i])agendaData[i]=[null,null,null,null,null,null,null];}
+  agenda=agendaData[selSemana];
+}
+function saveAgenda(alunaIdx){sv(getAgendaKey(alunaIdx),agendaData);}
+function semanaLabel(offset){var hoje=new Date();var diaSemana=hoje.getDay();var diffSeg=(diaSemana===0?-6:1-diaSemana);var seg=new Date(hoje);seg.setDate(hoje.getDate()+diffSeg+offset*7);var dom=new Date(seg);dom.setDate(seg.getDate()+6);var fmt=function(d){return(d.getDate()<10?'0':'')+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);};return fmt(seg)+' – '+fmt(dom);}
+function diaData(semOffset,diaIdx){var hoje=new Date();var diaSemana=hoje.getDay();var diffSeg=(diaSemana===0?-6:1-diaSemana);var seg=new Date(hoje);seg.setDate(hoje.getDate()+diffSeg+semOffset*7+diaIdx);return(seg.getDate()<10?'0':'')+seg.getDate()+'/'+(seg.getMonth()<9?'0':'')+(seg.getMonth()+1);}
+function applyTheme(sign){
+  SIGN=sign;THEME=SIGNS[sign]||SIGNS["Escorpião"];
+  var s=document.documentElement.style;
+  s.setProperty("--bg",THEME.bg);s.setProperty("--su",THEME.su);s.setProperty("--ca",THEME.ca);
+  s.setProperty("--ac",THEME.ac);s.setProperty("--so",THEME.so);s.setProperty("--tx",THEME.tx);
+  s.setProperty("--mu",THEME.mu);s.setProperty("--glow",THEME.glow);
+  document.body.style.background=THEME.bg;
+  var g=document.getElementById("glow1");
+  if(g)g.style.background="radial-gradient(circle,"+THEME.glow+"18 0%,transparent 68%)";
+}
+function goPage(pg){
+  ["home","treino","ciclo","progresso","personal","onboard"].forEach(function(p){
+    var el=document.getElementById("pg-"+p);if(el)el.classList.add("hidden");
+    var nb=document.getElementById("nb-"+p);if(nb)nb.classList.remove("on");
+  });
+  var el=document.getElementById("pg-"+pg);if(el)el.classList.remove("hidden");
+  var nb=document.getElementById("nb-"+pg);if(nb)nb.classList.add("on");
+  currentPage=pg;window.scrollTo(0,0);
+  if(pg==="home")renderHome();
+  else if(pg==="treino")renderTreino();
+  else if(pg==="ciclo")renderCiclo();
+  else if(pg==="progresso")renderProgresso();
+  else if(pg==="personal")renderPersonal();
+}
+
+// ══════════════════════════════════════════════════════════════
+// ONBOARDING — 4 steps (sem hora/local de nascimento)
+// Steps: 0=Nome+Data, 1=Ciclo, 2=Saúde, 3=Jornada
+// ══════════════════════════════════════════════════════════════
+function obClearErrors(){
+  document.querySelectorAll('.ob-invalid').forEach(function(e){e.classList.remove('ob-invalid');});
+  document.querySelectorAll('.ob-error').forEach(function(e){e.classList.remove('show');e.textContent='';});
+}
+function obShowError(inputId,msg){
+  var el=document.getElementById(inputId);
+  if(el){
+    el.classList.add('ob-invalid');
+    var err=document.getElementById(inputId+'-err');
+    if(err){err.textContent=msg;err.classList.add('show');}
+    el.focus();
+  }
+}
+function obValidateStep(step){
+  obClearErrors();
+  if(step===0){
+    if(!OB.nome.trim()||OB.nome.trim().length<2){obShowError('ob-nome','Nome obrigatório (mín. 2 caracteres)');return false;}
+    if(!OB.bd){obShowError('ob-bd','Data de nascimento obrigatória');return false;}
+    var age=getAge(OB.bd);
+    if(age===null||age<10||age>100){obShowError('ob-bd','Data inválida (10–100 anos)');return false;}
+  }
+  if(step===1&&!OB.men){
+    if(!OB.lp){obShowError('ob-lp','Data da última menstruação obrigatória');return false;}
+    var lastP=new Date(OB.lp),hoje=new Date();
+    var diff=Math.floor((hoje-lastP)/86400000);
+    if(diff<0){obShowError('ob-lp','A data não pode ser no futuro');return false;}
+    if(diff>400){obShowError('ob-lp','Data parece muito antiga (mais de 13 meses)');return false;}
+  }
+  return true;
+}
+function obNext(){if(!obValidateStep(obStep))return;obStep++;renderOnboard();}
+
+// ─── Atualiza signo no DOM sem re-renderizar ───────────────────
+function obUpdateSignDisplay(){
+  var bd=document.getElementById('ob-bd');
+  if(!bd)return;
+  OB.bd=bd.value;
+  var disp=document.getElementById('ob-sign-disp');
+  if(!disp)return;
+  if(!OB.bd){disp.innerHTML='';return;}
+  var age=getAge(OB.bd);
+  if(age===null||age<10||age>100){disp.innerHTML='';return;}
+  var ds=getSign(OB.bd);
+  var lua=getLua(OB.bd);
+  disp.innerHTML='<div style="margin-top:12px">'
+    +SIGNS[ds].e+' <span class="pill">Sol: '+ds+'</span>'
+    +'<span class="pill so">🌙 Lua: '+lua+'</span>'
+    +(age?'<span class="pill">'+age+' anos</span>':'')
+    +'</div>';
+}
+
+var OB={nome:"",bd:"",men:false,rep:false,dose:"",meds:[],cl:28,mensDur:5,lp:"",pat:"",met:"",versao:"mana"};
+var obStep=0;
+
+function renderOnboard(){
+  var pg=document.getElementById("pg-onboard");
+  // Pré-preencher com dados salvos
+  if(P&&P.nome&&!OB.nome){
+    OB.nome=P.nome||''; OB.bd=P.birthdate||'';
+    OB.men=P.menopausa||false; OB.rep=P.reposicao||false; OB.dose=P.doseReposicao||'';
+    OB.meds=(P.medicamentos||[]).map(function(m){return m.nome||m;});
+    OB.cl=P.cicloLength||28; OB.mensDur=P.mensDur||5; OB.lp=P.lastPeriod||'';
+    OB.pat=P.patologias||''; OB.met=P.metas||''; OB.versao=P.versao||'mana';
+  }
+  // 4 steps
+  var titles=["Bem-vinda, Mana ✨","Seu Ciclo 🌀","Saúde & Metas 💜","Sua Jornada 🚀"];
+  var dots="";for(var i=0;i<4;i++)dots+='<div class="pstep'+(i<=obStep?" on":"")+'"></div>';
+  var body="";
+
+  if(obStep===0){
+    // ── Step 0: Nome + Data ────────────────────────────────────
+    // A data NÃO chama renderOnboard no oninput — só salva o valor
+    // e atualiza o display de signo via JS leve
+    var ds=OB.bd?getSign(OB.bd):null;
+    var lua=OB.bd?getLua(OB.bd):null;
+    var age=OB.bd?getAge(OB.bd):null;
+    var signHtml='';
+    if(ds&&age&&age>=10&&age<=100){
+      signHtml='<div style="margin-top:12px">'
+        +SIGNS[ds].e+' <span class="pill">Sol: '+ds+'</span>'
+        +'<span class="pill so">🌙 Lua: '+lua+'</span>'
+        +'<span class="pill">'+age+' anos</span>'
+        +'</div>';
+    }
+    body='<div class="oc">'
+      +'<div class="tag" style="margin-bottom:8px">Como te chamamos?</div>'
+      +'<input class="inp" id="ob-nome" placeholder="Seu nome..." value="'+OB.nome+'" oninput="OB.nome=this.value"/>'
+      +'<div id="ob-nome-err" class="ob-error"></div>'
+      +'</div>'
+      +'<div class="oc">'
+      +'<div class="tag" style="margin-bottom:8px">Data de nascimento</div>'
+      // onchange: só chamado ao confirmar a data (sem perder foco a cada digit)
+      // oninput: atualiza signo sem recriar página
+      +'<input class="inp" id="ob-bd" type="date" value="'+OB.bd+'" onchange="obUpdateSignDisplay()" oninput="obUpdateSignDisplay()"/>'
+      +'<div id="ob-bd-err" class="ob-error"></div>'
+      +'<div id="ob-sign-disp">'+signHtml+'</div>'
+      +'</div>';
+
+  } else if(obStep===1){
+    // ── Step 1: Ciclo ──────────────────────────────────────────
+    body='<div class="oc"><div class="ct">Ciclo Menstrual</div>'
+      +'<div class="cbr" onclick="toggleObMen()"><div class="chk'+(OB.men?" on":"")+'">'+( OB.men?"✓":"")+'</div><span>Estou na menopausa</span></div>';
+    if(OB.men){
+      body+='<div class="cbr" onclick="toggleObRep()"><div class="chk'+(OB.rep?" on":"")+'">'+( OB.rep?"✓":"")+'</div><span>Faço reposição hormonal (TRH)</span></div>';
+      if(OB.rep)body+='<input class="inp" style="margin-top:8px" placeholder="Ex: Estrogel 0,75mg/dia" value="'+OB.dose+'" oninput="OB.dose=this.value"/>';
+    } else {
+      body+='<div style="margin-top:12px"><div class="tag" style="margin-bottom:7px">Último 1º dia da menstruação</div>'
+        +'<input class="inp" id="ob-lp" type="date" value="'+OB.lp+'" onchange="OB.lp=this.value" oninput="OB.lp=this.value"/>'
+        +'<div id="ob-lp-err" class="ob-error"></div></div>'
+        +'<div style="margin-top:12px;background:var(--ca);border-radius:14px;padding:13px">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:.83rem;font-weight:600">🔄 Duração do ciclo</span><span style="font-size:1rem;font-weight:700;color:var(--ac)" id="cl-ob">'+OB.cl+' dias</span></div>'
+        +'<div style="font-size:.71rem;color:var(--mu);margin-bottom:8px">Do 1º dia da menst. até o próximo (21–40 dias)</div>'
+        +'<input type="range" class="rng" min="21" max="45" value="'+OB.cl+'" oninput="OB.cl=parseInt(this.value);document.getElementById(\'cl-ob\').textContent=this.value+\' dias\'"/>'
+        +'</div>'
+        +'<div style="margin-top:10px;background:var(--ca);border-radius:14px;padding:13px">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-size:.83rem;font-weight:600">🔴 Duração da menstruação</span><span style="font-size:1rem;font-weight:700;color:#F87171" id="md-ob">'+OB.mensDur+' dias</span></div>'
+        +'<div style="font-size:.71rem;color:var(--mu);margin-bottom:8px">Quantos dias dura seu fluxo (2–10 dias)</div>'
+        +'<input type="range" class="rng" min="2" max="10" value="'+OB.mensDur+'" oninput="OB.mensDur=parseInt(this.value);document.getElementById(\'md-ob\').textContent=this.value+\' dias\'"/>'
+        +'</div>';
+    }
+    body+='</div>';
+
+  } else if(obStep===2){
+    // ── Step 2: Saúde & Metas ──────────────────────────────────
+    var mlist=OB.meds.map(function(m,i){return'<div class="mr"><span style="flex:1">💊 '+m+'</span><button onclick="removerMed('+i+')" style="background:none;border:none;color:var(--mu);font-size:1.2rem;cursor:pointer">×</button></div>';}).join('');
+    body='<div class="oc"><div class="ct">💊 Medicamentos</div>'
+      +'<div style="display:flex;gap:7px;margin-bottom:9px"><input class="inp" id="ob-med" placeholder="Medicamento..."/>'
+      +'<button class="bg" onclick="adicionarMed()">+</button></div>'
+      +(OB.meds.length?mlist:'<div style="color:var(--mu);font-size:.82rem;padding:6px 0">Nenhum</div>')+'</div>'
+      +'<div class="oc"><div class="tag" style="margin-bottom:7px">🦴 Patologias / condições</div>'
+      +'<textarea class="inp" rows="3" placeholder="Artrose, diabetes, hipotireoidismo..." oninput="OB.pat=this.value">'+OB.pat+'</textarea>'
+      +'<div class="tag" style="margin-top:13px;margin-bottom:7px">🎯 Suas metas</div>'
+      +'<textarea class="inp" rows="3" placeholder="Perder peso, ganhar força, bem-estar..." oninput="OB.met=this.value">'+OB.met+'</textarea></div>';
+
+  } else {
+    // ── Step 3: Jornada ────────────────────────────────────────
+    body='<div class="card" style="border-color:var(--ac)25;padding:24px 18px">'
+      +'<div style="text-align:center;font-size:2.5rem;margin-bottom:12px">🌙</div>'
+      +'<div class="ct" style="text-align:center">Escolha sua Jornada</div>'
+      +'<div style="font-size:.85rem;color:var(--mu);line-height:1.7;margin-bottom:18px;text-align:center">Comece gratuita ou entre como Deusa com personal.</div>'
+      +'<div style="display:flex;flex-direction:column;gap:10px">'
+      +'<div onclick="setVersaoMana()" style="padding:16px;border-radius:16px;border:2px solid '+(OB.versao==='mana'?'var(--ac)':'var(--ac)15')+';background:'+(OB.versao==='mana'?'var(--ac)10':'')+';cursor:pointer">'
+      +'<div style="font-weight:700">✨ Mana <span style="font-size:.75rem;color:var(--mu);font-weight:400">— Gratuita</span></div>'
+      +'<div style="font-size:.8rem;color:var(--mu);margin-top:4px">36 treinos iniciante · Baseados no mapa astral</div></div>'
+      +'<div onclick="setVersaoDeusa()" style="padding:16px;border-radius:16px;border:2px solid '+(OB.versao==='deusa'?'var(--ac)':'var(--ac)15')+';background:'+(OB.versao==='deusa'?'var(--ac)10':'')+';cursor:pointer">'
+      +'<div style="font-weight:700">👑 Deusa <span style="font-size:.75rem;color:var(--mu);font-weight:400">— Com Personal</span></div>'
+      +'<div style="font-size:.8rem;color:var(--mu);margin-top:4px">Treino 100% individualizado · Acompanhamento direto</div></div>'
+      +'</div></div>';
+  }
+
+  var backBtn=obStep>0?'<button class="bd" onclick="voltarStep()" style="margin-right:8px;flex-shrink:0">← Voltar</button>':'';
+  var nextBtn=obStep<3
+    ?'<button class="bp" style="flex:1" onclick="obNext()">Continuar →</button>'
+    :'<button class="bp" style="flex:1" onclick="finishOnboard()">Entrar no Luna 🌙</button>';
+
+  pg.innerHTML='<div style="padding-top:12px;margin-bottom:6px">'
+    +'<div class="luna-logo" style="margin-bottom:14px">🌙 Luna & Treino</div>'
+    +'<div style="display:flex;gap:5px;margin-bottom:24px">'+dots+'</div>'
+    +'<h1 class="pt">'+titles[obStep]+'</h1>'
+    +'<p class="pti" style="margin-bottom:20px">Conectada com seu ciclo, guiada pelos astros</p>'
+    +'</div>'+body
+    +'<div style="display:flex;align-items:center;margin-top:18px">'+backBtn+nextBtn+'</div>';
+}
+
+function finishOnboard(){
+  var pr={
+    nome:OB.nome,
+    birthdate:OB.bd,
+    menopausa:OB.men,
+    reposicao:OB.rep,
+    doseReposicao:OB.dose,
+    medicamentos:OB.meds.map(function(m){return{nome:m,id:Date.now()+Math.random()};}),
+    cicloLength:OB.cl,
+    mensDur:OB.mensDur||5,
+    lastPeriod:OB.lp,
+    patologias:OB.pat,
+    metas:OB.met,
+    versao:OB.versao
+  };
+  savePro(pr);
+  var sign=getSign(pr.birthdate)||"Escorpião";
+  LUA_SIGN=getLua(pr.birthdate);
+  applyTheme(sign);
+  document.getElementById("nav").style.display="flex";
+  document.getElementById("pg-onboard").classList.add("hidden");
+  if(_ALUNA_MODE){
+    // Modo aluna: ocultar Personal, mostrar Meu Treino, ir direto ao treino
+    var nbP=document.getElementById('nb-personal');
+    if(nbP)nbP.style.display='none';
+    tTab='guia';
+    goPage('treino');
+  } else {
+    goPage("home");
+  }
+}
+
+function soundBell(n){var freqs={3:1200,2:900,1:660};var durs={3:.18,2:.2,1:.28};beep(freqs[n]||880,durs[n]||.2,0.4);}
+function countdown3(secs){if(secs===3||secs===2||secs===1)soundBell(secs);}
+
+function renderHome(){
+  var pg=document.getElementById("pg-home");
+  var age=getAge(P.birthdate);
+  var ci=!P.menopausa?cyclePhase(P.lastPeriod,P.cicloLength,P.mensDur||5):null;
+  var today=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+  var h='<div style="padding-top:10px;margin-bottom:20px">'
+    +'<div class="luna-logo">🌙 Luna & Treino</div>'
+    +'<div style="margin-top:12px"><div class="tag">'+today+'</div>'
+    +'<h1 class="pt" style="margin-top:4px">Olá, '+P.nome.split(" ")[0]+' '+THEME.e+'</h1>'
+    +'<div style="margin-top:6px">'
+    +(P.versao==='deusa'?'<span class="version-badge">👑 Deusa</span> ':'<span class="version-badge">✨ Mana</span> ')
+    +'<span class="pill">☀️ '+SIGN+'</span>'
+    +'<span class="pill so">🌙 '+LUA_SIGN+'</span>'
+    +(age?'<span class="pill">'+age+' anos</span>':'')
+    +(P.menopausa?'<span class="pill red">🌸 Menopausa</span>':'')
+    +'</div></div></div>';
+  h+='<div class="moti">"'+FRASES[new Date().getDay()%FRASES.length]+'"</div>';
+  if(LOG.dor>=7)h+='<div class="alert">⚠️ Dor articular elevada ('+LOG.dor+'/10) — treino mais leve hoje, mana 💜</div>';
+  if(ci){
+    h+='<div class="card" style="border-color:'+ci.c+'35">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center">'
+      +'<div><div class="tag">Fase do Ciclo</div><div style="font-size:1.1rem;font-weight:700;margin-top:4px">'+ci.i+' '+ci.p+'</div></div>'
+      +'<div class="phase-ring" style="border-color:'+ci.c+'50;background:'+ci.c+'10">'+ci.i+'</div></div>'
+      +'<div class="prog-fill-bar"><div class="prog-fill" style="background:'+ci.c+';width:'+Math.min(100,Math.floor((new Date()-new Date(P.lastPeriod))/86400000)/(P.cicloLength||28)*100)+'%"></div></div>'
+      +'<div style="margin-top:9px;font-size:.83rem;color:var(--mu);line-height:1.6">'+ci.a+'</div></div>';
+  }
+  if(P.menopausa&&P.reposicao)h+='<div class="card"><div class="tag">Reposição Hormonal</div><div style="margin-top:5px;font-weight:600">💊 '+(P.doseReposicao||"Em uso")+'</div></div>';
+  var sonoOpts=[["pessimo","😫","Péssimo"],["ruim","😔","Ruim"],["regular","😐","Regular"],["bom","😊","Bom"],["otimo","😄","Ótimo"]];
+  h+='<div class="card"><div class="ct">🌙 Sono</div><div style="display:flex;gap:4px">';
+  sonoOpts.forEach(function(o){var sel=LOG.sono===o[0];h+='<button class="sb" onclick="upLog(\'sono\',\''+o[0]+'\');renderHome()" style="background:'+(sel?"var(--ac)":"var(--su)")+';color:'+(sel?"#000":"var(--mu)")+';font-weight:'+(sel?700:400)+'">'+o[1]+'<br><span style="font-size:.6rem">'+o[2]+'</span></button>';});
+  h+='</div></div>';
+  var humOpts=[["baixo","😔"],["neutro","😐"],["animada","😊"],["fogo","🔥"]];
+  h+='<div class="card"><div class="ct">Energia hoje</div><div style="display:flex;gap:8px">';
+  humOpts.forEach(function(o){var sel=LOG.humor===o[0];h+='<button onclick="upLog(\'humor\',\''+o[0]+'\');renderHome()" style="flex:1;border:none;border-radius:13px;padding:12px 4px;font-size:1.5rem;cursor:pointer;background:'+(sel?"var(--ac)18":"var(--su)")+';outline:'+(sel?"2px solid var(--ac)":"none")+'">'+o[1]+'</button>';});
+  h+='</div></div>';
+  var drops="",total=Math.max(8,LOG.agua+2);
+  for(var i=0;i<total;i++)drops+='<div class="wd'+(i<LOG.agua?" full":"")+'"></div>';
+  var mlTotal=LOG.agua*250,mlMeta=2000,mlPct=Math.min(100,Math.round(mlTotal/mlMeta*100));
+  h+='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'
+    +'<div><div class="tag">Hidratação 💧 <span style="font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">250ml/copo</span></div>'
+    +'<div class="mn" style="font-size:1.3rem;color:var(--ac);margin-top:3px">'+LOG.agua+' copos <span style="font-size:.85rem;color:var(--mu)">·</span> <span style="font-size:.95rem">'+mlTotal+'ml</span></div></div>'
+    +'<div style="display:flex;gap:8px">'+(LOG.agua>0?'<button class="bg" onclick="upLog(\'agua\','+(LOG.agua-1)+');renderHome()" style="padding:8px 14px">−</button>':'')
+    +'<button class="bg" onclick="upLog(\'agua\','+(LOG.agua+1)+');renderHome()">+1 💧</button></div></div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px">'+drops+'</div>'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:4px">'
+    +'<span style="font-size:.7rem;color:var(--mu)">Meta: 2000ml</span>'
+    +'<span style="font-size:.7rem;font-weight:600;color:'+(mlTotal>=mlMeta?'#4ADE80':'var(--ac)')+'">'+mlTotal+'/'+mlMeta+'ml '+(mlTotal>=mlMeta?'✅':'')+'</span></div>'
+    +'<div style="height:5px;background:var(--su);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+mlPct+'%;background:'+(mlTotal>=mlMeta?'#4ADE80':'var(--ac)')+';border-radius:3px;transition:width .4s"></div></div>'
+    +'</div>';
+  var cur=getCuriosidade();
+  h+='<div class="card" style="border-color:var(--ac)30;background:linear-gradient(135deg,var(--ca),var(--su))">'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+    +'<span style="font-size:1.8rem">'+cur.e+'</span>'
+    +'<div><div style="font-size:.68rem;font-weight:700;letter-spacing:.08em;color:var(--ac)">VOCÊ SABIA?</div>'
+    +'<div style="font-size:.88rem;font-weight:700;color:var(--tx)">'+cur.t+'</div></div></div>'
+    +'<div style="font-size:.85rem;color:var(--mu);line-height:1.6">'+cur.c+'</div>'
+    +'</div>';
+  var prev=getAstroPrev(SIGN);
+  h+='<div class="card" style="border-color:var(--so)30">'
+    +'<div style="font-size:.68rem;font-weight:700;letter-spacing:.08em;color:var(--so);margin-bottom:6px">✨ PREVISÃO DO DIA · '+SIGN.toUpperCase()+'</div>'
+    +'<div style="font-size:.88rem;color:var(--tx);line-height:1.6">'+prev+'</div>'
+    +'</div>';
+  // Botão de relatório para aluna
+  if(_ALUNA_MODE){
+    h+='<div class="card" style="border-color:var(--ac)40;background:linear-gradient(135deg,var(--ac)12,var(--so)08)">'
+      +'<div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;color:var(--ac);margin-bottom:8px">📊 RELATÓRIO DIÁRIO</div>'
+      +'<div style="font-size:.85rem;color:var(--mu);margin-bottom:12px;line-height:1.6">Registre como foi seu dia e envie para sua personal via WhatsApp 💜</div>'
+      +'<button class="bp" onclick="abrirFormularioRelatorio()">📱 Enviar Relatório para Personal</button>'
+      +'</div>';
+  }
+  pg.innerHTML=h;
+}
+
+function renderTreino(){
+  var pg=document.getElementById("pg-treino");
+  var age=getAge(P.birthdate);
+  var hrMax=age?220-age:null;
+  var zones=hrMax?hrZones(age):[];
+  var cz=hrMax&&LOG.hrMedia>0?zones.find(function(z){return LOG.hrMedia>=z.mn&&LOG.hrMedia<=z.mx;}):null;
+  var bl=["","Leve","Leve","Moderado","Moderado","Moderado","Intenso","Intenso","Muito intenso","Muito intenso","Máximo"];
+  var tabs=P.versao==='deusa'
+    ?[["guia","📋 Meu Treino"],["wods","💪 WODs"],["cronometro","⏱ Crono"],["hiit","⚡ HIIT"],["metricas","📊 Métricas"]]
+    :[["guia","🌟 Mana"],["wods","💪 WODs"],["cronometro","⏱ Crono"],["hiit","⚡ HIIT"],["metricas","📊 Métricas"]];
+  var tabsH='<div class="tabs">';
+  tabs.forEach(function(t){tabsH+='<button class="bg tab'+(tTab===t[0]?" on":"")+'\" onclick="tTab=\''+t[0]+'\';renderTreino()">'+t[1]+'</button>';});
+  tabsH+='</div>';
+  var segs="";for(var i=0;i<10;i++)segs+='<div class="seg" style="background:'+(i<LOG.dor?(i>=6?"#F87171":i>=3?"#FACC15":"#4ADE80"):"rgba(255,255,255,.07)")+'"></div>';
+  var metrics='<div class="card" style="margin-top:10px"><div class="ct">📊 Métricas</div>'
+    +'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">💓 FC Média</span><span class="mn ac">'+(LOG.hrMedia||"—")+' bpm</span></div>'
+    +'<input type="range" class="rng" min="40" max="'+(hrMax||220)+'" value="'+(LOG.hrMedia||40)+'" oninput="upLog(\'hrMedia\',parseInt(this.value));renderTreino()" style="accent-color:'+(cz?cz.c:"var(--ac)")+'"/>'
+    +(cz?'<div style="font-size:.77rem;color:'+cz.c+';margin-top:2px">● '+cz.l+' ('+cz.p+')</div>':'')+'</div>'
+    +'<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">⚡ Borg</span><span class="mn ac">'+LOG.borg+' — '+bl[LOG.borg]+'</span></div>'
+    +'<input type="range" class="rng" min="1" max="10" value="'+LOG.borg+'" oninput="upLog(\'borg\',parseInt(this.value));renderTreino()"/></div>'
+    +'<div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">🦵 Dor Articular</span><span class="mn" style="color:'+(LOG.dor>=7?"#F87171":LOG.dor>=4?"#FACC15":"#4ADE80")+'">'+LOG.dor+'/10</span></div>'
+    +'<div class="segbar">'+segs+'</div>'
+    +'<input type="range" class="rng" min="0" max="10" value="'+LOG.dor+'" oninput="upLog(\'dor\',parseInt(this.value));renderTreino()" style="accent-color:#F87171"/></div>'
+    +'<div class="dv"></div><div class="tag" style="margin-bottom:7px">📝 Comentário / Ajuste de carga</div>'
+    +'<textarea class="inp" rows="3" placeholder="Como foi? Ajustei a carga porque... Senti que..." oninput="upLog(\'notas\',this.value)">'+(LOG.notas||"")+'</textarea>'
+    +'<button class="bp" style="margin-top:8px" onclick="finalizarSessao()">Finalizar Sessão 👏</button></div>';
+  var body='<h2 class="pt">Treino 🏋️‍♀️</h2>'+tabsH;
+  if(tTab==="guia"){
+    if(P.versao==='deusa'){
+      var treDeusa=ld(LUNA_KEYS.DEUSA,"");
+      var deusaHtml='';
+      // Tentar parsear como array de semanas (novo formato)
+      try{
+        var semanasDeusa=typeof treDeusa==='string'?JSON.parse(treDeusa):treDeusa;
+        if(Array.isArray(semanasDeusa)&&semanasDeusa.length){
+          var hojeD=todayKey();
+          semanasDeusa.forEach(function(sem){
+            deusaHtml+='<div style="font-size:.7rem;font-weight:700;color:var(--ac);letter-spacing:.07em;margin:10px 0 6px">📅 '+sem.label+'</div>';
+            (sem.dias||[]).forEach(function(t){
+              var exH=Object.keys(t.exercicios||{}).map(function(ex){
+                var f=t.exercicios[ex];
+                return'<div style="padding:8px 10px;background:var(--ca);border-radius:10px;margin-bottom:5px">'
+                  +'<div style="display:flex;justify-content:space-between;align-items:center">'
+                  +'<span style="font-size:.86rem;font-weight:500">'+ex+'</span>'
+                  +'<span style="font-size:.76rem;color:var(--ac)">'+(f.series||'?')+'×'+(f.reps||'?')+(f.carga?' · '+f.carga+'kg':'')+'</span></div>'
+                  +(f.biset?'<div style="font-size:.72rem;color:var(--so);margin-top:4px">⚡ Bissérie: '+f.biset+(f.biset_reps?' '+f.biset_reps+'×':'')+(f.biset_carga?' '+f.biset_carga+'kg':'')+'</div>':'')
+                  +(f.descanso?'<div style="font-size:.7rem;color:var(--mu);margin-top:2px">😮‍💨 Descanso: '+f.descanso+'s</div>':'')
+                  +'</div>';
+              }).join('');
+              deusaHtml+='<div style="padding:12px;background:var(--su);border-radius:14px;margin-bottom:8px;border-left:3px solid var(--ac)40">'
+                +'<div style="font-weight:700;font-size:.9rem;margin-bottom:8px">'+t.dia+' <span style="font-size:.7rem;color:var(--mu)">'+t.data+'</span></div>'
+                +exH+'</div>';
+            });
+          });
+        }
+      }catch(e){
+        // fallback: texto simples
+        if(treDeusa)deusaHtml='<div style="font-size:.88rem;line-height:1.8;color:var(--mu);white-space:pre-line">'+treDeusa+'</div>';
+      }
+      body+='<div class="card"><div class="ct">Seu Treino 👑</div>'
+        +(deusaHtml||'<div style="text-align:center;padding:22px;color:var(--mu)"><div style="font-size:2rem;margin-bottom:8px">⏳</div>Aguardando treino da personal...<br><span style="font-size:.8rem">Em breve! 💜</span></div>')
+        +'</div>'+metrics;
+    } else {
+      var ci=cyclePhase(P.lastPeriod,P.cicloLength,P.mensDur||5);
+      var wtype=LOG.wtype||"forca";
+      var signIdx=MANA_SIGNOS.indexOf(SIGN);if(signIdx<0)signIdx=0;
+      var luaIdx=MANA_SIGNOS.indexOf(LUA_SIGN);if(luaIdx<0)luaIdx=0;
+      var myIdx=wtype==="forca"?signIdx:luaIdx;
+      var tipoTabs=[['forca','💪 Força · ☀️ '+SIGN],['alongamento','🧘 Flex · 🌙 '+LUA_SIGN],['cardio','🏃 Cardio']];
+      var ttH='<div class="tabs" style="margin-bottom:8px">';
+      tipoTabs.forEach(function(t){ttH+='<button class="bg tab'+(wtype===t[0]?" on":"")+'" onclick="upLog(\'wtype\',\''+t[0]+'\');renderTreino()">'+t[1]+'</button>';});
+      ttH+='</div>';
+      body+='<div style="background:var(--ac)10;border:1px solid var(--ac)25;border-radius:14px;padding:12px 14px;margin-bottom:10px">'
+        +'<div style="font-size:.8rem;font-weight:700;color:var(--ac);margin-bottom:5px">🗺️ Seu Mapa de Treino</div>'
+        +'<div style="font-size:.76rem;color:var(--mu);line-height:1.7">'
+        +'💪 <b>Força</b> segue seu Sol: <b>'+SIGN+'</b><br>'
+        +'🧘 <b>Flexibilidade</b> segue sua Lua: <b>'+LUA_SIGN+'</b><br>'
+        +'</div>'
+        +'<div style="margin-top:8px;padding-top:7px;border-top:1px solid var(--ac)15;font-size:.73rem;color:var(--mu)">'
+        +'💡 Cada signo tem seu treino! Compartilhe com sua <b>mãe, irmã, amiga</b> — cada uma tem o seu mapa único ✨'
+        +'</div></div>';
+      if(ci)body+='<div class="card" style="border-color:'+ci.c+'35;padding:13px 16px"><div style="display:flex;align-items:center;gap:9px">'+ci.i+' <div><div class="tag">Fase atual</div><div style="font-weight:600;color:var(--ac)">'+ci.p+' — '+ci.a+'</div></div></div></div>';
+      body+=ttH;
+      var lista=MANA[wtype]||[];
+      var meu=lista[myIdx];
+      if(meu){
+        var concMeu=ld("luna_mana_"+wtype+"_"+myIdx,false);
+        var _ot='data-tipo="'+wtype+'" data-idx="'+myIdx+'" onclick="abrirTreino(this)"';
+        body+='<div style="font-size:.7rem;font-weight:700;color:var(--ac);letter-spacing:.07em;margin-bottom:5px">⭐ SEU TREINO</div>'
+          +'<div class="treino-card" '+_ot+' style="border:2px solid var(--ac)60;background:var(--ac)08;margin-bottom:12px">'
+          +'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+          +'<div><div style="font-weight:800;font-size:1rem">'+(concMeu?"✅ ":"")+meu.e+" "+meu.t+'</div>'
+          +'<div style="font-size:.8rem;color:var(--mu);margin-top:3px">'+meu.d+'</div></div>'
+          +'<span class="pill green" style="flex-shrink:0;margin-left:8px">'+meu.dur+'</span></div></div>';
+      }
+      body+='<div style="font-size:.7rem;font-weight:700;color:var(--mu);letter-spacing:.07em;margin-bottom:5px">🌟 TODOS OS SIGNOS</div>';
+      lista.forEach(function(t,i){
+        if(i===myIdx)return;
+        var conc=ld("luna_mana_"+wtype+"_"+i,false);
+        var _ot2='onclick="openTreino(\''+wtype+'\','+i+')"';
+        body+='<div class="treino-card" '+_ot2+'>'
+          +'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+          +'<div><div style="font-weight:700;font-size:.92rem">'+(conc?"✅ ":"")+t.e+" "+t.t+'</div>'
+          +'<div style="font-size:.76rem;color:var(--mu);margin-top:3px">'+t.d+'</div></div>'
+          +'<span class="pill green" style="font-size:.65rem;flex-shrink:0;margin-left:8px">'+t.dur+'</span></div></div>';
+      });
+      body+=metrics;
+    }
+  } else if(tTab==="wods"){
+    if(wodTimer.mode==="prep"||wodTimer.mode==="work"||wodTimer.mode==="done"){
+      var isPrepW=wodTimer.phase==="prep";
+      var remW=wodTimer.secs;
+      var wName=wodTimer.wodNome;
+      if(wodTimer.mode==="done"){
+        body+='<div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:8px">🏆</div>'
+          +'<div class="ct">WOD Concluído!</div>'
+          +'<div style="color:var(--mu);margin-bottom:6px">'+wName+'</div>'
+          +'<div style="font-size:.85rem;color:var(--ac);margin-bottom:16px">Tempo: '+fmtT(wodTimer.elapsed)+'</div>'
+          +'<button class="bp" onclick="stopWodTimer()">Nova WOD</button></div>';
+      } else {
+        var pct=isPrepW?(10-remW)/10*100:(wodTimer.isFixo?(wodTimer.totalSecs-remW)/wodTimer.totalSecs*100:null);
+        var _ww=WODS.find(function(x){return x.nome===wName;});
+        var wodDescHtml=(!isPrepW&&_ww)?'<div style="font-size:.82rem;line-height:1.75;background:var(--su);border-radius:12px;padding:12px;margin:10px 0;color:var(--tx);text-align:left">'+_ww.desc.replace(/\n/g,'<br>')+'</div>':'';
+        body+='<div class="card" style="text-align:center;border-color:'+(isPrepW?'#FACC15':'var(--ac)')+'40">'
+          +'<div style="font-weight:700;font-size:.75rem;letter-spacing:.1em;color:'+(isPrepW?'#FACC15':'var(--ac)')+';margin-bottom:4px">'
+          +(isPrepW?'⚡ PREPARE-SE! O treino começa em...':'🏋️ WOD EM ANDAMENTO')+'</div>'
+          +'<div style="font-size:1.1rem;font-weight:700;margin-bottom:6px">'+wName+'</div>'
+          +'<div class="tn '+(isPrepW?'wlk':'run')+'" style="font-size:3.5rem;color:'+(isPrepW?'#FACC15':'var(--ac)')+'">'+fmtT(remW)+'</div>'
+          +(pct!==null?'<div style="height:6px;background:var(--su);border-radius:3px;margin:10px 0;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+(isPrepW?'#FACC15':'var(--ac)')+';border-radius:3px;transition:width 1s linear"></div></div>':'<div style="margin:10px 0;font-size:.8rem;color:var(--mu)">⏱ '+fmtT(wodTimer.elapsed)+' decorrido</div>')
+          +wodDescHtml
+          +'<div style="display:flex;justify-content:center;gap:12px;margin-top:8px">'
+          +'<button class="bg" onclick="stopWodTimer()" style="padding:0;width:44px;height:44px;border-radius:50%">✕</button>'
+          +'<button class="bp" style="width:60px;height:60px;border-radius:50%;padding:0;font-size:1.4rem" onclick="toggleWodTimer()">'+(wodTimer.running?'⏸':'▶')+'</button>'
+          +'</div></div>';
+      }
+    }
+    var diffGroups=[["easy","💚 Muito Fácil"],["mid","🟡 Iniciante/Intermediário"],["inter","🟠 Intermediário"],["hard","🔴 Difícil"]];
+    diffGroups.forEach(function(dg){
+      var list=WODS.filter(function(w){return w.dif===dg[0];});
+      if(!list.length)return;
+      body+='<div class="tag" style="margin:14px 0 8px">'+dg[1]+'</div>';
+      list.forEach(function(w){
+        body+='<div class="wod-card" data-nome="'+w.nome+'" onclick="abrirWod(this)">'
+          +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'
+          +'<div style="font-family:Cormorant Garamond,serif;font-size:1.2rem;font-weight:700">'+w.nome+' '+SIGNS[w.signo].e+'</div>'
+          +'<span class="wod-diff diff-'+w.dif+'">'+dg[1].split(" ").pop().toUpperCase()+'</span></div>'
+          +'<div style="font-size:.75rem;color:var(--mu);margin-bottom:8px;font-style:italic">'+w.foco+'</div>'
+          +'<div style="display:flex;gap:6px"><span class="pill" style="font-size:.67rem">'+w.signo+'</span><span class="pill" style="font-size:.67rem">⏱ '+w.tempo+'</span></div>'
+          +'</div>';
+      });
+    });
+  } else if(tTab==="cronometro"){
+    if(timer.mode==="setup"){
+      body+='<div class="card"><div class="ct">Corrida Intervalada 👏</div>';
+      [["⚡ Corrida (min)","runT",.5,15,.5],["🚶 Caminhada (min)","walkT",.5,10,.5],["🔁 Séries","sets",1,20,1]].forEach(function(f){
+        body+='<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">'+f[0]+'</span><span class="mn ac">'+timer[f[1]]+'</span></div>'
+          +'<input type="range" class="rng" min="'+f[2]+'" max="'+f[3]+'" step="'+f[4]+'" value="'+timer[f[1]]+'" oninput="timer.'+f[1]+'=parseFloat(this.value);renderTreino()"/></div>';
+      });
+      body+='<div class="dv"></div><div style="font-size:.82rem;color:var(--mu);margin-bottom:12px">Total: ~'+Math.round((timer.runT+timer.walkT)*timer.sets)+' min · 👏 palmas no zero</div>'
+        +'<button class="bp" onclick="startRun()">Iniciar ▶</button></div>'+metrics;
+    } else if(timer.mode==="active"){
+      if(timer.phase==="prep"){
+        var pr=timer.prepSecs;
+        body+='<div class="card" style="text-align:center;border-color:#FACC1540"><div style="font-weight:700;font-size:.75rem;letter-spacing:.1em;color:#FACC15;margin-bottom:8px">⚡ PREPARE-SE! Corrida começa em...</div><div class="tn wlk" style="font-size:5rem;color:#FACC15">'+pr+'</div><div style="height:6px;background:var(--su);border-radius:3px;margin:12px 0;overflow:hidden"><div style="height:100%;width:'+((10-pr)/10*100)+'%;background:#FACC15;border-radius:3px;transition:width 1s linear"></div></div><button class="bg" onclick="stopRun()" style="margin-top:4px">Cancelar</button></div>';
+        pg.innerHTML=body;return;
+      }
+      var phDur=(timer.phase==="corrida"?timer.runT:timer.walkT)*60,rem=phDur-timer.phEl,pct=Math.round(timer.phEl/phDur*100),isRun=timer.phase==="corrida";
+      var dots="";for(var i=0;i<timer.sets;i++)dots+='<div style="width:26px;height:26px;border-radius:50%;background:'+(i<timer.done?"var(--ac)":"var(--su)")+';border:1px solid var(--ac)20;display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;color:'+(i<timer.done?"#000":"var(--mu)")+';margin:2px">'+(i+1)+'</div>';
+      body+='<div class="card" style="text-align:center;border-color:'+(isRun?"var(--ac)":"var(--so)")+'40"><div class="tag" style="margin-bottom:8px">'+(isRun?"⚡ CORRA AGORA":"🚶 CAMINHE AGORA")+'</div>'
+        +'<div class="tn '+(isRun?"run":"wlk")+'">'+fmtT(rem)+'</div>'
+        +'<div style="height:5px;background:var(--su);border-radius:3px;margin:14px 0;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+(isRun?"var(--ac)":"var(--so)")+';border-radius:3px;transition:width 1s linear"></div></div>'
+        +'<div style="display:flex;justify-content:space-between;font-size:.76rem;color:var(--mu);margin-bottom:14px"><span>👏 '+timer.done+'/'+timer.sets+'</span><span>⏱ '+fmtT(timer.el)+'</span><span>Próx: '+(isRun?"🚶"+timer.walkT+"m":"⚡"+timer.runT+"m")+'</span></div>'
+        +'<div style="display:flex;justify-content:center;gap:12px"><button class="bg" onclick="stopRun()">✕</button>'
+        +'<button class="bp" style="width:58px;height:58px;border-radius:50%;padding:0;font-size:1.3rem;margin:0" onclick="toggleRun()">'+(timer.running?"⏸":"▶")+'</button>'
+        +'<button class="bg" onclick="skipRun()">⏭</button></div></div>'
+        +'<div style="display:flex;flex-wrap:wrap;padding:0 2px;margin-bottom:10px">'+dots+'</div>'+metrics;
+    } else {
+      body+='<div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:8px">🏆</div><div class="ct">Treino Completo!</div><div style="color:var(--mu);margin-bottom:14px">'+timer.sets+' séries · '+fmtT(timer.el)+'</div><button class="bp" onclick="novoTreino()">Novo Treino</button></div>'+metrics;
+    }
+  } else if(tTab==="hiit"){
+    if(hTimer.mode==="setup"){
+      body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">';
+      HIIT_ELEM.forEach(function(el,i){
+        var sel=hiitElem===i;
+        body+='<button data-elem="'+i+'" onclick="selecionarHiitElem(this)" style="padding:12px 8px;border-radius:14px;border:2px solid '+(sel?el.cor:'var(--ac)15')+';background:'+(sel?el.cor+'22':'var(--su)')+';color:'+(sel?el.cor:'var(--mu)')+';font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;text-align:center">'
+          +'<div style="font-size:1.3rem;margin-bottom:3px">'+el.nome.split(' ')[1]+'</div>'
+          +el.nome.split(' ')[0]+'<br><span style="font-size:.65rem;font-weight:400">'+el.desc+'</span></button>';
+      });
+      body+='</div>';
+      var elAtual=HIIT_ELEM[hiitElem];
+      body+='<div class="card" style="border-color:'+elAtual.cor+'40"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">'
+        +'<div style="font-size:1.6rem">'+elAtual.nome.split(' ')[1]+'</div>'
+        +'<div><div style="font-weight:700">'+elAtual.nome.split(' ')[0]+'</div>'
+        +'<div style="font-size:.77rem;color:var(--mu)">'+elAtual.desc+' · '+elAtual.exercicios.length+' exercícios</div></div></div>';
+      elAtual.exercicios.forEach(function(ex,i){
+        body+='<div style="padding:8px 12px;background:var(--ca);border-radius:10px;margin-bottom:6px;font-size:.85rem;display:flex;align-items:center;gap:10px">'
+          +'<span style="color:'+elAtual.cor+';font-weight:700;font-size:.75rem;min-width:20px">'+(i+1)+'.</span>'+ex+'</div>';
+      });
+      body+='<div class="dv" style="margin:12px 0"></div>';
+      [["🔥 Esforço (seg)","workSecs",10,120,5],["😮‍💨 Descanso (seg)","restSecs",5,120,5],["🔁 Rounds","sets",1,20,1]].forEach(function(f){
+        body+='<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">'+f[0]+'</span><span class="mn" style="color:'+elAtual.cor+'">'+hTimer[f[1]]+(f[1]==="sets"?'x':'s')+'</span></div>'
+          +'<input type="range" class="rng" min="'+f[2]+'" max="'+f[3]+'" step="'+f[4]+'" value="'+hTimer[f[1]]+'" oninput="hTimer.'+f[1]+'=parseInt(this.value);renderTreino()"/></div>';
+      });
+      var totalSecs=(hTimer.workSecs+hTimer.restSecs)*hTimer.sets*elAtual.exercicios.length;
+      body+='<div style="font-size:.82rem;color:var(--mu);margin-bottom:12px">Total: ~'+Math.ceil(totalSecs/60)+' min · '+hTimer.sets+' rounds × '+elAtual.exercicios.length+' exercícios</div>'
+        +'<button class="bp" style="background:'+elAtual.cor+';box-shadow:0 4px 20px '+elAtual.cor+'40" onclick="startHiitElem()">Iniciar '+elAtual.nome+' ▶</button></div>'+metrics;
+    } else if(hTimer.mode==="active"){
+      var el2=HIIT_ELEM[hiitElem];
+      var exs=el2.exercicios;
+      var nExs=exs.length;
+      if(hTimer.phase==="prep"){
+        var pr=hTimer.prepSecs;
+        body+='<div class="card" style="text-align:center;border-color:#FACC1540"><div style="font-weight:700;font-size:.75rem;letter-spacing:.1em;color:#FACC15;margin-bottom:8px">⚡ PREPARE-SE! HIIT começa em...</div><div class="tn wlk" style="font-size:5rem;color:#FACC15">'+pr+'</div><div style="font-size:.85rem;color:var(--mu);margin:8px 0">'+el2.nome+' · '+hTimer.sets+' rounds</div><div style="height:6px;background:var(--su);border-radius:3px;margin:10px 0;overflow:hidden"><div style="height:100%;width:'+((10-pr)/10*100)+'%;background:#FACC15;border-radius:3px;transition:width 1s linear"></div></div><button class="bg" onclick="stopHiit()" style="margin-top:8px">Cancelar</button></div>';
+        pg.innerHTML=body;return;
+      }
+      var totalReps=hTimer.sets*nExs;
+      var doneReps=hiitSerie*nExs+hiitExIdx;
+      var hPhDur=hTimer.phase==="work"?hTimer.workSecs:hTimer.restSecs;
+      var hRem=hPhDur-hTimer.phEl;
+      var hPct=Math.round(hTimer.phEl/hPhDur*100);
+      var isWork=hTimer.phase==="work";
+      var curEx=exs[hiitExIdx];
+      var cor2=el2.cor;
+      var nextExIdx=(hiitExIdx+1)%nExs;
+      var nextSerie=nextExIdx===0?hiitSerie+1:hiitSerie;
+      var proxEx=nextSerie<hTimer.sets?exs[nextExIdx]:"Terminou! 🏆";
+      body+='<div class="card" style="text-align:center;border-color:'+cor2+'50">'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:10px">'
+        +'<span class="pill" style="font-size:.68rem">Round '+(hiitSerie+1)+'/'+hTimer.sets+'</span>'
+        +'<span class="pill" style="font-size:.68rem">⏱ '+fmtT(hTimer.el)+'</span>'
+        +'</div>'
+        +(isWork
+          ?'<div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;color:'+cor2+';margin-bottom:6px">AGORA</div>'
+           +'<div style="font-size:1.5rem;font-weight:800;color:var(--tx);margin-bottom:4px">'+curEx+'</div>'
+           +'<div style="font-size:.72rem;color:var(--mu);margin-bottom:8px">exercício '+(hiitExIdx+1)+' de '+nExs+'</div>'
+          :'<div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;color:#4ADE80;margin-bottom:6px">DESCANSA 😮‍💨</div>'
+           +'<div style="font-size:1.1rem;color:var(--mu);margin-bottom:4px">Próximo: <strong style="color:var(--tx)">'+proxEx+'</strong></div>'
+           +'<div style="font-size:.72rem;color:var(--mu);margin-bottom:8px">&nbsp;</div>')
+        +'<div class="tn '+(isWork?"run":"wlk")+'" style="font-size:4rem;color:'+(isWork?cor2:"#4ADE80")+'">'+fmtT(hRem)+'</div>'
+        +'<div style="height:6px;background:var(--su);border-radius:3px;margin:12px 0;overflow:hidden"><div style="height:100%;width:'+hPct+'%;background:'+(isWork?cor2:"#4ADE80")+';border-radius:3px;transition:width 1s linear"></div></div>'
+        +'<div style="display:flex;justify-content:center;gap:12px">'
+        +'<button class="bg" onclick="stopHiit()" style="padding:0;width:44px;height:44px;border-radius:50%">✕</button>'
+        +'<button class="bp" style="width:60px;height:60px;border-radius:50%;padding:0;font-size:1.4rem;background:'+cor2+'" onclick="toggleHiit()">'+(hTimer.running?"⏸":"▶")+'</button>'
+        +'<button class="bg" onclick="skipHiit()" style="padding:0;width:44px;height:44px;border-radius:50%">⏭</button>'
+        +'</div></div>'
+        +'<div class="card" style="padding:12px">';
+      exs.forEach(function(ex,i){
+        var isCur=i===hiitExIdx&&isWork;
+        var isDone=hiitSerie*nExs+i<doneReps;
+        body+='<div style="padding:7px 10px;border-radius:9px;margin-bottom:5px;background:'+(isCur?cor2+'22':isDone?'var(--su)':'var(--ca)')+';border:1px solid '+(isCur?cor2:isDone?'var(--ac)10':'transparent')+';display:flex;align-items:center;gap:8px">'
+          +'<span style="font-size:.75rem;color:'+cor2+';min-width:16px">'+(isDone?'✓':(i+1)+'.')+'</span>'
+          +'<span style="font-size:.85rem;color:'+(isCur?'var(--tx)':'var(--mu)')+';font-weight:'+(isCur?700:400)+'">'+ex+'</span>'
+          +'</div>';
+      });
+      body+='</div>'+metrics;
+    } else {
+      body+='<div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:8px">🏆</div><div class="ct">HIIT Completo!</div>'
+        +'<div style="color:var(--mu);margin-bottom:14px">'+hTimer.sets+' rounds · '+fmtT(hTimer.el)+'</div>'
+        +'<button class="bp" onclick="novoHiit()">Novo HIIT</button></div>'+metrics;
+    }
+  } else {
+    body+=metrics;
+  }
+  pg.innerHTML=body;
+}
+
+function showModal(html){
+  var r=document.getElementById("modal-root");
+  r.innerHTML='<div class="modal-overlay" onclick="if(event.target===this)closeModal()">'
+    +'<div class="modal"><div class="modal-handle"></div>'+html+'</div></div>';
+  r.style.display="block";
+}
+function closeModal(){var r=document.getElementById("modal-root");r.innerHTML="";r.style.display="none";}
+function finalizarSessao(){
+  soundWorkoutDone();
+  var hist=ld(LUNA_KEYS.HIST,[]);
+  hist.push({data:todayKey(),borg:LOG.borg,dor:LOG.dor,hr:LOG.hrMedia,notas:LOG.notas,wtype:LOG.wtype});
+  sv(LUNA_KEYS.HIST,hist);
+  showModal('<div style="text-align:center;padding:10px 0"><div style="font-size:3rem;margin-bottom:12px">🏆</div>'
+    +'<h2 class="pt" style="text-align:center">Sessão Finalizada!</h2>'
+    +'<div class="moti" style="margin:16px 0">"'+nextFrase()+'"</div>'
+    +'<div style="color:var(--mu);font-size:.85rem">Borg: '+LOG.borg+' · Dor: '+LOG.dor+'/10 · Água: '+LOG.agua+' copos</div>'
+    +'<button class="bp" style="margin-top:16px" onclick="closeModal()">Valeu, Mana! 💜</button></div>');
+}
+function openTreino(tipo,idx){
+  var t=MANA[tipo][idx];if(!t)return;
+  var exHtml="";
+  if(t.ex&&t.ex.length){
+    exHtml='<div style="margin:12px 0 16px">'
+      +'<div style="font-size:.72rem;font-weight:700;color:var(--ac);letter-spacing:.07em;margin-bottom:8px">📋 EXERCÍCIOS</div>';
+    t.ex.forEach(function(ex,i){
+      exHtml+='<div style="padding:10px 12px;margin-bottom:6px;background:var(--su);border-radius:12px;border-left:3px solid var(--ac)40">'
+        +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+        +'<div style="font-weight:600;font-size:.87rem">'+(i+1)+'. '+ex.n+'</div>'
+        +'<div style="display:flex;gap:4px;flex-shrink:0">'
+        +(ex.s>1?'<span class="pill" style="font-size:.62rem">'+ex.s+'×</span>':'')
+        +'<span class="pill green" style="font-size:.62rem">'+ex.r+'</span>'
+        +'</div></div>'
+        +(ex.c?'<div style="font-size:.74rem;color:var(--mu);margin-top:4px">💡 '+ex.c+'</div>':'')
+        +'</div>';
+    });
+    exHtml+='</div>';
+  }
+  var manaKey='luna_mana_'+tipo+'_'+idx;
+  showModal('<div>'
+    +'<div style="font-size:1.8rem;margin-bottom:6px">'+t.e+'</div>'
+    +'<h2 class="pt">'+t.t+'</h2>'
+    +'<div style="display:flex;gap:6px;margin-bottom:10px">'
+    +'<span class="pill green">⏱ '+t.dur+'</span>'
+    +'<span class="pill">🌱 Iniciante</span>'
+    +'</div>'
+    +'<div style="font-size:.87rem;color:var(--mu);line-height:1.7;margin-bottom:4px">'+t.d+'</div>'
+    +exHtml
+    +'<div class="moti" style="margin-bottom:16px">"'+nextFrase()+'"</div>'
+    +'<button class="bp" id="btn-marcar-feito">✅ Marcar como Feito</button>'
+    +'<button class="bd" onclick="closeModal()" style="margin-top:8px;width:100%">Fechar</button></div>');
+  var btn=document.getElementById('btn-marcar-feito');
+  if(btn){btn.onclick=function(){sv(manaKey,true);closeModal();renderTreino();};}
+}
+function openWod(nome){
+  var w=WODS.find(function(x){return x.nome===nome;});if(!w)return;
+  var tempoMatch=w.tempo.match(/\d+/);
+  var tempoMin=tempoMatch?parseInt(tempoMatch[0]):0;
+  var isFixo=w.tempo.indexOf("~")<0;
+  _wodPendente={nome:w.nome,tempo:tempoMin,fixo:isFixo};
+  var desc=w.desc.replace(/\n/g,"<br>");
+  showModal('<div>'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">'
+    +'<div style="font-size:2.2rem">'+SIGNS[w.signo].e+'</div>'
+    +'<div><h2 class="pt">WOD '+w.nome+'</h2><div class="tag">'+w.signo+' · '+w.foco+'</div></div></div>'
+    +'<div style="font-size:.88rem;line-height:1.85;background:var(--ca);border-radius:14px;padding:14px;margin-bottom:14px;color:var(--tx)">'+desc+'</div>'
+    +'<div style="display:flex;gap:7px;margin-bottom:16px">'
+    +'<span class="pill">⏱ '+w.tempo+'</span>'
+    +'<span class="pill" style="background:var(--ac)10;color:var(--ac);border-color:var(--ac)20">'+(isFixo?'⏬ Regressivo':'⏱ Livre')+'</span>'
+    +'</div>'
+    +'<div class="moti" style="margin-bottom:16px">"'+nextFrase()+'"</div>'
+    +'<button class="bp" onclick="iniciarWodTimer()">▶ Iniciar Cronômetro</button>'
+    +'<button class="bd" style="margin-top:8px;width:100%" onclick="closeModal()">Só ver o treino</button>'
+    +'</div>');
+}
+function startWodTimer(nome,minutos,isFixo){
+  clearInterval(wodTimer.iid);
+  wodTimer.mode="prep";wodTimer.running=true;wodTimer.phase="prep";
+  wodTimer.secs=10;wodTimer.totalSecs=minutos*60;wodTimer.elapsed=0;
+  wodTimer.isFixo=isFixo;wodTimer.wodNome=nome;
+  wodTimer.iid=setInterval(function(){
+    if(wodTimer.phase==="prep"){
+      wodTimer.secs--;
+      if(wodTimer.secs<=0){soundPhaseEnd();wodTimer.phase="work";wodTimer.secs=wodTimer.totalSecs;wodTimer.elapsed=0;}
+    } else {
+      if(wodTimer.isFixo){wodTimer.secs--;wodTimer.elapsed++;if(wodTimer.secs<=0){clearInterval(wodTimer.iid);wodTimer.running=false;wodTimer.mode="done";soundWorkoutDone();}}
+      else{wodTimer.elapsed++;wodTimer.secs=wodTimer.elapsed;}
+    }
+    if(currentPage==="treino"&&tTab==="wods")renderTreino();
+  },1000);
+  tTab="wods";renderTreino();
+}
+function stopWodTimer(){clearInterval(wodTimer.iid);wodTimer.running=false;wodTimer.mode="idle";renderTreino();}
+function toggleWodTimer(){
+  wodTimer.running=!wodTimer.running;
+  if(wodTimer.running){
+    clearInterval(wodTimer.iid);
+    wodTimer.iid=setInterval(function(){
+      if(wodTimer.phase==="prep"){wodTimer.secs--;if(wodTimer.secs<=0){soundPhaseEnd();wodTimer.phase="work";wodTimer.secs=wodTimer.totalSecs;wodTimer.elapsed=0;}}
+      else{if(wodTimer.isFixo){wodTimer.secs--;wodTimer.elapsed++;if(wodTimer.secs<=0){clearInterval(wodTimer.iid);wodTimer.running=false;wodTimer.mode="done";soundWorkoutDone();}}else{wodTimer.elapsed++;wodTimer.secs=wodTimer.elapsed;}}
+      if(currentPage==="treino"&&tTab==="wods")renderTreino();
+    },1000);
+  } else clearInterval(wodTimer.iid);
+  renderTreino();
+}
+function startRun(){
+  timer.mode="active";timer.running=true;timer.phase="prep";timer.prepSecs=10;
+  timer.phEl=0;timer.done=0;timer.el=0;
+  clearInterval(timer.iid);
+  timer.iid=setInterval(function(){
+    if(timer.phase==="prep"){
+      timer.prepSecs--;countdown3(timer.prepSecs+1);
+      if(timer.prepSecs<=0){soundPhaseEnd();timer.phase="corrida";timer.phEl=0;}
+      if(currentPage==="treino"&&tTab==="cronometro")renderTreino();
+      return;
+    }
+    var phDur=(timer.phase==="corrida"?timer.runT:timer.walkT)*60;
+    timer.phEl++;timer.el++;countdown3(phDur-timer.phEl+1);
+    if(timer.phEl>=phDur){
+      if(timer.phase==="caminhada"){timer.done++;if(timer.done>=timer.sets){clearInterval(timer.iid);timer.running=false;timer.mode="done";soundWorkoutDone();}else{soundSetEnd();timer.phase="corrida";}}
+      else{soundPhaseEnd();timer.phase="caminhada";}
+      timer.phEl=0;
+    }
+    if(currentPage==="treino"&&tTab==="cronometro")renderTreino();
+  },1000);
+}
+function stopRun(){clearInterval(timer.iid);timer.running=false;timer.mode="setup";renderTreino();}
+function toggleRun(){timer.running=!timer.running;if(timer.running){clearInterval(timer.iid);timer.iid=setInterval(function(){var phDur=(timer.phase==="corrida"?timer.runT:timer.walkT)*60;timer.phEl++;timer.el++;if(timer.phEl>=phDur){if(timer.phase==="caminhada"){timer.done++;if(timer.done>=timer.sets){clearInterval(timer.iid);timer.running=false;timer.mode="done";soundWorkoutDone();}else{soundSetEnd();timer.phase="corrida";}}else{soundPhaseEnd();timer.phase="caminhada";}timer.phEl=0;}if(currentPage==="treino"&&tTab==="cronometro")renderTreino();},1000);}else clearInterval(timer.iid);renderTreino();}
+function skipRun(){var phDur=(timer.phase==="corrida"?timer.runT:timer.walkT)*60;timer.phEl=phDur-1;}
+function _hiitTick(){
+  var nExs=HIIT_ELEM[hiitElem].exercicios.length;
+  if(hTimer.phase==="prep"){
+    hTimer.prepSecs--;countdown3(hTimer.prepSecs+1);
+    if(hTimer.prepSecs<=0){soundPhaseEnd();hTimer.phase="work";hTimer.phEl=0;}
+    if(currentPage==="treino"&&tTab==="hiit")renderTreino();
+    return;
+  }
+  var phDur=hTimer.phase==="work"?hTimer.workSecs:hTimer.restSecs;
+  hTimer.phEl++;hTimer.el++;countdown3(phDur-hTimer.phEl+1);
+  if(hTimer.phEl>=phDur){
+    hTimer.phEl=0;
+    if(hTimer.phase==="work"){soundPhaseEnd();hTimer.phase="rest";}
+    else{
+      hiitExIdx++;
+      if(hiitExIdx>=nExs){hiitExIdx=0;hiitSerie++;}
+      if(hiitSerie>=hTimer.sets){clearInterval(hTimer.iid);hTimer.running=false;hTimer.mode="done";soundWorkoutDone();}
+      else{soundSetEnd();hTimer.phase="work";}
+    }
+  }
+  if(currentPage==="treino"&&tTab==="hiit")renderTreino();
+}
+function startHiitElem(){hTimer.mode="active";hTimer.running=true;hTimer.phase="prep";hTimer.prepSecs=10;hTimer.phEl=0;hTimer.el=0;hTimer.done=0;hiitExIdx=0;hiitSerie=0;clearInterval(hTimer.iid);hTimer.iid=setInterval(_hiitTick,1000);}
+function startHiit(){startHiitElem();}
+function stopHiit(){clearInterval(hTimer.iid);hTimer.running=false;hTimer.mode="setup";hiitExIdx=0;hiitSerie=0;renderTreino();}
+function toggleHiit(){hTimer.running=!hTimer.running;if(hTimer.running){clearInterval(hTimer.iid);hTimer.iid=setInterval(_hiitTick,1000);}else clearInterval(hTimer.iid);renderTreino();}
+function skipHiit(){var phDur=hTimer.phase==="work"?hTimer.workSecs:hTimer.restSecs;hTimer.phEl=phDur-1;}
+
+function renderCiclo(){
+  var pg=document.getElementById("pg-ciclo");
+  if(P.menopausa){
+    pg.innerHTML='<h2 class="pt">🌸 Menopausa</h2>'
+      +'<div class="card"><div class="ct">Reposição Hormonal</div>'
+      +'<div class="cbr" onclick="toggleReposicao()"><div class="chk'+(P.reposicao?" on":"")+'">'+( P.reposicao?"✓":"")+'</div><span>Em uso de TRH</span></div>'
+      +(P.reposicao?'<input class="inp" style="margin-top:8px" value="'+(P.doseReposicao||"")+'" placeholder="Ex: Estrogel 0,75mg" oninput="P.doseReposicao=this.value;savePro(P)"/>':'')
+      +'</div><div class="card"><div class="ct">Recomendações</div>'
+      +["Foco em força para preservar massa óssea","Monitorar FC com atenção","Hidratação redobrada","Respeitar ondas de calor e fadiga","Yoga e mobilidade como aliados"].map(function(r){return'<div style="padding:7px 0;border-bottom:1px solid var(--ac)06;font-size:.85rem;color:var(--mu)">• '+r+'</div>';}).join("")+'</div>';
+    return;
+  }
+  var ci=cyclePhase(P.lastPeriod,P.cicloLength,P.mensDur||5);
+  var phases=[["Menstruação","1–5","🔴","#F87171","Exercícios leves, yoga. Hidratação essencial.","Reduza intensidade. Priorize autocuidado."],["Folicular","6–13","🌱","#4ADE80","HIIT e força — energia em alta!","Aumente a carga. Melhor momento para recordes."],["Ovulação","14–16","✨","#FACC15","Pico de energia. Treine pesado!","Coordenação motora no pico."],["Lútea","17–28","🌙","#A78BFA","Treinos moderados e mobilidade.","Reduza gradualmente. Foque no bem-estar."]];
+  pg.innerHTML='<h2 class="pt">🌀 Ciclo Menstrual</h2>'
+    +'<div class="card"><div class="ct">Atualizar</div>'
+    +'<div class="tag" style="margin-bottom:6px">Último 1º dia</div>'
+    +'<input class="inp" type="date" value="'+(P.lastPeriod||"")+'" oninput="P.lastPeriod=this.value;savePro(P)"/>'
+    +'<div style="margin-top:12px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">Duração do ciclo</span><span id="clv" class="mn ac">'+(P.cicloLength||28)+' dias</span></div>'
+    +'<input type="range" class="rng" min="21" max="45" value="'+(P.cicloLength||28)+'" oninput="P.cicloLength=parseInt(this.value);document.getElementById(\'clv\').textContent=this.value+\' dias\';savePro(P)"/></div>'
+    +'<div style="margin-top:12px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="tag">Duração da menstruação</span><span id="mdv" class="mn ac">'+(P.mensDur||5)+' dias</span></div>'
+    +'<input type="range" class="rng" min="2" max="10" value="'+(P.mensDur||5)+'" oninput="P.mensDur=parseInt(this.value);document.getElementById(\'mdv\').textContent=this.value+\' dias\';savePro(P)"/></div>'
+    +'<button class="bp" style="margin-top:11px" onclick="renderCiclo()">Atualizar</button></div>'
+    +(ci?'<div class="card" style="border-color:'+ci.c+'35"><div style="display:flex;align-items:center;gap:12px"><div class="phase-ring" style="border-color:'+ci.c+'50;background:'+ci.c+'10">'+ci.i+'</div><div><div class="tag">Fase Atual</div><div style="font-size:1.2rem;font-weight:700;margin-top:3px">'+ci.p+'</div><div style="font-size:.83rem;color:var(--mu);margin-top:4px">'+ci.a+'</div></div></div></div>':"")
+    +'<div class="ct" style="margin:14px 0 8px">Guia das Fases</div>'
+    +phases.map(function(p){var isCurrent=ci&&ci.p===p[0];return'<div style="padding:12px;margin-bottom:8px;border-radius:14px;background:var(--su);border:1px solid '+(isCurrent?p[3]+'45':'var(--ac)08')+'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:1.2rem">'+p[2]+'</span><span style="font-weight:700">'+p[0]+'</span><span class="pill" style="margin-left:auto;background:'+p[3]+'14;color:'+p[3]+'">Dias '+p[1]+'</span>'+(isCurrent?'<span class="pill green" style="font-size:.62rem">Agora ✨</span>':'')+'</div><div style="font-size:.8rem;color:var(--mu)">'+p[4]+'</div><div style="font-size:.78rem;color:'+p[3]+';margin-top:5px;font-weight:500">🏋️ '+p[5]+'</div></div>';}).join("")
+    +renderCicloCalendario();
+}
+function renderCicloCalendario(){
+  if(!P.lastPeriod) return "";
+  var hoje=new Date();hoje.setHours(0,0,0,0);
+  var inicio=new Date(hoje.getFullYear(),hoje.getMonth(),1);
+  var fim=new Date(hoje.getTime()+32*86400000);
+  var cl=P.cicloLength||28,md=P.mensDur||5;
+  var diasSemana=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+  var cells=[],cur=new Date(inicio);
+  while(cur<=fim){
+    var diff=Math.floor((cur-new Date(P.lastPeriod))/86400000);
+    var phase=null;
+    if(diff>=0){
+      var d=diff%cl,ov=Math.round(cl/2);
+      if(d<md)phase={i:"🔴",c:"#F87171"};
+      else if(d<ov-1)phase={i:"🌱",c:"#4ADE80"};
+      else if(d<=ov+1)phase={i:"✨",c:"#FACC15"};
+      else phase={i:"🌙",c:"#A78BFA"};
+    }
+    var isHoje=cur.toDateString()===hoje.toDateString();
+    cells.push({date:new Date(cur),day:cur.getDate(),phase:phase,isHoje:isHoje,wday:cur.getDay()});
+    cur.setDate(cur.getDate()+1);
+  }
+  var meses={};
+  cells.forEach(function(c){
+    var k=c.date.getFullYear()+"-"+(c.date.getMonth()+1);
+    if(!meses[k]){meses[k]={label:c.date.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}),cells:[],firstWday:c.wday};}
+    meses[k].cells.push(c);
+  });
+  var html='<div class="card"><div class="ct">📅 Calendário do Ciclo</div>';
+  Object.keys(meses).forEach(function(mk){
+    var m=meses[mk];
+    html+='<div style="margin-bottom:16px"><div style="font-size:.75rem;font-weight:700;color:var(--ac);text-transform:capitalize;margin-bottom:8px">'+m.label+'</div>';
+    html+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">';
+    diasSemana.forEach(function(d){html+='<div style="font-size:.6rem;color:var(--mu);text-align:center;font-weight:700">'+d+'</div>';});
+    html+='</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">';
+    for(var i=0;i<m.firstWday;i++)html+='<div></div>';
+    m.cells.forEach(function(c){
+      html+='<div style="aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;'
+        +(c.isHoje?'border:2px solid var(--ac);background:var(--ac)20;':'background:'+(c.phase?c.phase.c+'15':'var(--su)')+'80;')
+        +'padding:2px">'
+        +'<div style="font-size:.65rem;line-height:1;'+(c.isHoje?'color:var(--ac);font-weight:800':'color:var(--tx)')+'">'+c.day+'</div>'
+        +(c.phase?'<div style="font-size:.65rem;line-height:1">'+c.phase.i+'</div>':'')
+        +'</div>';
+    });
+    html+='</div></div>';
+  });
+  html+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">';
+  [{i:"🔴",l:"Menstruação"},{i:"🌱",l:"Folicular"},{i:"✨",l:"Ovulação"},{i:"🌙",l:"Lútea"}].forEach(function(f){html+='<span style="font-size:.7rem;color:var(--mu)">'+f.i+' '+f.l+'</span>';});
+  html+='</div></div>';
+  return html;
+}
+
+function renderProgresso(){
+  var pg=document.getElementById("pg-progresso");
+  var hist=ld("luna_hist",[]).slice(-10);
+  var age=getAge(P.birthdate);
+  var hrMax=age?220-age:220;
+  var SIGN_SYMBOLS={"Áries":"♈","Touro":"♉","Gêmeos":"♊","Câncer":"♋","Leão":"♌","Virgem":"♍","Libra":"♎","Escorpião":"♏","Sagitário":"♐","Capricórnio":"♑","Aquário":"♒","Peixes":"♓"};
+  var signSym=SIGN_SYMBOLS[SIGN]||"✦";
+  function makeLineChart(data,color,maxVal,sym){
+    if(!data.length)return"";
+    var W=300,H=90,padL=8,padR=8,padT=18,padB=8,n=data.length;
+    var pts=data.map(function(v,i){return{x:padL+(i/(Math.max(n-1,1)))*(W-padL-padR),y:padT+(H-padT-padB)*(1-v/maxVal),v:v};});
+    var path=pts.map(function(p,i){return(i===0?"M":"L")+p.x.toFixed(1)+","+p.y.toFixed(1);}).join(" ");
+    var area=path+" L"+pts[pts.length-1].x.toFixed(1)+","+(H-padB)+" L"+pts[0].x.toFixed(1)+","+(H-padB)+" Z";
+    var dots=pts.map(function(p){return'<text x="'+p.x.toFixed(1)+'" y="'+(p.y+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="'+color+'" style="filter:drop-shadow(0 1px 3px '+color+'80)">'+sym+'</text>';}).join("");
+    return'<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:'+H+'px;overflow:visible"><defs><linearGradient id="g'+color.replace("#","")+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.25"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0.02"/></linearGradient></defs><path d="'+area+'" fill="url(#g'+color.replace("#","")+')" /><path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +dots+'</svg>';
+  }
+  var borgData=hist.map(function(h){return h.borg;});
+  var hrData=hist.filter(function(h){return h.hr>0;}).map(function(h){return h.hr;});
+  var labels=hist.map(function(h){return h.data.slice(5);});
+  var chartHtml="";
+  if(hist.length>=2){
+    chartHtml='<div style="position:relative;margin-bottom:4px">'+makeLineChart(borgData,getComputedStyle(document.documentElement).getPropertyValue("--ac").trim()||"#C084FC",10,signSym)+'</div>'
+      +(hrData.length>=2?'<div style="position:relative;margin-bottom:4px">'+makeLineChart(hist.filter(function(h){return h.hr>0;}).map(function(h){return h.hr;}),"#F87171",hrMax,"🌙")+'</div>':'')
+      +'<div style="display:flex;justify-content:space-between;padding:0 8px;margin-top:2px">'+labels.map(function(l){return'<span style="font-size:.5rem;color:var(--mu)">'+l+'</span>';}).join("")+'</div>';
+  }
+  pg.innerHTML='<h2 class="pt">Evolução 📈</h2>'
+    +'<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div class="ct" style="margin:0">Esforço & FC</div>'
+    +'<div style="display:flex;gap:10px"><div style="display:flex;align-items:center;gap:4px"><span style="font-size:.9rem">'+signSym+'</span><span style="font-size:.68rem;color:var(--mu)">Borg</span></div>'
+    +'<div style="display:flex;align-items:center;gap:4px"><span style="font-size:.9rem">🌙</span><span style="font-size:.68rem;color:var(--mu)">FC</span></div></div></div>'
+    +(hist.length>=2?chartHtml+'<div style="font-size:.75rem;color:var(--mu);margin-top:4px">Últimas '+hist.length+' sessões</div>':'<div style="text-align:center;padding:20px;color:var(--mu)">Finalize 2+ treinos para ver sua evolução 💜</div>')
+    +'</div>'
+    +(hist.length?'<div class="card"><div class="ct">Últimas Sessões</div>'+hist.slice(-5).reverse().map(function(h){return'<div style="padding:9px 0;border-bottom:1px solid var(--ac)06"><div style="display:flex;justify-content:space-between"><span style="font-weight:600;font-size:.88rem">'+h.data+'</span><div style="display:flex;gap:6px"><span class="pill" style="font-size:.65rem">Borg '+h.borg+'</span>'+(h.hr?'<span class="pill" style="font-size:.65rem;background:#F8717114;color:#F87171;border-color:#F8717122">'+h.hr+' bpm</span>':'')+'</div></div>'+(h.notas?'<div style="font-size:.78rem;color:var(--mu);margin-top:4px;font-style:italic">"'+h.notas.substring(0,80)+'"</div>':'')+'</div>';}).join("")+'</div>':"")
+    +'<div class="card"><div class="ct">Mapa Astral 🌙</div>'
+    +'<div class="astro-row">'
+    +'<div class="astro-item"><div style="font-size:1.6rem;margin-bottom:4px">☀️</div><div class="tag">Sol</div><div style="font-weight:700;margin-top:2px">'+SIGN+'</div><div style="font-size:.7rem;color:var(--mu)">'+THEME.el+'</div></div>'
+    +'<div class="astro-item"><div style="font-size:1.6rem;margin-bottom:4px">🌙</div><div class="tag">Lua</div><div style="font-weight:700;margin-top:2px">'+LUA_SIGN+'</div><div style="font-size:.7rem;color:var(--mu)">'+SIGNS[LUA_SIGN].el+'</div></div>'
+    +'</div>'
+    +'<div style="font-size:.75rem;color:var(--mu);line-height:1.65;margin-top:4px">☀️ Sol calculado pela data de nascimento · 🌙 Lua calculada por longitude eclíptica</div>'
+    +'</div>'
+    +'<div class="card"><div class="ct">⚙️ Perfil</div>'
+    +'<div class="tag" style="margin-bottom:6px">Nome</div>'
+    +'<input class="inp" value="'+(P.nome||"")+'" oninput="P.nome=this.value;savePro(P)" style="margin-bottom:12px"/>'
+    +'<div class="tag" style="margin-bottom:6px">Data de nascimento</div>'
+    +'<input class="inp" type="date" value="'+(P.birthdate||"")+'" onchange="P.birthdate=this.value;applyTheme(getSign(this.value));LUA_SIGN=getLua(this.value);savePro(P);renderProgresso()" oninput="P.birthdate=this.value;applyTheme(getSign(this.value));LUA_SIGN=getLua(this.value);savePro(P)"/>'
+    +'<div class="cbr" style="margin-top:12px" onclick="toggleMenopausaP()"><div class="chk'+(P.menopausa?" on":"")+'">'+( P.menopausa?"✓":"")+'</div><span>Menopausa</span></div>'
+    +'<div class="dv"></div>'
+    +'<button onclick="resetarTudo()" style="width:100%;padding:12px;border-radius:12px;background:none;border:1px solid #F8717130;color:#F87171;font-family:Outfit,sans-serif;font-size:.85rem;cursor:pointer">Resetar Perfil</button>'
+    +(P.versao!=='deusa'?'<div class="dv"></div>'
+      +'<div class="tag" style="margin-bottom:6px">📱 Meu número WhatsApp (para alunas te enviarem relatório)</div>'
+      +'<input class="inp" placeholder="55 11 99999-9999" value="'+(P.telefone||"")+'" oninput="P.telefone=this.value;savePro(P)" style="margin-bottom:4px"/>'
+      +'<div style="font-size:.72rem;color:var(--mu)">Com DDD e código do país. Ex: 5511999999999</div>':'')
+    +'</div>';
+}
+
+function renderPersonal(){
+  var pg=document.getElementById("pg-personal");
+  var ptabs=[["alunas","👩‍🏫 Alunas"],["montar","🏋️ Montar"],["relatorios","📊 Relatórios"],["enviar","📤 Enviar"]];
+  var tabsH='<div class="tabs">';
+  ptabs.forEach(function(t){tabsH+='<button class="bg tab'+(pTab===t[0]?" on":"")+'\" onclick="pTab=\''+t[0]+'\';renderPersonal()">'+t[1]+'</button>';});
+  tabsH+='</div>';
+  var body='<h2 class="pt">Personal 👩‍💼</h2>'+tabsH;
+  if(pTab==="alunas"){
+    var aList=ALUNAS.map(function(a,i){
+      var s=getSign(a.birthdate)||"Escorpião";
+      var age2=getAge(a.birthdate);
+      var ci2=!a.menopausa?cyclePhase(a.lastPeriod,28):null;
+      return'<div class="aluna-card">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center" onclick="abrirAluna('+i+')">'
+        +'<div><div style="font-weight:700;font-size:.98rem">'+SIGNS[s].e+' '+a.nome+'</div>'
+        +'<div style="font-size:.75rem;color:var(--mu);margin-top:2px">'+s+(age2?' · '+age2+' anos':'')+(a.menopausa?' · 🌸 Menopausa':'')+(ci2?' · '+ci2.i+' '+ci2.p:'')+'</div></div>'
+        +'<div style="display:flex;gap:6px;align-items:center">'
+        +'<button onclick="event.stopPropagation();editarAluna('+i+')" style="background:var(--ac)12;border:1px solid var(--ac)25;border-radius:9px;padding:6px 11px;color:var(--ac);font-size:.75rem;cursor:pointer;font-family:Outfit,sans-serif">✏️ Editar</button>'
+        +'<div style="font-size:1.5rem;color:var(--mu)">›</div></div></div>'
+        +(a.patologias?'<div style="font-size:.72rem;color:#FB923C;margin-top:6px;padding:5px 8px;background:#FB923C10;border-radius:7px">⚠️ '+a.patologias.substring(0,60)+'</div>':'')
+        +'</div>';
+    }).join("");
+    body+=(ALUNAS.length?aList:'<div class="card" style="text-align:center;color:var(--mu);padding:28px"><div style="font-size:2rem;margin-bottom:8px">👩‍🏫</div>Nenhuma aluna ainda</div>')
+      +'<div class="card"><div class="ct">➕ Nova Aluna</div>'
+      +'<input class="inp" id="an-nome" placeholder="Nome completo" style="margin-bottom:8px"/>'
+      +'<div class="tag" style="margin-bottom:5px;margin-top:4px">Data de nascimento</div>'
+      +'<input class="inp" type="date" id="an-bd" style="margin-bottom:8px"/>'
+      +'<div class="tag" style="margin-bottom:5px">Último período</div>'
+      +'<input class="inp" type="date" id="an-lp" style="margin-bottom:8px"/>'
+      +'<input class="inp" id="an-pat" placeholder="Patologias (opcional)" style="margin-bottom:8px"/>'
+      +'<div class="cbr" onclick="toggleAnMen()"><div class="chk" id="an-men"></div><span>Menopausa</span></div>'
+      +'<button class="bp" style="margin-top:10px" onclick="addAluna()">Cadastrar Aluna</button></div>';
+  } else if(pTab==="montar"){
+    var aOpts2=ALUNAS.map(function(a,i){return'<option value="'+i+'"'+(selAluna===i?" selected":"")+'>'+a.nome+'</option>';}).join("");
+    body+='<div class="card"><div class="tag" style="margin-bottom:7px">Selecione a aluna</div>'
+      +'<select class="inp" onchange="selAluna=parseInt(this.value);selSemana=0;loadAgenda(selAluna);selDia=0;buildCat=null;selExs={};renderPersonal()"><option value="-1">Escolha uma aluna...</option>'+aOpts2+'</select></div>';
+    if(selAluna!==null&&selAluna>=0&&ALUNAS[selAluna]){
+      var al=ALUNAS[selAluna];
+      var alSign=getSign(al.birthdate)||"Escorpião";
+      var alAge=getAge(al.birthdate);
+      var alCi=!al.menopausa?cyclePhase(al.lastPeriod,al.cicloLength||28,al.mensDur||5):null;
+      var alHrMax=alAge?220-alAge:null;
+      body+='<div class="card" style="border-color:var(--ac)25">'
+        +'<div style="display:flex;gap:11px;align-items:center">'
+        +'<div style="font-size:2.2rem">'+SIGNS[alSign].e+'</div>'
+        +'<div><div style="font-weight:700;font-size:1rem">'+al.nome+'</div>'
+        +'<div style="font-size:.77rem;color:var(--mu)">'+alSign+(alAge?' · '+alAge+' anos':'')+(alHrMax?' · FC máx: '+alHrMax+'bpm':'')+'</div>'
+        +(alCi?'<div style="font-size:.78rem;margin-top:2px">'+alCi.i+' '+alCi.p+'</div>':'')
+        +(al.patologias?'<div style="font-size:.73rem;color:#FB923C;margin-top:2px">⚠️ '+al.patologias+'</div>':'')
+        +'</div></div></div>';
+      var semTreinos=agenda.filter(function(d){return d&&Object.keys(d.exercicios||{}).length>0;}).length;
+      body+='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'
+        +'<div class="ct" style="margin:0">📅 Semana</div>'
+        +(semTreinos>0?'<button class="bg" onclick="pTab=\'enviar\';renderPersonal()" style="font-size:.78rem;padding:7px 13px">📤 Enviar semana</button>':'')
+        +'</div>'
+        +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">';
+      DIAS.forEach(function(d,i){
+        var tem=agenda[i]&&Object.keys(agenda[i].exercicios||{}).length>0;
+        var isSel=selDia===i;
+        body+='<button onclick="selDia='+i+';buildCat=null;selExs=agenda['+i+']?JSON.parse(JSON.stringify(agenda['+i+'].exercicios||{})):{};renderPersonal()" '
+          +'style="padding:8px 2px;border-radius:11px;border:2px solid '+(isSel?'var(--ac)':tem?'var(--ac)30':'var(--ac)10')+';'
+          +'background:'+(isSel?'var(--ac)20':tem?'var(--ac)08':'var(--su)')+';'
+          +'color:'+(isSel?'var(--ac)':tem?'var(--ac)':'var(--mu)')+';'
+          +'font-family:Outfit,sans-serif;font-size:.72rem;font-weight:'+(isSel||tem?700:400)+';cursor:pointer;text-align:center">'
+          +d+(tem?'<br><span style="font-size:.55rem">✓</span>':'')
+          +'</button>';
+      });
+      body+='</div><div style="margin-top:8px;font-size:.75rem;color:var(--mu)">'+semTreinos+'/7 dias com treino</div></div>';
+      body+='<div class="card" style="border-color:var(--ac)20">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'
+        +'<div class="ct" style="margin:0">'+DIAS_FULL[selDia]+'</div>'
+        +(agenda[selDia]&&Object.keys(agenda[selDia].exercicios||{}).length?
+          '<button onclick="agendaData[selSemana][selDia]=null;agenda=agendaData[selSemana];selExs={};saveAgenda(selAluna);renderPersonal()" style="background:#F8717110;border:1px solid #F8717130;border-radius:9px;padding:6px 12px;color:#F87171;font-size:.75rem;cursor:pointer">🗑 Limpar</button>':
+          '')
+        +'</div>';
+      if(!buildCat)buildCat=Object.keys(EXDB)[0];
+      var cats2=Object.keys(EXDB);
+      body+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px">';
+      cats2.forEach(function(c){
+        body+='<button onclick="buildCat=\''+c+'\';renderPersonal()" style="padding:10px 8px;border-radius:11px;border:2px solid '+(buildCat===c?'var(--ac)':'var(--ac)12')+';background:'+(buildCat===c?'var(--ac)15':'var(--su)')+';color:'+(buildCat===c?'var(--ac)':'var(--mu)')+';font-family:Outfit,sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;text-align:left">'+c+'</button>';
+      });
+      body+='</div>';
+      var exList2=EXDB[buildCat]||[];
+      var isMusc=CATS_MUSCULACAO.indexOf(buildCat)>=0;
+      body+='<div class="tag" style="margin-bottom:7px">'+buildCat+(isMusc?' <span style="font-weight:400;color:var(--mu);text-transform:none;letter-spacing:0">· selecione ângulo e material</span>':'')+'</div>';
+
+      if(isMusc){
+        // Musculação: mostra exercícios base com botão "+" para configurar e adicionar
+        exList2.forEach(function(exBase,ei){
+          var eid2="exb"+ei;
+          // Quantas instâncias deste base já estão selecionadas
+          var instancias=Object.keys(selExs).filter(function(k){return k===exBase||k.indexOf(exBase+' ·')===0;});
+          body+='<div style="padding:11px 13px;background:var(--su);border-radius:13px;margin-bottom:7px">'
+            +'<div style="display:flex;justify-content:space-between;align-items:center">'
+            +'<span style="font-size:.9rem;font-weight:500">'+exBase+'</span>'
+            +'<button onclick="event.stopPropagation();abrirConfigEx(\''+exBase.replace(/'/g,"\\'")+'\')" style="background:var(--ac)18;border:1px solid var(--ac)30;border-radius:9px;padding:6px 13px;color:var(--ac);font-size:.8rem;font-weight:700;cursor:pointer;font-family:Outfit,sans-serif">+ Adicionar</button>'
+            +'</div>'
+            +(instancias.length?'<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">'
+              +instancias.map(function(k){
+                var kesc=k.replace(/'/g,"\\'");
+                var f=selExs[k];
+                return'<div style="background:var(--ac)12;border:1px solid var(--ac)30;border-radius:9px;padding:5px 10px;font-size:.72rem;display:flex;align-items:center;gap:7px">'
+                  +'<span style="color:var(--ac);font-weight:600">'+k+'</span>'
+                  +(f.series?'<span style="color:var(--mu)">'+f.series+'×'+f.reps+(f.carga?' '+f.carga+'kg':'')+'</span>':'')
+                  +'<button onclick="event.stopPropagation();removerExMusc(\''+kesc+'\')" style="background:none;border:none;color:#F87171;cursor:pointer;font-size:.9rem;padding:0;line-height:1">×</button>'
+                  +'</div>';
+              }).join('')
+              +'</div>':'')
+            +'</div>';
+        });
+
+        // Modal de configuração (injetado via JS)
+        body+='<div id="cfg-ex-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:300;align-items:flex-end;justify-content:center">'
+          +'<div style="background:var(--su);border-radius:22px 22px 0 0;padding:22px 18px 36px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto">'
+          +'<div style="width:40px;height:4px;background:var(--mu)40;border-radius:2px;margin:0 auto 16px"></div>'
+          +'<div class="ct" id="cfg-ex-titulo" style="margin-bottom:14px"></div>'
+          +'<div class="tag" style="margin-bottom:6px">📐 Ângulo / Inclinação</div>'
+          +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px" id="cfg-angulos">'
+          +ANGULOS.map(function(a){return'<button onclick="cfgSelAngulo(\''+a+'\')" id="cfa-'+a.replace(/[^a-z]/gi,'_')+'" style="padding:7px 13px;border-radius:9px;border:1px solid var(--ac)20;background:var(--su);color:var(--mu);font-family:Outfit,sans-serif;font-size:.8rem;cursor:pointer">'+a+'</button>';}).join('')
+          +'</div>'
+          +'<div class="tag" style="margin-bottom:6px">🏋️ Material / Equipamento</div>'
+          +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px" id="cfg-materiais">'
+          +MATERIAIS.map(function(m){return'<button onclick="cfgSelMaterial(\''+m+'\')" id="cfm-'+m.replace(/[^a-z]/gi,'_')+'" style="padding:7px 13px;border-radius:9px;border:1px solid var(--ac)20;background:var(--su);color:var(--mu);font-family:Outfit,sans-serif;font-size:.8rem;cursor:pointer">'+m+'</button>';}).join('')
+          +'</div>'
+          +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:14px">'
+          +'<div class="tag" style="margin-bottom:6px">📋 Preview da chave</div>'
+          +'<div id="cfg-preview" style="font-size:.88rem;font-weight:600;color:var(--ac)">—</div>'
+          +'</div>'
+          +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:14px">'
+          +'<div><div class="tag" style="margin-bottom:4px">Séries</div><input class="inp" id="cfg-series" placeholder="3"/></div>'
+          +'<div><div class="tag" style="margin-bottom:4px">Reps</div><input class="inp" id="cfg-reps" placeholder="12"/></div>'
+          +'<div><div class="tag" style="margin-bottom:4px">Kg</div><input class="inp" id="cfg-carga" placeholder="0"/></div>'
+          +'<div><div class="tag" style="margin-bottom:4px">Desc(s)</div><input class="inp" id="cfg-desc" placeholder="60"/></div>'
+          +'</div>'
+          +'<button class="bp" onclick="confirmarConfigEx()">✅ Adicionar ao treino</button>'
+          +'<button onclick="fecharConfigEx()" style="width:100%;margin-top:8px;padding:12px;background:none;border:1px solid var(--ac)20;border-radius:12px;color:var(--mu);font-family:Outfit,sans-serif;cursor:pointer">Cancelar</button>'
+          +'</div></div>';
+
+      } else {
+        // Categorias normais (Aquecimento, Mobilidade, Cardio, HIIT)
+        exList2.forEach(function(ex,ei){
+        var isSel=!!selExs[ex];
+        var fields=selExs[ex]||{series:'',reps:'',carga:'',descanso:''};
+        var eid="exd"+ei;
+        var exesc=ex.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        var isHiitAq=ex==='HIIT como Aquecimento';
+        var isAulaGrupo=ex==='Aula de grupo';
+
+        // Campos internos variam por tipo
+        var innerFields='';
+        if(isHiitAq){
+          // Seletor de elemento HIIT
+          var hiitOpts=HIIT_ELEM.map(function(el){
+            var sel=(fields.hiitElem===el.nome);
+            return'<option value="'+el.nome+'"'+(sel?' selected':'')+'>'+el.nome+'</option>';
+          }).join('');
+          innerFields='<div style="margin-bottom:8px">'
+            +'<div style="font-size:.72rem;color:var(--ac);font-weight:700;margin-bottom:5px">⚡ Elemento HIIT</div>'
+            +'<select class="inp" style="font-size:.82rem" oninput="event.stopPropagation();setExF(\''+exesc+'\',\'hiitElem\',this.value)">'
+            +'<option value="">Escolha o elemento...</option>'+hiitOpts
+            +'</select></div>'
+            +'<div style="display:flex;gap:4px;flex-wrap:wrap">'
+            +'<input class="ex-field" placeholder="Rounds" value="'+(fields.series||'')+'" oninput="setExF(\''+exesc+'\',\'series\',this.value)"/>'
+            +'<input class="ex-field" placeholder="Work(s)" value="'+(fields.reps||'')+'" oninput="setExF(\''+exesc+'\',\'reps\',this.value)"/>'
+            +'<input class="ex-field" placeholder="Rest(s)" value="'+(fields.descanso||'')+'" oninput="setExF(\''+exesc+'\',\'descanso\',this.value)"/>'
+            +'</div>';
+        } else if(isAulaGrupo){
+          innerFields='<div style="margin-bottom:8px">'
+            +'<div style="font-size:.72rem;color:var(--ac);font-weight:700;margin-bottom:5px">🎵 Modalidade</div>'
+            +'<input class="inp" style="font-size:.82rem;margin-bottom:7px" placeholder="Ex: Zumba, Body Pump, Spinning..." value="'+(fields.modalidade||'')+'" oninput="event.stopPropagation();setExF(\''+exesc+'\',\'modalidade\',this.value)"/>'
+            +'<div style="font-size:.72rem;color:var(--ac);font-weight:700;margin-bottom:5px">🕐 Horário</div>'
+            +'<input class="inp" style="font-size:.82rem" placeholder="Ex: Seg/Qua/Sex às 07h" value="'+(fields.horario||'')+'" oninput="event.stopPropagation();setExF(\''+exesc+'\',\'horario\',this.value)"/>'
+            +'</div>';
+        } else {
+          innerFields='<div style="display:flex;gap:4px;flex-wrap:wrap">'
+            +'<input class="ex-field" placeholder="Séries" value="'+fields.series+'" oninput="setExF(\''+exesc+'\',\'series\',this.value)"/>'
+            +'<input class="ex-field" placeholder="Reps" value="'+fields.reps+'" oninput="setExF(\''+exesc+'\',\'reps\',this.value)"/>'
+            +'<input class="ex-field" placeholder="Kg" value="'+fields.carga+'" oninput="setExF(\''+exesc+'\',\'carga\',this.value)"/>'
+            +'<input class="ex-field" placeholder="Desc.(s)" value="'+fields.descanso+'" oninput="setExF(\''+exesc+'\',\'descanso\',this.value)"/>'
+            +'</div>'
+            +'<div style="border-top:1px dashed var(--ac)20;padding-top:8px;margin-top:4px">'
+            +(fields.biset
+              ?'<div style="padding:8px;background:var(--ac)10;border-radius:11px;border:1px solid var(--ac)25">'
+               +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'
+               +'<span style="font-size:.72rem;color:var(--ac);font-weight:700">⚡ Bissérie: '+fields.biset+'</span>'
+               +'<button onclick="event.stopPropagation();setExF(\''+exesc+'\',\'biset\',\'\');setExF(\''+exesc+'\',\'biset_reps\',\'\');setExF(\''+exesc+'\',\'biset_carga\',\'\');renderPersonal()" style="background:#F8717120;color:#F87171;border:1px solid #F8717130;border-radius:7px;padding:3px 8px;font-size:.7rem;cursor:pointer">✕ Remover</button>'
+               +'</div>'
+               +'<div style="display:flex;gap:4px">'
+               +'<input class="ex-field" placeholder="Reps" value="'+(fields.biset_reps||'')+'" oninput="event.stopPropagation();setExF(\''+exesc+'\',\'biset_reps\',this.value)"/>'
+               +'<input class="ex-field" placeholder="Kg" value="'+(fields.biset_carga||'')+'" oninput="event.stopPropagation();setExF(\''+exesc+'\',\'biset_carga\',this.value)"/>'
+               +'</div></div>'
+              :'<button onclick="event.stopPropagation();toggleBiset(\''+exesc+'\',\''+eid+'\')" style="width:100%;background:var(--su);color:var(--mu);border:1px dashed var(--ac)30;border-radius:10px;padding:8px;font-size:.78rem;cursor:pointer;text-align:center">⚡ + Adicionar Bissérie</button>'
+               +'<div id="biset-picker-'+eid+'" style="display:none;margin-top:6px;max-height:180px;overflow-y:auto;background:var(--su);border-radius:11px;border:1px solid var(--ac)25">'
+               +Object.values(EXDB).flat().filter(function(e2){return e2!==ex;}).map(function(e2){
+                 var e2esc=e2.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+                 return'<div onclick="event.stopPropagation();setExF(\''+exesc+'\',\'biset\',\''+e2esc+'\');document.getElementById(\'biset-picker-'+eid+'\').style.display=\'none\';renderPersonal()" style="padding:10px 12px;border-bottom:1px solid var(--ac)08;font-size:.82rem;cursor:pointer;color:var(--tx)">'+e2+'</div>';
+               }).join("")
+               +'</div>')
+            +'</div>';
+        }
+
+        // Badge especial para HIIT e Aula
+        var exLabel=isHiitAq?'⚡ '+ex:isAulaGrupo?'🎵 '+ex:ex;
+        var exBorder=isHiitAq?'border-color:#F87171;background:#F8717108':isAulaGrupo?'border-color:#FACC15;background:#FACC1508':'';
+
+        body+='<div class="ex-item'+(isSel?' sel':'')+'\" id="'+eid+'" style="'+(isSel&&exBorder?exBorder:'')+'" onclick="domToggleEx(this,\''+eid+'\',\''+exesc+'\')">'
+          +'<div class="ex-item-header">'
+          +'<div class="ex-chk'+(isSel?' on':'')+'\" id="'+eid+'c">'+(isSel?'✓':'')+'</div>'
+          +'<div class="ex-name">'+exLabel+'</div>'
+          +'</div>'
+          +'<div class="ex-fields" id="'+eid+'f" style="display:'+(isSel?'flex':'none')+';flex-direction:column;gap:7px" onclick="event.stopPropagation()">'
+          +innerFields
+          +'</div></div>';
+      });
+      } // fim else categorias normais
+
+      var selCount2=Object.keys(selExs).length;
+      body+='<div id="ex-count-bar" style="margin-top:8px;padding:9px 13px;background:var(--ac)10;border-radius:11px;display:'+(selCount2?'block':'none')+'">'
+        +'<span style="font-size:.8rem;color:var(--ac);font-weight:600">✅ <span id="ex-count-num">'+selCount2+'</span> exercício(s)</span></div>'
+        +'<button class="bp" style="margin-top:10px" onclick="salvarDiaAtual()">💾 Salvar '+DIAS_FULL[selDia]+'</button>'
+        +'</div>';
+    }
+  } else if(pTab==="relatorios"){
+    var aOptsR=ALUNAS.map(function(a,i){return'<option value="'+i+'"'+(selAluna===i?" selected":"")+'>'+a.nome+'</option>';}).join("");
+    body+='<div class="card"><div class="tag" style="margin-bottom:7px">Selecione a aluna</div>'
+      +'<select class="inp" onchange="selAluna=parseInt(this.value);renderPersonal()"><option value="-1">Escolha uma aluna...</option>'+aOptsR+'</select></div>';
+    if(selAluna!==null&&selAluna>=0&&ALUNAS[selAluna]){
+      var alR=ALUNAS[selAluna];
+      var rels=ld(LUNA_KEYS.REL(selAluna),[]);
+      body+='<div class="card" style="border-color:var(--ac)25">'
+        +'<div class="ct">➕ Novo Registro — '+alR.nome+'</div>'
+        +'<div class="tag" style="margin-bottom:5px">Data</div>'
+        +'<input class="inp" type="date" id="rel-data" value="'+todayKey()+'" style="margin-bottom:10px"/>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">'
+        +'<div><div class="tag" style="margin-bottom:4px">💧 Água (copos)</div><input class="inp" type="number" id="rel-p-agua" placeholder="0" min="0" max="20"/></div>'
+        +'<div><div class="tag" style="margin-bottom:4px">💓 FC Média</div><input class="inp" type="number" id="rel-p-hr" placeholder="bpm" min="40" max="220"/></div>'
+        +'<div><div class="tag" style="margin-bottom:4px">⚡ Borg</div><input class="inp" type="number" id="rel-p-borg" placeholder="1–10" min="1" max="10"/></div>'
+        +'<div><div class="tag" style="margin-bottom:4px">🦵 Dor</div><input class="inp" type="number" id="rel-p-dor" placeholder="0–10" min="0" max="10"/></div>'
+        +'</div>'
+        +'<div class="tag" style="margin-bottom:5px">🌙 Sono</div>'
+        +'<select class="inp" id="rel-p-sono" style="margin-bottom:10px"><option value="">—</option><option value="pessimo">Péssimo 😫</option><option value="ruim">Ruim 😔</option><option value="regular">Regular 😐</option><option value="bom">Bom 😊</option><option value="otimo">Ótimo 😄</option></select>'
+        +'<div class="tag" style="margin-bottom:5px">⚡ Energia</div>'
+        +'<select class="inp" id="rel-p-hum" style="margin-bottom:10px"><option value="">—</option><option value="baixo">Baixa 😔</option><option value="neutro">Neutra 😐</option><option value="animada">Animada 😊</option><option value="fogo">Alta 🔥</option></select>'
+        +'<div class="tag" style="margin-bottom:5px">🌀 Fase do Ciclo</div>'
+        +'<select class="inp" id="rel-p-ciclo" style="margin-bottom:10px"><option value="">—</option><option value="Menstruação">🔴 Menstruação</option><option value="Folicular">🌱 Folicular</option><option value="Ovulação">✨ Ovulação</option><option value="Lútea">🌙 Lútea</option></select>'
+        +'<div class="tag" style="margin-bottom:5px">📝 Observações</div>'
+        +'<textarea class="inp" id="rel-p-obs" rows="2" placeholder="Notas do treino..." style="margin-bottom:12px"></textarea>'
+        +'<button class="bp" onclick="salvarRelatorio('+selAluna+')">💾 Salvar Registro</button>'
+        +'</div>';
+      if(rels.length>0){
+        var relOrd=rels.slice().sort(function(a,b){return a.data>b.data?1:-1;});
+        var relSlice=relOrd.slice(-20);
+        var W=300,H=100,padL=8,padR=8,padT=14,padB=8;
+        function mkLine(vals,maxV,color,sym){
+          var data=vals.filter(function(v){return v>0;});
+          if(data.length<2)return"";
+          var pts=vals.map(function(v,i){return{x:padL+i/(Math.max(vals.length-1,1))*(W-padL-padR),y:padT+(H-padT-padB)*(1-v/maxV)};});
+          var path=pts.map(function(p,i){return(i===0?"M":"L")+p.x.toFixed(1)+","+p.y.toFixed(1);}).join(" ");
+          var dots=pts.filter(function(p,i){return vals[i]>0;}).map(function(p){return'<text x="'+p.x.toFixed(1)+'" y="'+(p.y+1).toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="'+color+'">'+sym+'</text>';}).join("");
+          return'<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>'+dots;
+        }
+        var acColor=getComputedStyle(document.documentElement).getPropertyValue('--ac').trim()||"#C084FC";
+        body+='<div class="card"><div class="ct">📈 Evolução — '+alR.nome+'</div>'
+          +'<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:.72rem">'
+          +'<span>💓 FC &nbsp;⚡ Borg &nbsp;🦵 Dor &nbsp;💧 Água</span></div>'
+          +'<svg viewBox="0 0 300 100" style="width:100%;overflow:visible">'
+          +mkLine(relSlice.map(function(r){return r.hr||0;}),200,"#F87171","💓")
+          +mkLine(relSlice.map(function(r){return r.borg||0;}),10,acColor,"⚡")
+          +mkLine(relSlice.map(function(r){return r.dor||0;}),10,"#FB923C","🦵")
+          +mkLine(relSlice.map(function(r){return r.agua||0;}),15,"#60A5FA","💧")
+          +'</svg>'
+          +'<div style="font-size:.68rem;color:var(--mu);margin-top:4px">'+relSlice.length+' registros</div></div>';
+        var sonoIco={'pessimo':'😫','ruim':'😔','regular':'😐','bom':'😊','otimo':'😄'};
+        var humIco={'baixo':'😔','neutro':'😐','animada':'😊','fogo':'🔥'};
+        body+='<div class="card"><div class="ct">📋 Histórico</div>';
+        relOrd.slice().reverse().slice(0,15).forEach(function(r,i){
+          body+='<div style="padding:10px;background:var(--su);border-radius:12px;margin-bottom:7px">'
+            +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'
+            +'<span style="font-weight:700;font-size:.88rem">'+r.data.split('-').reverse().join('/')+'</span>'
+            +'<button onclick="deletarRelatorio('+selAluna+','+i+')" style="background:none;border:none;color:var(--mu);font-size:1rem;cursor:pointer">🗑</button></div>'
+            +'<div style="display:flex;flex-wrap:wrap;gap:5px">'
+            +(r.agua?'<span class="pill" style="font-size:.65rem">💧 '+r.agua+'</span>':'')
+            +(r.hr?'<span class="pill" style="font-size:.65rem;background:#F8717114;color:#F87171;border-color:#F8717125">💓 '+r.hr+'</span>':'')
+            +(r.borg?'<span class="pill" style="font-size:.65rem">⚡ '+r.borg+'</span>':'')
+            +(r.dor?'<span class="pill" style="font-size:.65rem;background:#FB923C14;color:#FB923C;border-color:#FB923C25">🦵 '+r.dor+'</span>':'')
+            +(r.sono?'<span class="pill" style="font-size:.65rem">'+(sonoIco[r.sono]||'')+'</span>':'')
+            +(r.humor?'<span class="pill" style="font-size:.65rem">'+(humIco[r.humor]||'')+'</span>':'')
+            +(r.ciclo?'<span class="pill" style="font-size:.65rem">🌀 '+r.ciclo+'</span>':'')
+            +'</div>'
+            +(r.obs?'<div style="font-size:.76rem;color:var(--mu);margin-top:6px;font-style:italic">"'+r.obs+'"</div>':'')
+            +'</div>';
+        });
+        body+='</div>';
+      } else {
+        body+='<div class="card" style="text-align:center;color:var(--mu);padding:22px"><div style="font-size:2rem;margin-bottom:8px">📊</div>Nenhum registro ainda.<br><span style="font-size:.8rem">Adicione o primeiro acima ⬆️</span></div>';
+      }
+    }
+  } else {
+    var diasComTreino=(agenda||[]).map(function(d,i){return d&&Object.keys(d.exercicios||{}).length>0?i:-1;}).filter(function(i){return i>=0;});
+    var todasSemanas=[];
+    for(var si=0;si<8;si++){
+      var dias2=(agendaData[si]||[]).map(function(d,i){return d&&Object.keys(d.exercicios||{}).length>0?i:-1;}).filter(function(x){return x>=0;});
+      if(dias2.length){todasSemanas.push({semana:si,label:semanaLabel(si),dias:dias2.map(function(i){return{dia:DIAS_FULL[i],diaIdx:i,data:diaData(si,i),cat:agendaData[si][i].cat||'',exercicios:agendaData[si][i].exercicios};})});}
+    }
+    var _algTreino=Object.values(agendaData).some(function(sem){return(sem||[]).some(function(d){return d&&Object.keys(d.exercicios||{}).length>0;});});
+    if(selAluna===null||selAluna<0||!ALUNAS[selAluna]||!_algTreino){
+      var mot2=selAluna===null||selAluna<0?"Selecione uma aluna na aba 🏋️":"Monte ao menos 1 dia na aba 🏋️";
+      body+='<div class="card" style="text-align:center;color:var(--mu);padding:28px"><div style="font-size:2rem;margin-bottom:8px">📅</div>'+mot2+'</div>';
+    } else {
+      var al2=ALUNAS[selAluna];
+      var baseUrl=ld("luna_baseurl","");
+      var personalWA=P.telefone||'';
+      var payload={
+        aluna:al2.nome,
+        birthdate:al2.birthdate||'',
+        menopausa:al2.menopausa||false,
+        reposicao:al2.reposicao||false,
+        cicloLength:al2.cicloLength||28,
+        mensDur:al2.mensDur||5,
+        lastPeriod:al2.lastPeriod||'',
+        patologias:al2.patologias||'',
+        semanas:todasSemanas,
+        personalWA:personalWA,
+        personalNome:P.nome||'',
+        geradoEm:new Date().toLocaleDateString("pt-BR")
+      };
+      var encoded="";
+      try{
+        var json=JSON.stringify(payload);
+        // TextEncoder garante UTF-8 correto no Safari
+        if(window.TextEncoder){
+          var bytes=new TextEncoder().encode(json);
+          var binary='';
+          bytes.forEach(function(b){binary+=String.fromCharCode(b);});
+          encoded=btoa(binary);
+        } else {
+          encoded=btoa(unescape(encodeURIComponent(json)));
+        }
+      }catch(e){}
+      var baseUrl=ld("luna_baseurl","");
+      var shareUrl=(baseUrl?baseUrl.replace(/\/$/,""):"")+"?t="+encoded;
+      var urlOk=baseUrl&&baseUrl.indexOf("http")===0;
+      var prevH='';
+      todasSemanas.forEach(function(sem){
+        prevH+='<div style="font-size:.7rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.08em;margin:10px 0 6px">'+sem.label+'</div>';
+        sem.dias.forEach(function(t){
+          var exH=Object.keys(t.exercicios).map(function(ex){
+            var f=t.exercicios[ex];
+            var biH=f.biset?'<div style="font-size:.72rem;color:var(--ac);padding:2px 0 2px 10px">⚡ '+f.biset+' — '+(f.biset_reps||'?')+' reps'+(f.biset_carga?' '+f.biset_carga+'kg':'')+'</div>':'';
+            var extraH='';
+            if(ex==='HIIT como Aquecimento'&&f.hiitElem)extraH='<div style="font-size:.72rem;color:#F87171;padding:2px 0">⚡ '+f.hiitElem+(f.series?' · '+f.series+' rounds':'')+(f.reps?' · Work '+f.reps+'s':'')+(f.descanso?' · Rest '+f.descanso+'s':'')+'</div>';
+            if(ex==='Aula de grupo'){extraH='<div style="font-size:.72rem;color:#FACC15;padding:2px 0">'+(f.modalidade||'Modalidade não definida')+(f.horario?' · '+f.horario:'')+'</div>';}
+            return'<div style="font-size:.76rem;padding:4px 0"><div style="display:flex;justify-content:space-between"><span>'+ex+'</span><span style="color:var(--mu)">'+(ex==='HIIT como Aquecimento'||ex==='Aula de grupo'?'':((f.series||'?')+'×'+(f.reps||'?')+(f.carga?' '+f.carga+'kg':'')))+'</span></div>'+extraH+biH+'</div>';
+          }).join("");
+          prevH+='<div style="margin-bottom:7px;padding:11px;background:var(--su);border-radius:13px;border-left:3px solid var(--ac)"><div style="font-weight:700;font-size:.88rem;margin-bottom:5px">'+t.dia+' <span style="font-size:.68rem;color:var(--mu)">'+t.data+' · '+t.cat+'</span></div>'+exH+'</div>';
+        });
+      });
+      body+='<div class="card"><div class="ct">📅 Semana de '+al2.nome+'</div>'+prevH+'</div>'
+        +'<div class="card"><div class="ct">🔗 URL do App</div>'
+        +'<div style="font-size:.82rem;color:var(--mu);margin-bottom:9px">Cole o endereço do GitHub Pages. Salvo automaticamente.</div>'
+        +'<input class="inp" id="base-url-inp" placeholder="https://seunome.github.io/luna/luna.html" value="'+baseUrl+'" oninput="sv(\'luna_baseurl\',this.value)"/>'
+        +'</div>'
+        +(urlOk
+          ?'<div class="card"><div class="ct">📤 Compartilhar</div>'
+          +'<button class="bp" id="copy-btn" onclick="copyLink(\''+shareUrl+'\')">📋 Copiar Link</button>'
+          +'<button class="bp" id="wa-btn" data-nome="'+al2.nome.replace(/"/g,'&quot;')+'" style="margin-top:8px;background:transparent;border:1px solid var(--ac)30;box-shadow:none;color:var(--tx)" onclick="abrirWhatsApp(this)">📱 Abrir WhatsApp</button>'
+          +'</div>'
+          :'<div class="alert" style="margin-top:4px">⚠️ Configure a URL do app acima para gerar o link</div>');
+    }
+  }
+  pg.innerHTML=body;
+}
+
+function addAluna(){
+  var nome=(document.getElementById("an-nome")||{}).value||"";
+  var bd=(document.getElementById("an-bd")||{}).value||"";
+  var lp=(document.getElementById("an-lp")||{}).value||"";
+  var pat=(document.getElementById("an-pat")||{}).value||"";
+  var men=document.getElementById("an-men")&&document.getElementById("an-men").classList.contains("on");
+  nome=nome.trim();
+  if(!nome){alert("Digite o nome da aluna");return;}
+  ALUNAS.push({nome:nome,birthdate:bd,lastPeriod:lp,patologias:pat,menopausa:men});
+  saveAlunas();selAluna=ALUNAS.length-1;selSemana=0;loadAgenda(selAluna);selDia=0;pTab="montar";renderPersonal();
+}
+function salvarDia(alunaIdx){
+  if(!Object.keys(selExs).length){alert("Selecione ao menos 1 exercício");return;}
+  if(!agendaData[selSemana])agendaData[selSemana]=[null,null,null,null,null,null,null];
+  agendaData[selSemana][selDia]={cat:buildCat,exercicios:JSON.parse(JSON.stringify(selExs))};
+  agenda=agendaData[selSemana];
+  saveAgenda(alunaIdx);
+  var prox=selDia;
+  for(var i=1;i<=6;i++){var nx=(selDia+i)%7;if(!agenda[nx]||!Object.keys(agenda[nx].exercicios||{}).length){prox=nx;break;}}
+  selDia=prox;buildCat=null;selExs={};
+  renderPersonal();
+}
+function domToggleEx(el,eid,ex){
+  var isSel=!!selExs[ex];
+  if(isSel){
+    delete selExs[ex];
+    el.classList.remove("sel");
+    var chk=document.getElementById(eid+"c");if(chk){chk.classList.remove("on");chk.textContent="";}
+    var flds=document.getElementById(eid+"f");if(flds)flds.style.display="none";
+  } else {
+    selExs[ex]={series:"",reps:"",carga:"",descanso:"",biset:"",biset_reps:"",biset_carga:""};
+    el.classList.add("sel");
+    var chk=document.getElementById(eid+"c");if(chk){chk.classList.add("on");chk.textContent="✓";}
+    var flds=document.getElementById(eid+"f");if(flds)flds.style.display="flex";
+  }
+  var n=Object.keys(selExs).length;
+  var bar=document.getElementById("ex-count-bar"),num=document.getElementById("ex-count-num");
+  if(bar)bar.style.display=n?"block":"none";if(num)num.textContent=n;
+}
+function setExF(ex,field,val){if(selExs[ex])selExs[ex][field]=val;}
+function toggleBiset(ex,eid){var picker=document.getElementById("biset-picker-"+eid);if(picker){picker.style.display=picker.style.display==="none"?"block":"none";}}
+
+function copyLink(url){
+  _lastShareUrl=url;
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){alert('Link copiado! 📋');});}
+  else{var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);alert('Link copiado! 📋');}
+}
+function abrirWhatsApp(btn){
+  var nome=btn.dataset.nome||'';
+  var url=_lastShareUrl||'';
+  var msg=encodeURIComponent('🌙 Olá '+nome+'! Aqui está seu treino da semana no Luna & Treino:\n'+url);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var t=params.get('t');
+  if(t){
+    try{
+      // Decode robusto compatível com Safari/iPhone
+      var binary=atob(t);
+      var bytes=new Uint8Array(binary.length);
+      for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+      var decoded=new TextDecoder('utf-8').decode(bytes);
+      renderTreinoLink(JSON.parse(decoded));
+      return;
+    }catch(e1){
+      try{
+        renderTreinoLink(JSON.parse(decodeURIComponent(escape(atob(t)))));
+        return;
+      }catch(e2){
+        try{
+          renderTreinoLink(JSON.parse(atob(t)));
+          return;
+        }catch(e3){
+          console.error('Erro link ?t=',e3);
+        }
+      }
+    }
+  }
+  if(P&&P.nome&&P.birthdate&&P.versao){
+    LUA_SIGN=getLua(P.birthdate);
+    applyTheme(getSign(P.birthdate)||'Escorpião');
+    document.getElementById('nav').style.display='flex';
+    document.getElementById('pg-onboard').classList.add('hidden');
+    goPage('home');
+  } else {
+    renderOnboard();
+  }
+})();
+
+// ══════════════════════════════════════════════════════════════
+// MODO ALUNA — app completo sem aba Personal
+// ══════════════════════════════════════════════════════════════
+var _ALUNA_MODE=false;
+var _ALUNA_DATA=null; // {aluna, semanas, personalWA, personalNome}
+
+function renderTreinoLink(data){
+  _ALUNA_MODE=true;
+  _ALUNA_DATA=data;
+
+  // Montar perfil da aluna a partir dos dados do link
+  var pr={
+    nome: data.aluna||'Mana',
+    birthdate: data.birthdate||'',
+    menopausa: data.menopausa||false,
+    reposicao: data.reposicao||false,
+    doseReposicao: data.doseReposicao||'',
+    cicloLength: data.cicloLength||28,
+    mensDur: data.mensDur||5,
+    lastPeriod: data.lastPeriod||'',
+    patologias: data.patologias||'',
+    metas: data.metas||'',
+    versao: 'deusa'
+  };
+
+  // Salvar perfil da aluna (sempre atualiza com dados do link)
+  P=pr; sv(LUNA_KEYS.PERFIL,P);
+
+  // Salvar treino deusa — sempre sobrescreve com o treino atual do link
+  if(data.semanas&&data.semanas.length){
+    sv(LUNA_KEYS.DEUSA, JSON.stringify(data.semanas));
+  }
+
+  LUA_SIGN=getLua(P.birthdate||pr.birthdate);
+  applyTheme(getSign(P.birthdate||pr.birthdate)||'Touro');
+
+  // Ocultar aba Personal e renomear para "Meu Treino"
+  var nbP=document.getElementById('nb-personal');
+  if(nbP){
+    nbP.style.display='none';
+  }
+  // Adicionar aba "Meu Treino" na nav se ainda não existir
+  var nav=document.getElementById('nav');
+  if(nav&&!document.getElementById('nb-meutreino')){
+    var btnMT=document.createElement('button');
+    btnMT.className='nb';
+    btnMT.id='nb-meutreino';
+    btnMT.innerHTML='<span class="ni">📋</span>Meu Treino';
+    btnMT.onclick=function(){tTab='guia';goPage('treino');};
+    nav.insertBefore(btnMT, nav.children[1]); // depois de Luna
+  }
+
+  document.getElementById('nav').style.display='flex';
+  ['home','treino','ciclo','progresso','personal','onboard'].forEach(function(p){
+    var el=document.getElementById('pg-'+p);if(el)el.classList.add('hidden');
+  });
+  // Abrir direto na aba Treino → Meu Treino
+  tTab='guia';
+  goPage('treino');
+}
+
+// Relatório da aluna → WhatsApp da personal
+function abrirFormularioRelatorio(){
+  if(!_ALUNA_DATA)return;
+  var today=todayKey();
+  var logHoje=ld(LUNA_KEYS.LOG(today),{agua:0,borg:5,dor:0,hrMedia:0,sono:null,humor:null});
+  var ci=!P.menopausa?cyclePhase(P.lastPeriod,P.cicloLength,P.mensDur||5):null;
+  var sonoLabel={'pessimo':'Péssimo 😫','ruim':'Ruim 😔','regular':'Regular 😐','bom':'Bom 😊','otimo':'Ótimo 😄'};
+  var humLabel={'baixo':'Baixa 😔','neutro':'Neutra 😐','animada':'Animada 😊','fogo':'Alta 🔥'};
+  showModal('<div>'
+    +'<div style="font-size:1.8rem;text-align:center;margin-bottom:6px">📊</div>'
+    +'<h2 class="ct" style="text-align:center;margin-bottom:4px">Relatório de Hoje</h2>'
+    +'<div style="font-size:.78rem;color:var(--mu);text-align:center;margin-bottom:16px">'+today.split('-').reverse().join('/')+'</div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div class="tag" style="margin-bottom:8px">💧 Água (copos de 250ml)</div>'
+    +'<div style="display:flex;align-items:center;gap:10px">'
+    +'<button onclick="var n=parseInt(document.getElementById(\'rel-agua\').value||0);if(n>0)document.getElementById(\'rel-agua\').value=n-1;" style="width:36px;height:36px;border-radius:50%;background:var(--su);border:1px solid var(--ac)20;color:var(--tx);font-size:1.2rem;cursor:pointer">−</button>'
+    +'<input id="rel-agua" type="number" min="0" max="20" value="'+logHoje.agua+'" class="inp" style="text-align:center;width:70px;font-size:1.2rem;font-weight:700"/>'
+    +'<button onclick="var n=parseInt(document.getElementById(\'rel-agua\').value||0);document.getElementById(\'rel-agua\').value=n+1;" style="width:36px;height:36px;border-radius:50%;background:var(--su);border:1px solid var(--ac)20;color:var(--tx);font-size:1.2rem;cursor:pointer">+</button>'
+    +'<span style="font-size:.78rem;color:var(--mu)" id="rel-agua-ml"></span>'
+    +'</div></div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div class="tag" style="margin-bottom:8px">🌙 Sono</div>'
+    +'<div style="display:flex;gap:4px" id="rel-sono-btns">'
+    +[['pessimo','😫'],['ruim','😔'],['regular','😐'],['bom','😊'],['otimo','😄']].map(function(o){
+      var sel=logHoje.sono===o[0];
+      return'<button onclick="relSonoSel(\''+o[0]+'\')" id="rel-sono-'+o[0]+'" style="flex:1;border:none;border-radius:10px;padding:10px 2px;font-size:1.3rem;cursor:pointer;background:'+(sel?'var(--ac)18':'var(--su)')+';outline:'+(sel?'2px solid var(--ac)':'none')+'">'+o[1]+'</button>';
+    }).join('')
+    +'</div></div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div class="tag" style="margin-bottom:8px">⚡ Energia</div>'
+    +'<div style="display:flex;gap:6px" id="rel-hum-btns">'
+    +[['baixo','😔'],['neutro','😐'],['animada','😊'],['fogo','🔥']].map(function(o){
+      var sel=logHoje.humor===o[0];
+      return'<button onclick="relHumSel(\''+o[0]+'\')" id="rel-hum-'+o[0]+'" style="flex:1;border:none;border-radius:10px;padding:10px 4px;font-size:1.5rem;cursor:pointer;background:'+(sel?'var(--ac)18':'var(--su)')+';outline:'+(sel?'2px solid var(--ac)':'none')+'">'+o[1]+'</button>';
+    }).join('')
+    +'</div></div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="tag">💓 FC Média (bpm)</span><span class="mn ac" id="rel-hr-val">'+(logHoje.hrMedia||'—')+'</span></div>'
+    +'<input type="range" class="rng" min="40" max="200" value="'+(logHoje.hrMedia||70)+'" id="rel-hr" oninput="document.getElementById(\'rel-hr-val\').textContent=this.value"/>'
+    +'</div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="tag">⚡ Esforço Borg</span><span class="mn ac" id="rel-borg-val">'+logHoje.borg+'</span></div>'
+    +'<input type="range" class="rng" min="1" max="10" value="'+logHoje.borg+'" id="rel-borg" oninput="document.getElementById(\'rel-borg-val\').textContent=this.value"/>'
+    +'</div>'
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:10px">'
+    +'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="tag">🦵 Dor Articular</span><span class="mn" style="color:#F87171" id="rel-dor-val">'+logHoje.dor+'/10</span></div>'
+    +'<input type="range" class="rng" min="0" max="10" value="'+logHoje.dor+'" id="rel-dor" oninput="document.getElementById(\'rel-dor-val\').textContent=this.value+\'/10\'"/>'
+    +'</div>'
+
+    +(ci?'<div style="background:'+ci.c+'15;border:1px solid '+ci.c+'30;border-radius:14px;padding:12px;margin-bottom:10px">'
+    +'<div class="tag" style="margin-bottom:4px">🌀 Ciclo</div>'
+    +'<div style="font-weight:600">'+ci.i+' '+ci.p+'</div></div>':'')
+
+    +'<div style="background:var(--ca);border-radius:14px;padding:13px;margin-bottom:14px">'
+    +'<div class="tag" style="margin-bottom:6px">📝 Observações</div>'
+    +'<textarea class="inp" id="rel-obs" rows="3" placeholder="Como foi o treino? Alguma dor diferente?"></textarea>'
+    +'</div>'
+
+    +'<button class="bp" onclick="enviarRelatorioWA()">📱 Enviar para a Personal via WhatsApp</button>'
+    +'<button onclick="closeModal()" style="width:100%;margin-top:8px;padding:12px;background:none;border:1px solid var(--ac)20;border-radius:12px;color:var(--mu);font-family:Outfit,sans-serif;cursor:pointer">Cancelar</button>'
+    +'</div>');
+}
+
+var _relSono='', _relHum='';
+function relSonoSel(v){
+  _relSono=v;
+  ['pessimo','ruim','regular','bom','otimo'].forEach(function(k){
+    var b=document.getElementById('rel-sono-'+k);
+    if(b){b.style.background=k===v?'var(--ac)18':'var(--su)';b.style.outline=k===v?'2px solid var(--ac)':'none';}
+  });
+}
+function relHumSel(v){
+  _relHum=v;
+  ['baixo','neutro','animada','fogo'].forEach(function(k){
+    var b=document.getElementById('rel-hum-'+k);
+    if(b){b.style.background=k===v?'var(--ac)18':'var(--su)';b.style.outline=k===v?'2px solid var(--ac)':'none';}
+  });
+}
+
+function enviarRelatorioWA(){
+  var agua=document.getElementById('rel-agua')?document.getElementById('rel-agua').value:'0';
+  var hr=document.getElementById('rel-hr')?document.getElementById('rel-hr').value:'0';
+  var borg=document.getElementById('rel-borg')?document.getElementById('rel-borg').value:'5';
+  var dor=document.getElementById('rel-dor')?document.getElementById('rel-dor').value:'0';
+  var obs=document.getElementById('rel-obs')?document.getElementById('rel-obs').value:'';
+  var sonoLabel={'pessimo':'Péssimo 😫','ruim':'Ruim 😔','regular':'Regular 😐','bom':'Bom 😊','otimo':'Ótimo 😄'};
+  var humLabel={'baixo':'Baixa energia 😔','neutro':'Neutra 😐','animada':'Animada 😊','fogo':'Energia alta 🔥'};
+  var ci=!P.menopausa?cyclePhase(P.lastPeriod,P.cicloLength,P.mensDur||5):null;
+  var today=new Date().toLocaleDateString('pt-BR');
+
+  // Salvar no log local
+  upLog('agua',parseInt(agua));upLog('hrMedia',parseInt(hr));upLog('borg',parseInt(borg));upLog('dor',parseInt(dor));
+  if(_relSono)upLog('sono',_relSono);if(_relHum)upLog('humor',_relHum);if(obs)upLog('notas',obs);
+
+  var msg='🌙 *Relatório Luna & Treino*\n'
+    +'👩 *'+P.nome+'* — '+today+'\n\n'
+    +'💧 Água: '+agua+' copos ('+parseInt(agua)*250+'ml)\n'
+    +'🌙 Sono: '+( sonoLabel[_relSono]||'Não informado')+'\n'
+    +'⚡ Energia: '+( humLabel[_relHum]||'Não informado')+'\n'
+    +'💓 FC Média: '+hr+' bpm\n'
+    +'⚡ Borg: '+borg+'/10\n'
+    +'🦵 Dor: '+dor+'/10\n'
+    +(ci?'🌀 Ciclo: '+ci.i+' '+ci.p+'\n':'')
+    +(obs?'\n📝 '+obs:'');
+
+  var waNum=(_ALUNA_DATA&&_ALUNA_DATA.personalWA)||'';
+  var url=waNum
+    ?'https://wa.me/'+waNum.replace(/\D/g,'')+'?text='+encodeURIComponent(msg)
+    :'https://wa.me/?text='+encodeURIComponent(msg);
+  closeModal();
+  window.open(url,'_blank');
+}
+
+function voltarStep(){obStep--;renderOnboard();}
+function toggleObMen(){OB.men=!OB.men;renderOnboard();}
+function toggleObRep(){OB.rep=!OB.rep;renderOnboard();}
+function setVersaoMana(){OB.versao='mana';renderOnboard();}
+function setVersaoDeusa(){OB.versao='deusa';renderOnboard();}
+function novoTreino(){timer.mode='setup';renderTreino();}
+function novoHiit(){hTimer.mode='setup';hiitSerie=0;hiitExIdx=0;renderTreino();}
+function toggleReposicao(){P.reposicao=!P.reposicao;savePro(P);renderCiclo();}
+function toggleMenopausaP(){P.menopausa=!P.menopausa;savePro(P);renderProgresso();}
+function resetarTudo(){if(confirm('Resetar tudo?')){localStorage.clear();location.reload();}}
+function toggleAnMen(){var el=document.getElementById('an-men');if(el)el.classList.toggle('on');}
+function selecionarHiitElem(btn){hiitElem=parseInt(btn.getAttribute('data-elem'));renderTreino();}
+function abrirWod(el){openWod(el.getAttribute('data-nome'));}
+var _wodPendente=null;
+var _lastShareUrl='';
+function iniciarWodTimer(){if(_wodPendente)startWodTimer(_wodPendente.nome,_wodPendente.tempo,_wodPendente.fixo);}
+function adicionarMed(){var inp=document.getElementById('ob-med');if(!inp)return;var v=inp.value.trim();if(v){OB.meds.push(v);inp.value='';renderOnboard();}}
+function removerMed(idx){OB.meds.splice(idx,1);renderOnboard();}
+function salvarRelatorio(alunaIdx){
+  var data=(document.getElementById('rel-data')||{}).value||todayKey();
+  var agua=parseInt((document.getElementById('rel-p-agua')||{}).value||0)||0;
+  var hr=parseInt((document.getElementById('rel-p-hr')||{}).value||0)||0;
+  var borg=parseInt((document.getElementById('rel-p-borg')||{}).value||0)||0;
+  var dor=parseInt((document.getElementById('rel-p-dor')||{}).value||0)||0;
+  var sono=(document.getElementById('rel-p-sono')||{}).value||'';
+  var humor=(document.getElementById('rel-p-hum')||{}).value||'';
+  var ciclo=(document.getElementById('rel-p-ciclo')||{}).value||'';
+  var obs=((document.getElementById('rel-p-obs')||{}).value||'').trim();
+  var rels=ld(LUNA_KEYS.REL(alunaIdx),[]);
+  // Substitui se mesma data, senão adiciona
+  var idx=rels.findIndex(function(r){return r.data===data;});
+  var reg={data:data,agua:agua,hr:hr,borg:borg,dor:dor,sono:sono,humor:humor,ciclo:ciclo,obs:obs};
+  if(idx>=0)rels[idx]=reg; else rels.push(reg);
+  sv(LUNA_KEYS.REL(alunaIdx),rels);
+  renderPersonal();
+}
+function deletarRelatorio(alunaIdx,idx){
+  if(!confirm('Remover este registro?'))return;
+  var rels=ld(LUNA_KEYS.REL(alunaIdx),[]);
+  var ord=rels.slice().sort(function(a,b){return a.data>b.data?-1:1;});
+  var reg=ord[idx];
+  if(reg){var pos=rels.findIndex(function(r){return r.data===reg.data;});if(pos>=0)rels.splice(pos,1);}
+  sv(LUNA_KEYS.REL(alunaIdx),rels);
+  renderPersonal();
+}
+function salvarDiaAtual(){salvarDia(selAluna);}
+
+// ── Configuração de exercício de musculação ───────────────────
+var _cfgExBase='', _cfgAngulo='—', _cfgMaterial='—';
+function abrirConfigEx(nomeBase){
+  _cfgExBase=nomeBase; _cfgAngulo='—'; _cfgMaterial='—';
+  var modal=document.getElementById('cfg-ex-modal');
+  if(!modal)return;
+  var titulo=document.getElementById('cfg-ex-titulo');
+  if(titulo)titulo.textContent='Configurar: '+nomeBase;
+  // Reset botões
+  ANGULOS.forEach(function(a){var b=document.getElementById('cfa-'+a.replace(/[^a-z]/gi,'_'));if(b){b.style.background=a==='—'?'var(--ac)18':'var(--su)';b.style.color=a==='—'?'var(--ac)':'var(--mu)';}});
+  MATERIAIS.forEach(function(m){var b=document.getElementById('cfm-'+m.replace(/[^a-z]/gi,'_'));if(b){b.style.background=m==='—'?'var(--ac)18':'var(--su)';b.style.color=m==='—'?'var(--ac)':'var(--mu)';}});
+  atualizarCfgPreview();
+  ['cfg-series','cfg-reps','cfg-carga','cfg-desc'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  modal.style.display='flex';
+}
+function fecharConfigEx(){
+  var modal=document.getElementById('cfg-ex-modal');
+  if(modal)modal.style.display='none';
+}
+function cfgSelAngulo(a){
+  _cfgAngulo=a;
+  ANGULOS.forEach(function(x){var b=document.getElementById('cfa-'+x.replace(/[^a-z]/gi,'_'));if(b){b.style.background=x===a?'var(--ac)18':'var(--su)';b.style.color=x===a?'var(--ac)':'var(--mu)';}});
+  atualizarCfgPreview();
+}
+function cfgSelMaterial(m){
+  _cfgMaterial=m;
+  MATERIAIS.forEach(function(x){var b=document.getElementById('cfm-'+x.replace(/[^a-z]/gi,'_'));if(b){b.style.background=x===m?'var(--ac)18':'var(--su)';b.style.color=x===m?'var(--ac)':'var(--mu)';}});
+  atualizarCfgPreview();
+}
+function atualizarCfgPreview(){
+  var prev=document.getElementById('cfg-preview');
+  if(!prev)return;
+  // Calcular instância
+  var inst=contarInstancias(_cfgExBase,_cfgAngulo,_cfgMaterial)+1;
+  prev.textContent=exKey(_cfgExBase,_cfgAngulo,_cfgMaterial,inst);
+}
+function contarInstancias(base,ang,mat){
+  var chaveBase=exKey(base,ang,mat,1);
+  var count=0;
+  Object.keys(selExs).forEach(function(k){
+    if(k===chaveBase||k===base||(k.indexOf(base+' ·')===0&&angMat(k,ang,mat)))count++;
+  });
+  return count;
+}
+function angMat(chave,ang,mat){
+  var partes=chave.split(' · ');
+  var aOk=ang==='—'||partes.indexOf(ang)>=0;
+  var mOk=mat==='—'||partes.indexOf(mat)>=0;
+  return aOk&&mOk;
+}
+function confirmarConfigEx(){
+  var series=(document.getElementById('cfg-series')||{}).value||'';
+  var reps=(document.getElementById('cfg-reps')||{}).value||'';
+  var carga=(document.getElementById('cfg-carga')||{}).value||'';
+  var desc=(document.getElementById('cfg-desc')||{}).value||'';
+  var inst=contarInstancias(_cfgExBase,_cfgAngulo,_cfgMaterial)+1;
+  var chave=exKey(_cfgExBase,_cfgAngulo,_cfgMaterial,inst);
+  selExs[chave]={series:series,reps:reps,carga:carga,descanso:desc,angulo:_cfgAngulo,material:_cfgMaterial,base:_cfgExBase};
+  fecharConfigEx();
+  renderPersonal();
+}
+function removerExMusc(chave){
+  delete selExs[chave];
+  renderPersonal();
+}
+function abrirTreino(el){openTreino(el.getAttribute('data-tipo'),parseInt(el.getAttribute('data-idx')));}
+function abrirAluna(i){selAluna=i;selSemana=0;loadAgenda(i);pTab='montar';renderPersonal();}
+function editarAluna(i){
+  var a=ALUNAS[i];
+  if(!a)return;
+  showModal('<div>'
+    +'<h2 class="ct" style="font-size:1.2rem;margin-bottom:14px">✏️ Editar '+a.nome+'</h2>'
+    +'<div class="tag" style="margin-bottom:5px">Nome</div>'
+    +'<input class="inp" id="ed-nome" value="'+a.nome+'" style="margin-bottom:10px"/>'
+    +'<div class="tag" style="margin-bottom:5px">Data de nascimento</div>'
+    +'<input class="inp" type="date" id="ed-bd" value="'+(a.birthdate||"")+'" style="margin-bottom:10px"/>'
+    +'<div class="tag" style="margin-bottom:5px">Último período</div>'
+    +'<input class="inp" type="date" id="ed-lp" value="'+(a.lastPeriod||"")+'" style="margin-bottom:10px"/>'
+    +'<div class="tag" style="margin-bottom:5px">Patologias</div>'
+    +'<input class="inp" id="ed-pat" value="'+(a.patologias||"")+'" placeholder="(opcional)" style="margin-bottom:12px"/>'
+    +'<div class="cbr" onclick="document.getElementById(\'ed-men\').classList.toggle(\'on\')" style="margin-bottom:16px">'
+    +'<div class="chk'+(a.menopausa?' on':'')+'" id="ed-men">'+(a.menopausa?'✓':'')+'</div>'
+    +'<span>Menopausa</span></div>'
+    +'<button class="bp" onclick="salvarEdicaoAluna('+i+')">💾 Salvar</button>'
+    +'<button onclick="closeModal()" style="width:100%;margin-top:8px;padding:12px;background:none;border:1px solid var(--ac)20;border-radius:12px;color:var(--mu);font-family:Outfit,sans-serif;cursor:pointer">Cancelar</button>'
+    +'</div>');
+}
+function salvarEdicaoAluna(i){
+  var nome=(document.getElementById('ed-nome')||{}).value||'';
+  var bd=(document.getElementById('ed-bd')||{}).value||'';
+  var lp=(document.getElementById('ed-lp')||{}).value||'';
+  var pat=(document.getElementById('ed-pat')||{}).value||'';
+  var men=document.getElementById('ed-men')&&document.getElementById('ed-men').classList.contains('on');
+  nome=nome.trim();
+  if(!nome){alert('Nome obrigatório');return;}
+  ALUNAS[i].nome=nome;
+  ALUNAS[i].birthdate=bd;
+  ALUNAS[i].lastPeriod=lp;
+  ALUNAS[i].patologias=pat;
+  ALUNAS[i].menopausa=men;
+  saveAlunas();
+  closeModal();
+  renderPersonal();
+}
+</script>
+</body>
+</html>
